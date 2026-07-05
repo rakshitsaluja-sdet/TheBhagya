@@ -1,0 +1,66 @@
+# ── Python ────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Node / React ──────────────────────────────────────
+node_modules/
+dist/
+.cache/
+*.local
+
+# ── Environment / Secrets ─────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.production
+
+# ── Database ──────────────────────────────────────────
+data/bhagyaai.db
+data/bhagyaai.db-shm
+data/bhagyaai.db-wal
+*.sqlite
+*.sqlite3
+
+# ── Swiss Ephemeris data files (large, not needed in repo) ──
+ephe/
+*.se1
+
+# ── OS ────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ───────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Logs ──────────────────────────────────────────────
+*.log
+logs/
+
+# ── Build markers ─────────────────────────────────────
+.swe_ok
+frontend/dist/
+
+# ── Credentials / sensitive docs ──────────────────────
+TheBhagya_Credentials.docx

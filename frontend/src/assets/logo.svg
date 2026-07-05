@@ -1,0 +1,42 @@
+<svg width="480" height="200" viewBox="0 0 480 200" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>TheBhagya — Destiny AI Cosmos</title>
+  <desc>Cosmic celestial logo with crescent moon, stars, and TheBhagya wordmark in gold</desc>
+  <defs>
+    <style>
+      .ring  { fill: none; stroke: #C9933A; stroke-width: 1.2; }
+      .ring2 { fill: none; stroke: #C9933A; stroke-width: 0.5; stroke-dasharray: 3 5; }
+      .star-path { fill: #C9933A; }
+      .dot-gold  { fill: #C9933A; }
+      .dot-dim   { fill: #7A5E28; }
+      .disc-bg   { fill: #0D0B14; }
+      .crescent  { fill: #C9933A; }
+      .crescent-cut { fill: #0D0B14; }
+      .orbit-dot { fill: none; stroke: #4A3A1A; stroke-width: 0.8; stroke-dasharray: 2 4; }
+    </style>
+  </defs>
+  <rect width="480" height="200" fill="#0D0B14" rx="12"/>
+  <g transform="translate(76, 100)">
+    <circle class="disc-bg" cx="0" cy="0" r="72"/>
+    <circle class="ring" cx="0" cy="0" r="72"/>
+    <circle class="ring2" cx="0" cy="0" r="65"/>
+    <circle class="orbit-dot" cx="0" cy="0" r="46"/>
+    <circle class="crescent" cx="-6" cy="0" r="24"/>
+    <circle class="crescent-cut" cx="5" cy="-3" r="20"/>
+    <polygon class="star-path" points="0,-54 2.5,-47 8,-47 3.5,-43 5,-36 0,-40 -5,-36 -3.5,-43 -8,-47 -2.5,-47" transform="rotate(20)"/>
+    <polygon class="star-path" points="0,-54 2.5,-47 8,-47 3.5,-43 5,-36 0,-40 -5,-36 -3.5,-43 -8,-47 -2.5,-47" transform="rotate(110)"/>
+    <polygon class="star-path" points="0,-54 2.5,-47 8,-47 3.5,-43 5,-36 0,-40 -5,-36 -3.5,-43 -8,-47 -2.5,-47" transform="rotate(200)"/>
+    <polygon class="star-path" points="0,-54 2.5,-47 8,-47 3.5,-43 5,-36 0,-40 -5,-36 -3.5,-43 -8,-47 -2.5,-47" transform="rotate(290)"/>
+    <circle class="dot-gold" cx="0" cy="-66" r="2"/>
+    <circle class="dot-gold" cx="66" cy="0" r="2"/>
+    <circle class="dot-gold" cx="0" cy="66" r="2"/>
+    <circle class="dot-gold" cx="-66" cy="0" r="2"/>
+    <circle class="dot-dim" cx="46" cy="-46" r="1.2"/>
+    <circle class="dot-dim" cx="46" cy="46" r="1.2"/>
+    <circle class="dot-dim" cx="-46" cy="-46" r="1.2"/>
+    <circle class="dot-dim" cx="-46" cy="46" r="1.2"/>
+  </g>
+  <text x="164" y="90" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#C9933A" letter-spacing="2">TheBhagya</text>
+  <text x="164" y="116" font-family="Georgia, serif" font-size="10" fill="#7A5E28" letter-spacing="5">DESTINY · AI · COSMOS</text>
+  <line x1="164" y1="126" x2="455" y2="126" stroke="#2A2218" stroke-width="0.8"/>
+  <text x="164" y="148" font-family="Georgia, serif" font-size="8.5" fill="#3A2E18" letter-spacing="2.5">ASTROLOGY · LAL KITAB · PALMISTRY · NUMEROLOGY</text>
+</svg>

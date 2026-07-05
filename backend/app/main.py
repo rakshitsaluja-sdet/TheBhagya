@@ -1,0 +1,147 @@
+"""
+backend/app/main.py
+
+TheBhagya / BhagyaAI FastAPI application.
+
+Run locally:
+    uvicorn backend.app.main:app --reload --port 8000
+
+API docs:
+    http://localhost:8000/docs      (Swagger UI)
+    http://localhost:8000/redoc     (ReDoc)
+"""
+
+from __future__ import annotations
+
+import logging
+import os
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from backend.app.db.database import init_db, AsyncSessionLocal
+from backend.app.db.models import User
+from backend.app.core.security import hash_password
+from sqlalchemy import select
+from backend.app.api.v1.auth       import router as auth_router
+from backend.app.api.v1.charts     import router as charts_router
+from backend.app.api.v1.chat       import router as chat_router
+from backend.app.api.v1.numerology import router as numerology_router
+from backend.app.api.v1.payments   import router as payments_router
+from backend.app.api.v1.admin      import router as admin_router
+
+# ── Logging ───────────────────────────────────────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+)
+logger = logging.getLogger("bhagyaai")
+
+# ── Seed test accounts ────────────────────────────────────────────────────
+_TEST_USERS = [
+    {"email": "free@thebhagya.com",    "password": "Test@free1",    "plan": "starter"},
+    {"email": "pro@thebhagya.com",     "password": "Test@pro1",     "plan": "pro"},
+    {"email": "jyotish@thebhagya.com", "password": "Test@jyotish1", "plan": "jyotish"},
+]
+
+async def _seed_test_users() -> None:
+    """Ensure test accounts exist. Safe to call on every startup."""
+    async with AsyncSessionLocal() as db:
+        try:
+            created = []
+            for u in _TEST_USERS:
+                result = await db.execute(select(User).where(User.email == u["email"]))
+                if result.scalar_one_or_none():
+                    continue
+                db.add(User(
+                    email=u["email"],
+                    password_hash=hash_password(u["password"]),
+                    plan=u["plan"],
+                ))
+                created.append(u["email"])
+            await db.commit()
+            if created:
+                logger.info("Seeded test accounts: %s", created)
+            else:
+                logger.info("Test accounts already exist — skipped seeding.")
+        except Exception as exc:
+            logger.warning("Could not seed test accounts: %s", exc)
+            await db.rollback()
+
+
+# ── Lifespan (startup / shutdown) ─────────────────────────────────────────
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info("TheBhagya API starting — initialising database...")
+    await init_db()
+    logger.info("Database ready.")
+    await _seed_test_users()
+    yield
+    logger.info("TheBhagya API shutting down.")
+
+
+# ── App factory ───────────────────────────────────────────────────────────
+app = FastAPI(
+    title="TheBhagya API",
+    description=(
+        "AI-native astrology platform — Vedic Astrology · Lal Kitab · "
+        "Numerology · Destiny Chat · Palmistry (coming soon). "
+        "Pure Swiss Ephemeris math + Claude AI interpretation."
+    ),
+    version="2.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    lifespan=lifespan,
+)
+
+# ── CORS ──────────────────────────────────────────────────────────────────
+_default_origins = ",".join([
+    "http://localhost:3000",
+    "http://localhost:5173",   # Vite dev server
+    "http://localhost:8000",
+    "http://localhost:19006",  # Expo / React Native
+    "https://thebhagya.com",
+    "https://www.thebhagya.com",
+])
+
+_origins = os.getenv("ALLOWED_ORIGINS", _default_origins).split(",")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ── Routers ───────────────────────────────────────────────────────────────
+API_PREFIX = os.getenv("API_V1_PREFIX", "/v1")
+
+app.include_router(auth_router,       prefix=API_PREFIX)
+app.include_router(charts_router,     prefix=API_PREFIX)
+app.include_router(chat_router,       prefix=API_PREFIX)
+app.include_router(numerology_router, prefix=API_PREFIX)
+app.include_router(payments_router,   prefix=API_PREFIX)
+app.include_router(admin_router,      prefix=API_PREFIX)
+
+# ── System endpoints ──────────────────────────────────────────────────────
+@app.get("/health", tags=["System"])
+async def health() -> dict:
+    return {"status": "ok", "service": "TheBhagya", "version": "2.0.0"}
+
+
+@app.get("/", tags=["System"])
+async def root() -> dict:
+    return {
+        "message":    "🔮 TheBhagya API",
+        "version":    "2.0.0",
+        "docs":       "/docs",
+        "health":     "/health",
+        "endpoints": {
+            "charts":     f"{API_PREFIX}/charts",
+            "chat":       f"{API_PREFIX}/chat",
+            "numerology": f"{API_PREFIX}/numerology",
+            "payments":   f"{API_PREFIX}/payments/plans",
+        },
+    }
