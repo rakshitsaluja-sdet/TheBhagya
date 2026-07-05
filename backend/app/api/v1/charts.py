@@ -186,15 +186,16 @@ async def download_pdf(
 
 @router.delete(
     "/{chart_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
+    status_code=status.HTTP_200_OK,
     summary="Delete a chart",
 )
 async def delete_chart(
     chart_id: str,
     db: AsyncSession = Depends(get_db),
-) -> None:
+) -> dict:
     record = await _get_or_404(chart_id, db)
     await db.delete(record)
+    return {"deleted": chart_id}
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────
