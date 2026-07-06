@@ -88,6 +88,19 @@ export async function authRegister(email, password, plan) {
   return data
 }
 
+export async function authGoogleLogin(credential) {
+  const res = await fetch(`${BASE}/auth/google`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ credential }),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Google login failed: ${res.status}`)
+  }
+  return res.json()
+}
+
 // ── Page View Tracking ────────────────────────────────────────────────────
 
 // Generate or retrieve a stable session ID for this browser tab

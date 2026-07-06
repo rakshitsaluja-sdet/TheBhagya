@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -91,6 +91,7 @@ const T = {
 function UserAvatar({ user, plan, planBadge, planColor, onLogout, lang }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
@@ -160,7 +161,7 @@ function UserAvatar({ user, plan, planBadge, planColor, onLogout, lang }) {
               { icon: '✦', label: lang === 'hi' ? 'प्लान अपग्रेड' : 'Upgrade Plan', href: '/pricing' },
             ].map(item => (
               <button key={item.href}
-                onClick={() => { setOpen(false); window.location.href = item.href }}
+                onClick={() => { setOpen(false); navigate(item.href) }}
                 style={{
                   width: '100%', textAlign: 'left', padding: '10px 12px',
                   background: 'none', border: 'none', borderRadius: '6px',
