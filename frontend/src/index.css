@@ -147,3 +147,178 @@ input, select {
   border-top: 1px solid var(--border);
   margin: 2rem 0;
 }
+
+/* ── Responsive Utilities ─────────────────────────────────── */
+
+/* Hamburger / mobile nav */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  z-index: 200;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav drawer */
+.nav-mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 0; right: 0;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index: 99;
+  padding: 1.25rem 1.5rem 1.75rem;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.nav-mobile-drawer.open { display: flex; }
+
+.nav-mobile-link {
+  display: block;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid rgba(201,147,58,0.08);
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
+  transition: color 0.2s;
+}
+.nav-mobile-link:last-child { border-bottom: none; }
+.nav-mobile-link:hover, .nav-mobile-link.active { color: var(--gold); }
+
+.nav-mobile-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  align-items: center;
+}
+
+/* Hide/show based on breakpoints */
+@media (max-width: 768px) {
+  .nav-desktop-links { display: none !important; }
+  .nav-hamburger { display: flex !important; }
+
+  /* Stack CTA buttons on mobile */
+  .btn-primary, .btn-outline {
+    width: 100%;
+    text-align: center;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* Hero padding */
+  .hero-section {
+    padding: 4rem 1.25rem 3rem !important;
+  }
+
+  /* Section padding */
+  .page-section {
+    padding: 3rem 1.25rem !important;
+  }
+
+  /* Pillar cards — 1 column on very small, 2 on medium mobile */
+  .pillars-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Steps — 1 column on mobile */
+  .steps-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .steps-row > * {
+    max-width: 100% !important;
+  }
+
+  /* Chart form full width */
+  .chart-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tables scroll horizontally */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tabs wrap on mobile */
+  .tabs-row {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
+  .tabs-row button {
+    flex: 1 1 calc(50% - 0.25rem) !important;
+    min-width: 0 !important;
+    font-size: 0.78rem !important;
+    padding: 0.5rem 0.5rem !important;
+    text-align: center !important;
+  }
+
+  /* Pricing cards stack */
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Admin dashboard grid */
+  .admin-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* General text size comfort */
+  h1 { font-size: clamp(1.6rem, 7vw, 2.5rem) !important; }
+  h2 { font-size: clamp(1.2rem, 5vw, 1.8rem) !important; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Tablet: show hamburger too to save space */
+  .nav-desktop-links { display: none !important; }
+  .nav-hamburger { display: flex !important; }
+
+  .pillars-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .steps-row > * {
+    flex: 1 1 calc(50% - 0.75rem) !important;
+    max-width: calc(50% - 0.75rem) !important;
+  }
+}
+
+/* Ensure touch targets are at least 44px */
+@media (max-width: 1024px) {
+  button, a {
+    min-height: 44px;
+  }
+  .nav-mobile-link {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+}
+
