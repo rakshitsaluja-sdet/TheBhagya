@@ -562,8 +562,51 @@ export default function Landing() {
           55%  { opacity:1; transform:scaleY(1); transform-origin:bottom }
           100% { opacity:0; transform:scaleY(0); transform-origin:bottom }
         }
-        @media (max-width:880px) {
-          section > div[style] { grid-column:1/-1 !important; justify-self:start !important }
+
+        /* ── Mobile (≤768px) ── */
+        @media (max-width:768px) {
+          /* Nav: hide desktop links */
+          nav ul { display:none !important }
+          nav { padding:1rem 5vw !important }
+
+          /* All section grid columns → full width */
+          section > div[style] { grid-column:1/-1 !important; justify-self:stretch !important }
+
+          /* Section: single-column grid, auto height, top padding for fixed nav */
+          section[style] {
+            grid-template-columns:1fr !important;
+            min-height:auto !important;
+            padding:5rem 5vw 3rem !important;
+          }
+          /* First section keeps viewport height for hero feel */
+          section#sec-hero { min-height:100svh !important; padding-top:7rem !important }
+
+          /* Glass card: tighter padding */
+          section > div[style*="backdropFilter"] { padding:1.8rem 1.4rem 2rem !important }
+
+          /* Feature grid: 1 column */
+          section > div[style*="1fr 1fr"] { grid-template-columns:1fr !important; grid-column:1/-1 !important }
+
+          /* Stat row: smaller nums */
+          section div[style*="repeat(3,1fr)"] { grid-template-columns:repeat(3,1fr) !important }
+          section div[style*="repeat(3,1fr)"] span:first-child { font-size:1.5rem !important }
+
+          /* Meta row: hide on mobile to save space */
+          section div[style*="0.57rem"][style*="letterSpacing"] { display:none !important }
+
+          /* Scroll hint: hide on mobile */
+          section div[style*="scrollLine"] { display:none !important }
+
+          /* CTA section: center content */
+          section > div[style*="textAlign:'center'"] { text-align:center !important }
+        }
+
+        /* ── Tablet (769–1024px) ── */
+        @media (min-width:769px) and (max-width:1024px) {
+          nav ul { display:none !important }
+          section[style] { grid-template-columns:repeat(6,1fr) !important; padding:0 4vw !important }
+          section > div[style] { grid-column:1/-1 !important; justify-self:stretch !important }
+          section > div[style*="1fr 1fr"] { grid-template-columns:1fr 1fr !important; grid-column:1/-1 !important }
         }
       `}</style>
     </div>

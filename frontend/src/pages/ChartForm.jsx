@@ -140,7 +140,7 @@ export default function ChartForm() {
         </div>
 
         {/* DOB + TOB */}
-        <div style={{ ...s.group, ...s.row }}>
+        <div className="chart-form-grid" style={{ ...s.group, ...s.row }}>
           <div>
             <div style={s.labelRow}>
               <span style={s.label}>DATE OF BIRTH</span>
@@ -191,7 +191,7 @@ export default function ChartForm() {
         </div>
 
         {/* LAT / LON */}
-        <div style={{ ...s.group, ...s.row }}>
+        <div className="chart-form-grid" style={{ ...s.group, ...s.row }}>
           <div>
             <div style={s.labelRow}>
               <span style={s.label}>LATITUDE</span>

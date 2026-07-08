@@ -322,3 +322,64 @@ input, select {
   }
 }
 
+/* ── Login page glass card — mobile ── */
+@media (max-width: 480px) {
+  /* Tighter card padding on small phones */
+  .bhagya-login-card {
+    padding: 1.8rem 1.2rem 1.6rem !important;
+  }
+}
+
+/* ── ChartForm responsive ── */
+@media (max-width: 768px) {
+  .chart-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  /* ChartResult tabs wrap */
+  .chart-tabs {
+    flex-wrap: wrap !important;
+    gap: 0.4rem !important;
+  }
+  .chart-tabs button {
+    flex: 1 1 calc(50% - 0.2rem) !important;
+    font-size: 0.72rem !important;
+    padding: 0.5rem 0.4rem !important;
+  }
+  /* Kundali SVG chart */
+  .kundali-svg {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+  /* Planet table scroll */
+  .planet-table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  /* Destiny chat message area */
+  .chat-messages {
+    max-height: 55vh !important;
+  }
+  /* Numerology grid */
+  .numerology-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* Admin stats grid */
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── Navbar hamburger menu ── */
+@media (max-width: 768px) {
+  .navbar-desktop { display: none !important; }
+  .navbar-hamburger-btn { display: flex !important; }
+}
+@media (min-width: 769px) {
+  .navbar-hamburger-btn { display: none !important; }
+  .navbar-mobile-menu { display: none !important; }
+}
+
