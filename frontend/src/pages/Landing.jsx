@@ -56,7 +56,7 @@ const FEATURES = [
   { icon: '♂', name: 'Dosha Check',   desc: 'Mangal Dosha and Kaal Sarp Dosha computed from your exact birth data. Severity, cancellations, and remedies.', to: '/doshas' },
   { icon: '♥', name: 'Kundli Match',  desc: 'Ashtakoot 36-Guna compatibility — Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakut, Nadi — with dosha detection.', to: '/kundli-matching' },
   { icon: '∑', name: 'Numerology',    desc: 'Pythagorean and Chaldean systems. Life path, destiny, soul urge, personal year, partner compatibility.', to: '/numerology' },
-  { icon: '📖', name: 'Lal Kitab',    desc: 'Ancient Punjabi remedies. Pucca Ghar planets, house map, personalised karmic remedy plan.', to: '/chart/new' },
+  { icon: '📖', name: 'Lal Kitab',    desc: 'Ancient Punjabi remedies. Pucca Ghar planets, house map, personalised karmic remedy plan.', to: '/lal-kitab' },
 ]
 
 const TESTIMONIALS = [
@@ -632,7 +632,7 @@ export default function Landing() {
               <Link to="/login"     style={S.btnO}>Sign In</Link>
             </div>
             <div style={S.ftrRow}>
-              {[{l:'My Charts',t:'/my-charts'},{l:'Horoscope',t:'/horoscope'},{l:'Sade Sati',t:'/sade-sati'},{l:'Doshas',t:'/doshas'},{l:'Kundli Match',t:'/kundli-matching'},{l:'Destiny Chat',t:'/destiny-chat'},{l:'Numerology',t:'/numerology'},{l:'Pricing',t:'/pricing'},{l:'Sign In',t:'/login'}].map(lk => (
+              {[{l:'My Charts',t:'/my-charts'},{l:'Horoscope',t:'/horoscope'},{l:'Sade Sati',t:'/sade-sati'},{l:'Doshas',t:'/doshas'},{l:'Kundli Match',t:'/kundli-matching'},{l:'Lal Kitab',t:'/lal-kitab'},{l:'Destiny Chat',t:'/destiny-chat'},{l:'Numerology',t:'/numerology'},{l:'Pricing',t:'/pricing'},{l:'Sign In',t:'/login'}].map(lk => (
                 <Link key={lk.l} to={lk.t} style={S.ftrA}>{lk.l}</Link>
               ))}
             </div>

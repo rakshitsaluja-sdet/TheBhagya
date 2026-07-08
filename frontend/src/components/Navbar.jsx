@@ -91,6 +91,7 @@ const T = {
   sadeSati:  { en: 'Sade Sati',     hi: 'साढ़े साती' },
   doshas:    { en: 'Doshas',        hi: 'दोष' },
   kundli:    { en: 'Kundli Match',  hi: 'कुंडली मिलान' },
+  lalKitab:  { en: 'Lal Kitab',    hi: 'लाल किताब' },
   pricing:   { en: 'Pricing',       hi: 'मूल्य' },
   features:  { en: 'Features',      hi: 'विशेषताएं' },
   cta:       { en: 'Get Your Reading', hi: 'कुंडली देखें' },
@@ -260,6 +261,7 @@ export default function Navbar() {
           <Link to="/sade-sati"    style={isActive('/sade-sati')}>{T.sadeSati[lang]}</Link>
           <Link to="/doshas"           style={isActive('/doshas')}>{T.doshas[lang]}</Link>
           <Link to="/kundli-matching" style={isActive('/kundli-matching')}>{T.kundli[lang]}</Link>
+          <Link to="/lal-kitab"       style={isActive('/lal-kitab')}>{T.lalKitab[lang]}</Link>
           <Link to="/destiny-chat"    style={isActive('/destiny-chat')}>{T.chat[lang]}</Link>
           <Link to="/numerology"   style={isActive('/numerology')}>{T.numeral[lang]}</Link>
         </div>
@@ -321,6 +323,7 @@ export default function Navbar() {
         <Link to="/sade-sati"    className={mobileActiveCls('/sade-sati')}>♄ {T.sadeSati[lang]}</Link>
         <Link to="/doshas"           className={mobileActiveCls('/doshas')}>♂ {T.doshas[lang]}</Link>
         <Link to="/kundli-matching" className={mobileActiveCls('/kundli-matching')}>♥ {T.kundli[lang]}</Link>
+        <Link to="/lal-kitab"       className={mobileActiveCls('/lal-kitab')}>📖 {T.lalKitab[lang]}</Link>
         <Link to="/destiny-chat"    className={mobileActiveCls('/destiny-chat')}>✨ {T.chat[lang]}</Link>
         <Link to="/numerology"   className={mobileActiveCls('/numerology')}>∑ {T.numeral[lang]}</Link>
         <button className="nav-mobile-link" onClick={handleFeatures}>★ {T.features[lang]}</button>

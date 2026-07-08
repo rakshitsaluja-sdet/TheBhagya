@@ -27,6 +27,7 @@ from backend.app.api.v1.horoscope       import router as horoscope_router
 from backend.app.api.v1.sade_sati       import router as sade_sati_router
 from backend.app.api.v1.doshas          import router as doshas_router
 from backend.app.api.v1.kundli_matching import router as kundli_matching_router
+from backend.app.api.v1.lal_kitab      import router as lal_kitab_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -111,6 +112,7 @@ app.include_router(horoscope_router,       prefix=API_PREFIX)
 app.include_router(sade_sati_router,       prefix=API_PREFIX)
 app.include_router(doshas_router,          prefix=API_PREFIX)
 app.include_router(kundli_matching_router, prefix=API_PREFIX)
+app.include_router(lal_kitab_router,       prefix=API_PREFIX)
 
 
 @app.get("/health", tags=["System"])
@@ -134,5 +136,6 @@ async def root() -> dict:
             "sade_sati":       f"{API_PREFIX}/sade-sati/by-moon-sign",
             "doshas":          f"{API_PREFIX}/doshas/compute",
             "kundli_matching": f"{API_PREFIX}/kundli-matching/compute",
+            "lal_kitab":       f"{API_PREFIX}/lal-kitab/compute",
         },
     }

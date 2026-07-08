@@ -59,7 +59,7 @@ LK_PUCCA_GHAR: dict[str, list[int]] = {
     "Venus":   [7],
     "Saturn":  [8],
     "Rahu":    [6, 12],
-    "Ketu":    [6, 12],
+    "Ketu":    [12],
 }
 
 
@@ -417,20 +417,28 @@ class JyotishEngine:
         }
 
         # ── Generate planet-level readings ────────────────────────────────
+        # LK rule: retrograde planet gives results of the OPPOSITE house
         planet_readings = []
         for planet, data in planets.items():
-            house = data["house"]
-            effects = LK_EFFECTS.get(planet, {}).get(house)
+            house      = data["house"]
+            is_retro   = data.get("retrograde", False)
+            # Opposite house for retrograde treatment (1↔7, 2↔8, 3↔9, etc.)
+            lk_house   = ((house - 1 + 6) % 12) + 1 if is_retro else house
+            retro_note = (
+                f" [Retrograde — LK reads as House {lk_house}]" if is_retro else ""
+            )
+            effects = LK_EFFECTS.get(planet, {}).get(lk_house)
             if effects:
                 benefit, challenge, remedy = effects
                 planet_readings.append({
-                    "planet":    planet,
-                    "house":     house,
-                    "pucca":     data.get("lk_pucca", False),
-                    "retrograde": data.get("retrograde", False),
-                    "benefit":   benefit,
-                    "challenge": challenge,
-                    "remedy":    remedy,
+                    "planet":         planet,
+                    "house":          house,      # actual house
+                    "lk_house":       lk_house,   # effective LK house
+                    "pucca":          data.get("lk_pucca", False),
+                    "retrograde":     is_retro,
+                    "benefit":        benefit + retro_note,
+                    "challenge":      challenge + retro_note,
+                    "remedy":         remedy,
                 })
 
         # ── Rahu-Ketu axis reading ─────────────────────────────────────────
@@ -767,7 +775,6 @@ class JyotishEngine:
 
         # Also attach guide to each planet_reading
         for pr in planet_readings:
-            guide = PLANET_REMEDY_GUIDE.get(pr["planet"], {})
             pr["remedy_guide"] = guide
 
         return {
@@ -776,7 +783,7 @@ class JyotishEngine:
             "axis_reading":        axis_reading,
             "foreign_indicator":   rahu_house in [3, 9, 12] or ketu_house in [9, 12],
             "planet_readings":     planet_readings,
-            "benefits":            top_benefits[:5],
-            "challenges":          top_challenges[:5],
-            "remedies":            top_remedies[:6],
+            "benefits":            top_benefits,
+            "challenges":          top_challenges,
+            "remedies":            top_remedies,
         }

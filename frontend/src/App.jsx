@@ -19,6 +19,7 @@ import Horoscope from './pages/Horoscope'
 import SadeSati from './pages/SadeSati'
 import Doshas from './pages/Doshas'
 import KundliMatching from './pages/KundliMatching'
+import LalKitab from './pages/LalKitab'
 import Pricing from './pages/Pricing'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
@@ -79,6 +80,7 @@ function AppShell() {
                 <Route path="/sade-sati" element={<SadeSati />} />
                 <Route path="/doshas"           element={<Doshas />} />
                 <Route path="/kundli-matching" element={<KundliMatching />} />
+                <Route path="/lal-kitab"      element={<LalKitab />} />
                 <Route path="/chart/new" element={<ChartForm />} />
                 <Route path="/chart/:id" element={<ChartResult />} />
                 <Route path="/my-charts" element={<MyCharts />} />
