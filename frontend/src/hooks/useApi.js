@@ -174,6 +174,21 @@ export async function getTodayHoroscope(sign) {
   return res.json()
 }
 
+// ── Doshas ────────────────────────────────────────────────────────────────
+
+export async function computeDoshas(data) {
+  const res = await fetch(`${BASE}/doshas/compute`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Error ${res.status}`)
+  }
+  return res.json()
+}
+
 // ── Sade Sati ─────────────────────────────────────────────────────────────
 
 export async function getSadeSatiByMoonSign(moon_sign) {

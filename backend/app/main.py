@@ -2,13 +2,6 @@
 backend/app/main.py
 
 TheBhagya / BhagyaAI FastAPI application.
-
-Run locally:
-    uvicorn backend.app.main:app --reload --port 8000
-
-API docs:
-    http://localhost:8000/docs      (Swagger UI)
-    http://localhost:8000/redoc     (ReDoc)
 """
 
 from __future__ import annotations
@@ -32,15 +25,14 @@ from backend.app.api.v1.payments   import router as payments_router
 from backend.app.api.v1.admin      import router as admin_router
 from backend.app.api.v1.horoscope  import router as horoscope_router
 from backend.app.api.v1.sade_sati  import router as sade_sati_router
+from backend.app.api.v1.doshas     import router as doshas_router
 
-# ── Logging ───────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
 )
 logger = logging.getLogger("bhagyaai")
 
-# ── Seed test accounts ────────────────────────────────────────────────────
 _TEST_USERS = [
     {"email": "free@thebhagya.com",    "password": "Test@free1",    "plan": "starter"},
     {"email": "pro@thebhagya.com",     "password": "Test@pro1",     "plan": "pro"},
@@ -48,7 +40,6 @@ _TEST_USERS = [
 ]
 
 async def _seed_test_users() -> None:
-    """Ensure test accounts exist. Safe to call on every startup."""
     async with AsyncSessionLocal() as db:
         try:
             created = []
@@ -65,46 +56,36 @@ async def _seed_test_users() -> None:
             await db.commit()
             if created:
                 logger.info("Seeded test accounts: %s", created)
-            else:
-                logger.info("Test accounts already exist — skipped seeding.")
         except Exception as exc:
             logger.warning("Could not seed test accounts: %s", exc)
             await db.rollback()
 
 
-# ── Lifespan (startup / shutdown) ─────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("TheBhagya API starting — initialising database...")
+    logger.info("TheBhagya API starting")
     await init_db()
-    logger.info("Database ready.")
     await _seed_test_users()
     yield
     logger.info("TheBhagya API shutting down.")
 
 
-# ── App factory ───────────────────────────────────────────────────────────
 app = FastAPI(
     title="TheBhagya API",
-    description=(
-        "AI-native astrology platform — Vedic Astrology · Lal Kitab · "
-        "Numerology · Destiny Chat · Palmistry (coming soon). "
-        "Pure Swiss Ephemeris math + Claude AI interpretation."
-    ),
+    description="Vedic Astrology platform with Swiss Ephemeris precision.",
     version="2.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
     lifespan=lifespan,
 )
 
-# ── CORS ──────────────────────────────────────────────────────────────────
 _default_origins = ",".join([
     "http://localhost:3000",
-    "http://localhost:5173",   # Vite dev server
+    "http://localhost:5173",
     "http://localhost:8000",
-    "http://localhost:19006",  # Expo / React Native
     "https://thebhagya.com",
     "https://www.thebhagya.com",
+    "https://the-bhagya.vercel.app",
 ])
 
 _origins = os.getenv("ALLOWED_ORIGINS", _default_origins).split(",")
@@ -117,7 +98,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Routers ───────────────────────────────────────────────────────────────
 API_PREFIX = os.getenv("API_V1_PREFIX", "/v1")
 
 app.include_router(auth_router,       prefix=API_PREFIX)
@@ -128,8 +108,9 @@ app.include_router(payments_router,   prefix=API_PREFIX)
 app.include_router(admin_router,      prefix=API_PREFIX)
 app.include_router(horoscope_router,  prefix=API_PREFIX)
 app.include_router(sade_sati_router,  prefix=API_PREFIX)
+app.include_router(doshas_router,     prefix=API_PREFIX)
 
-# ── System endpoints ──────────────────────────────────────────────────────
+
 @app.get("/health", tags=["System"])
 async def health() -> dict:
     return {"status": "ok", "service": "TheBhagya", "version": "2.0.0"}
@@ -138,10 +119,10 @@ async def health() -> dict:
 @app.get("/", tags=["System"])
 async def root() -> dict:
     return {
-        "message":    "🔮 TheBhagya API",
-        "version":    "2.0.0",
-        "docs":       "/docs",
-        "health":     "/health",
+        "message": "TheBhagya API v2",
+        "version": "2.0.0",
+        "docs":    "/docs",
+        "health":  "/health",
         "endpoints": {
             "charts":     f"{API_PREFIX}/charts",
             "chat":       f"{API_PREFIX}/chat",
@@ -149,5 +130,6 @@ async def root() -> dict:
             "payments":   f"{API_PREFIX}/payments/plans",
             "horoscope":  f"{API_PREFIX}/horoscope/today",
             "sade_sati":  f"{API_PREFIX}/sade-sati/by-moon-sign",
+            "doshas":     f"{API_PREFIX}/doshas/compute",
         },
     }
