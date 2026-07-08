@@ -67,11 +67,18 @@ const s = {
     flexShrink: 0, letterSpacing: '0.5px',
   },
   cta: {
-    background: 'linear-gradient(135deg, #C9933A 0%, #8B6020 100%)',
-    color: '#FFF8EC', padding: '0.5rem 1.4rem',
-    borderRadius: '6px', fontWeight: 600, fontSize: '0.875rem',
-    textDecoration: 'none', whiteSpace: 'nowrap',
-    display: 'inline-flex', alignItems: 'center',
+    background: 'transparent',
+    color: 'var(--gold)',
+    padding: '0.38rem 1.1rem',
+    borderRadius: '6px',
+    border: '1px solid rgba(201,147,58,0.5)',
+    fontWeight: 600,
+    fontSize: '0.875rem',
+    textDecoration: 'none',
+    whiteSpace: 'nowrap',
+    display: 'inline-flex',
+    alignItems: 'center',
+    transition: 'border-color 0.2s, background 0.2s',
   },
 }
 
