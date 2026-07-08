@@ -101,6 +101,28 @@ export async function authGoogleLogin(credential) {
   return res.json()
 }
 
+export async function authOtpSend(email) {
+  const res = await fetch(`${BASE}/auth/otp/send`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  })
+  const data = await res.json()
+  if (!res.ok) throw new Error(data.detail || 'Failed to send OTP')
+  return data
+}
+
+export async function authOtpVerify(email, otp) {
+  const res = await fetch(`${BASE}/auth/otp/verify`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, otp }),
+  })
+  const data = await res.json()
+  if (!res.ok) throw new Error(data.detail || 'OTP verification failed')
+  return data
+}
+
 // ── Page View Tracking ────────────────────────────────────────────────────
 
 // Generate or retrieve a stable session ID for this browser tab

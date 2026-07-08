@@ -93,10 +93,28 @@ class ChatSession(Base):
     """
     __tablename__ = "chat_sessions"
 
-    id          = Column(String(36), primary_key=True, default=_new_uuid)
-    chart_id    = Column(String(36), nullable=False)  # FK to birth_charts.id
+    id           = Column(String(36), primary_key=True, default=_new_uuid)
+    chart_id     = Column(String(36), nullable=False)  # FK to birth_charts.id
     session_type = Column(String(20), default="vedic")  # vedic | lal_kitab | palmistry
-    messages    = Column(JSON,   nullable=True)         # [{role, content}]
-    tokens_used = Column(String, nullable=True)
-    created_at  = Column(DateTime, server_default=func.now(), nullable=False)
-    updated_at  = Column(DateTime, server_default=func.now(), onupdate=func.now())
+    messages     = Column(JSON,   nullable=True)         # [{role, content}]
+    tokens_used  = Column(String, nullable=True)
+    created_at   = Column(DateTime, server_default=func.now(), nullable=False)
+    updated_at   = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+
+class EmailOTP(Base):
+    """
+    Short-lived one-time passwords for passwordless email login.
+    Expire after 10 minutes and are single-use.
+    """
+    __tablename__ = "email_otps"
+
+    id         = Column(String(36),  primary_key=True, default=_new_uuid)
+    email      = Column(String(200), nullable=False, index=True)
+    otp_code   = Column(String(6),   nullable=False)
+    expires_at = Column(DateTime,    nullable=False)   # UTC naive
+    used       = Column(Boolean,     default=False, nullable=False)
+    created_at = Column(DateTime,    server_default=func.now(), nullable=False)
+
+    def __repr__(self) -> str:
+        return f"<EmailOTP email={self.email!r} used={self.used}>"

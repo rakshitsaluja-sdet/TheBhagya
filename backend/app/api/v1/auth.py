@@ -2,24 +2,33 @@
 backend/app/api/v1/auth.py
 
 Authentication endpoints:
-  POST /v1/auth/register   — create account
-  POST /v1/auth/login      — returns JWT token
-  GET  /v1/auth/me         — returns current user from token
-  POST /v1/auth/seed       — seeds 3 test users (dev only)
+  POST /v1/auth/register     — create account
+  POST /v1/auth/login        — returns JWT token
+  GET  /v1/auth/me           — returns current user from token
+  POST /v1/auth/google       — Google OAuth login
+  POST /v1/auth/otp/send     — send 6-digit OTP to email
+  POST /v1/auth/otp/verify   — verify OTP, return JWT (auto-creates account)
+  POST /v1/auth/seed         — seeds 3 test users (dev only)
 """
 
 from __future__ import annotations
 
 import os
 import logging
+import random
+import string
+import smtplib
+from datetime import datetime, timedelta
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.app.db.database import get_db
-from backend.app.db.models import User
+from backend.app.db.models import User, EmailOTP
 from backend.app.core.security import (
     hash_password, verify_password,
     create_token, decode_token, PLAN_LIMITS,
@@ -43,6 +52,13 @@ class LoginRequest(BaseModel):
 
 class GoogleLoginRequest(BaseModel):
     credential: str  # Google ID token (JWT)
+
+class OTPRequest(BaseModel):
+    email: str
+
+class OTPVerifyRequest(BaseModel):
+    email: str
+    otp:   str
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -162,6 +178,126 @@ async def google_login(req: GoogleLoginRequest, db: AsyncSession = Depends(get_d
         db.add(user)
         await db.flush()
         logger.info("New user via Google OAuth: %s", email)
+
+    if not user.is_active:
+        raise HTTPException(403, "Account is deactivated. Contact support.")
+
+    token = create_token(user.id, user.email, user.plan)
+    return _user_response(user, token)
+
+
+# ── OTP helpers ───────────────────────────────────────────────────────────────
+
+def _gen_otp() -> str:
+    return ''.join(random.choices(string.digits, k=6))
+
+
+async def _send_otp_email(to_email: str, otp: str) -> None:
+    """Send OTP via SMTP. Falls back to console log if SMTP not configured."""
+    smtp_host = os.getenv("SMTP_HOST", "")
+    smtp_port = int(os.getenv("SMTP_PORT", "587"))
+    smtp_user = os.getenv("SMTP_USER", "")
+    smtp_pass = os.getenv("SMTP_PASSWORD", "")
+    smtp_from = os.getenv("SMTP_FROM", smtp_user)
+
+    if not smtp_host or not smtp_user:
+        # Dev fallback — log so you can test without real SMTP
+        logger.info("OTP for %s  →  %s  (SMTP not configured)", to_email, otp)
+        return
+
+    body = (
+        f"Your Bhagya one-time login code is:\n\n"
+        f"    {otp}\n\n"
+        f"This code expires in 10 minutes. Do not share it with anyone.\n\n"
+        f"— Bhagya Team"
+    )
+    msg = MIMEMultipart()
+    msg["From"]    = smtp_from
+    msg["To"]      = to_email
+    msg["Subject"] = f"{otp} — Your Bhagya login code"
+    msg.attach(MIMEText(body, "plain"))
+
+    with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as srv:
+        srv.ehlo()
+        srv.starttls()
+        srv.login(smtp_user, smtp_pass)
+        srv.send_message(msg)
+
+
+# ── OTP routes ────────────────────────────────────────────────────────────────
+
+@router.post("/otp/send")
+async def send_otp(req: OTPRequest, db: AsyncSession = Depends(get_db)):
+    """
+    Generate a 6-digit OTP, store it (10-min expiry), and email it.
+    Invalidates any previous unused OTPs for the same email.
+    """
+    email = req.email.strip().lower()
+    if not email or "@" not in email:
+        raise HTTPException(400, "Please enter a valid email address.")
+
+    otp        = _gen_otp()
+    expires_at = datetime.utcnow() + timedelta(minutes=10)
+
+    # Invalidate stale OTPs for this email
+    await db.execute(
+        update(EmailOTP)
+        .where(EmailOTP.email == email, EmailOTP.used == False)
+        .values(used=True)
+    )
+
+    db.add(EmailOTP(email=email, otp_code=otp, expires_at=expires_at))
+    await db.flush()
+
+    try:
+        await _send_otp_email(email, otp)
+    except Exception as exc:
+        logger.error("SMTP error sending OTP to %s: %s", email, exc)
+        raise HTTPException(500, "Failed to send OTP email. Please try again or use email/password login.")
+
+    return {"message": "A 6-digit code has been sent to your email."}
+
+
+@router.post("/otp/verify")
+async def verify_otp(req: OTPVerifyRequest, db: AsyncSession = Depends(get_db)):
+    """
+    Validate OTP → auto-create user if new → return JWT.
+    Works as both registration and login with no password.
+    """
+    email = req.email.strip().lower()
+    code  = req.otp.strip()
+    now   = datetime.utcnow()
+
+    result = await db.execute(
+        select(EmailOTP)
+        .where(
+            EmailOTP.email      == email,
+            EmailOTP.otp_code   == code,
+            EmailOTP.used       == False,
+            EmailOTP.expires_at >  now,
+        )
+        .order_by(EmailOTP.created_at.desc())
+        .limit(1)
+    )
+    record = result.scalar_one_or_none()
+    if not record:
+        raise HTTPException(401, "Invalid or expired code. Please request a new one.")
+
+    record.used = True
+    await db.flush()
+
+    # Find or create user
+    result = await db.execute(select(User).where(User.email == email))
+    user   = result.scalar_one_or_none()
+    if not user:
+        user = User(
+            email=email,
+            password_hash=hash_password(os.urandom(32).hex()),  # random unusable password
+            plan="starter",
+        )
+        db.add(user)
+        await db.flush()
+        logger.info("New user via OTP: %s", email)
 
     if not user.is_active:
         raise HTTPException(403, "Account is deactivated. Contact support.")
