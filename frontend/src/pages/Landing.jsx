@@ -468,8 +468,7 @@ export default function Landing() {
               <a href="#features"   style={S.btnO}>Explore Features</a>
             </div>
             <div style={S.meta}>
-              <span>01 / 04</span>
-              <span style={S.metaSpan}>Kaal Chakra · Navagraha Orrery</span>
+              <span>Kaal Chakra · Navagraha Orrery</span>
               <span style={S.metaSpan}>Swiss Ephemeris</span>
             </div>
           </div>
@@ -490,7 +489,7 @@ export default function Landing() {
               <div style={S.statSep}><span style={S.statN}>12</span><span style={S.statL}>Rashis</span></div>
               <div style={S.statSep}><span style={S.statN}>9</span><span style={S.statL}>Grahas</span></div>
             </div>
-            <div style={{ ...S.meta, justifyContent:'flex-end' }}><span>02 / 04</span><span style={S.metaSpan}>Real-time compute</span></div>
+            <div style={{ ...S.meta, justifyContent:'flex-end' }}><span>Real-time compute</span></div>
           </div>
           <div style={{ ...S.featGrid, gridColumn:'6 / span 7' }}>
             {FEATURES.map(f => (
@@ -514,11 +513,11 @@ export default function Landing() {
             <div style={{ width:34, height:1.5, background:GOLD, marginBottom:'1.4rem' }}/>
             <h2 style={S.h2}>The Cosmos<br />Is Mapped<br /><span style={S.accent}>In You.</span></h2>
             <p style={{ ...S.body, marginBottom:'1.2rem' }}>The ancient rishis understood that the macrocosm and the individual are one. Your birth chart is a map of your tendencies, gifts, and dharma — not a cage.</p>
-            <p style={S.body}>Every planet in TheBhagya is computed using Swiss Ephemeris with Lahiri Ayanamsa — the professional standard used by Jyotishis worldwide.</p>
+            <p style={S.body}>Every planet in Bhagya is computed using Swiss Ephemeris with Lahiri Ayanamsa — the professional standard used by Jyotishis worldwide.</p>
             <div style={S.tagRow}>
               {['Kundali','Dasha','Destiny Chat','Numerology','Lal Kitab'].map(t => <span key={t} style={S.tag}>{t}</span>)}
             </div>
-            <div style={S.meta}><span>03 / 04</span><span style={S.metaSpan}>AI-powered</span></div>
+            <div style={S.meta}><span>AI-powered</span></div>
           </div>
         </section>
 
@@ -547,9 +546,8 @@ export default function Landing() {
               ))}
             </div>
             <div style={{ marginTop:'2rem', fontSize:'0.5rem', color:'rgba(245,240,232,0.14)', letterSpacing:'3px', fontFamily:"'Cinzel',serif" }}>
-              © 2025 THEBHAGYA · ALL RIGHTS RESERVED
+              © {new Date().getFullYear()} BHAGYA · ALL RIGHTS RESERVED
             </div>
-            <div style={{ ...S.meta, justifyContent:'center', marginTop:'1.5rem' }}><span>04 / 04</span></div>
           </div>
         </section>
 

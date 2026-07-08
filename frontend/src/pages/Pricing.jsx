@@ -147,7 +147,7 @@ export default function Pricing() {
         key:         order.razorpay_key_id,
         amount:      order.amount,
         currency:    order.currency,
-        name:        'TheBhagya',
+        name:        'Bhagya',
         description: order.description,
         order_id:    order.order_id,
         handler: async (response) => {

@@ -53,7 +53,7 @@ const SECTIONS = [
     intro: 'The Lagna (Ascendant) is the zodiac sign rising on the eastern horizon at the exact moment of your birth. It is the most important factor in your personal chart — more significant than your Sun sign.',
     items: [
       { label: 'What it reveals', detail: 'Your Lagna reveals your physical body, natural personality, how others instinctively perceive you, and the overall quality of your life. Two people born on the same day with different birth times can have completely different charts because the Lagna changes every ~2 hours.' },
-      { label: 'Why it matters more than Sun sign', detail: 'Western astrology focuses on the Sun sign (based on month of birth). Vedic astrology uses the Lagna (based on time and place of birth), which is far more specific and personal. This is why your TheBhagya reading requires exact birth time — without it, the Lagna cannot be calculated.' },
+      { label: 'Why it matters more than Sun sign', detail: 'Western astrology focuses on the Sun sign (based on month of birth). Vedic astrology uses the Lagna (based on time and place of birth), which is far more specific and personal. This is why your Bhagya reading requires exact birth time — without it, the Lagna cannot be calculated.' },
       { label: 'Nakshatra of the Lagna', detail: 'Your Lagna falls within one of 27 Nakshatras (lunar mansions). The Nakshatra adds additional texture to your personality — think of the Lagna sign as the broad stroke and the Nakshatra as the fine detail.' },
     ]
   },
@@ -83,9 +83,9 @@ const SECTIONS = [
     title: 'Ayanamsa & Sidereal Astrology',
     intro: 'Vedic astrology uses the Sidereal zodiac (based on actual star positions) unlike Western astrology which uses the Tropical zodiac (based on seasons). The difference between them is called the Ayanamsa — currently about 23–24 degrees.',
     items: [
-      { label: 'Lahiri Ayanamsa', detail: 'TheBhagya uses the Lahiri Ayanamsa — the official standard adopted by the Indian government\'s Rashtriya Panchang. This is the most widely used Ayanamsa by Vedic astrologers worldwide and gives planet positions that align with actual sky positions.' },
-      { label: 'Why your signs differ from Western astrology', detail: 'If you\'ve looked up your Sun sign online using Western astrology, it may differ from what TheBhagya shows. This is because of the ~24° Ayanamsa shift. Neither is wrong — they are different systems with different philosophies. Vedic astrology is generally considered more precise for life events and timing.' },
-      { label: 'Swiss Ephemeris', detail: 'TheBhagya uses the Swiss Ephemeris — the gold standard for astronomical planet position calculations. Developed by Astrodienst, it is accurate to fractions of a second of arc. This is the same system used by professional astrologers and researchers worldwide.' },
+      { label: 'Lahiri Ayanamsa', detail: 'Bhagya uses the Lahiri Ayanamsa — the official standard adopted by the Indian government\'s Rashtriya Panchang. This is the most widely used Ayanamsa by Vedic astrologers worldwide and gives planet positions that align with actual sky positions.' },
+      { label: 'Why your signs differ from Western astrology', detail: 'If you\'ve looked up your Sun sign online using Western astrology, it may differ from what Bhagya shows. This is because of the ~24° Ayanamsa shift. Neither is wrong — they are different systems with different philosophies. Vedic astrology is generally considered more precise for life events and timing.' },
+      { label: 'Swiss Ephemeris', detail: 'Bhagya uses the Swiss Ephemeris — the gold standard for astronomical planet position calculations. Developed by Astrodienst, it is accurate to fractions of a second of arc. This is the same system used by professional astrologers and researchers worldwide.' },
     ]
   },
 ]

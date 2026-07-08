@@ -75,8 +75,8 @@ export default function Palmistry() {
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.75, maxWidth: '540px', margin: '0 auto 1.5rem' }}>
             {isHindi
-              ? 'आपकी हथेली की रेखाएं और पर्वत आपके जीवन की अद्वितीय कहानी बताते हैं। जल्द ही TheBhagya पर AI-आधारित हस्तरेखा पठन उपलब्ध होगा।'
-              : 'Your palm lines and mounts tell a unique story that complements your Vedic birth chart. AI-powered palmistry reading coming to TheBhagya soon — powered by computer vision and classical Hasta Samudrika Shastra.'}
+              ? 'आपकी हथेली की रेखाएं और पर्वत आपके जीवन की अद्वितीय कहानी बताते हैं। जल्द ही Bhagya पर AI-आधारित हस्तरेखा पठन उपलब्ध होगा।'
+              : 'Your palm lines and mounts tell a unique story that complements your Vedic birth chart. AI-powered palmistry reading coming to Bhagya soon — powered by computer vision and classical Hasta Samudrika Shastra.'}
           </p>
 
           {/* Waitlist */}
@@ -168,7 +168,7 @@ export default function Palmistry() {
         <div style={{ background: 'rgba(201,147,58,0.05)', borderRadius: '12px', border: '1px solid rgba(201,147,58,0.2)', padding: '1.25rem 1.4rem', textAlign: 'center' }}>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: 1.75, margin: 0 }}>
             {isHindi
-              ? 'हस्तरेखा शास्त्र (हस्त सामुद्रिक शास्त्र) और जन्म कुंडली दोनों एक ही आत्मा की कहानी के दो दर्पण हैं। जल्द ही TheBhagya इन्हें एक साथ पढ़ेगा।'
+              ? 'हस्तरेखा शास्त्र (हस्त सामुद्रिक शास्त्र) और जन्म कुंडली दोनों एक ही आत्मा की कहानी के दो दर्पण हैं। जल्द ही Bhagya इन्हें एक साथ पढ़ेगा।'
               : 'In classical Indian tradition, palmistry (Hasta Samudrika Shastra) and birth chart astrology are two mirrors of the same soul. When both agree, the reading becomes extraordinarily precise.'}
           </p>
         </div>

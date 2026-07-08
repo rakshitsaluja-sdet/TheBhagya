@@ -103,7 +103,7 @@ export default function AdminLogin() {
 
       <div style={s.card}>
         <div style={s.badge}>⚙ SUPER ADMIN</div>
-        <div style={s.heading}>TheBhagya Admin</div>
+        <div style={s.heading}>Bhagya Admin</div>
         <p style={s.sub}>Restricted access — authorised personnel only</p>
 
         {error && <div style={s.error}>{error}</div>}

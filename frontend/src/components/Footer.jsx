@@ -21,7 +21,7 @@ export default function Footer() {
         <a href="#" style={s.link}>Contact</a>
         <a href="#" style={s.link}>About</a>
       </div>
-      <p style={s.copy}>© {new Date().getFullYear()} TheBhagya · Ancient wisdom, modern precision</p>
+      <p style={s.copy}>© {new Date().getFullYear()} Bhagya · Ancient wisdom, modern precision</p>
       <p style={s.disc}>For spiritual guidance purposes only. Not a substitute for professional advice.</p>
     </footer>
   )

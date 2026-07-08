@@ -211,7 +211,7 @@ export default function AdminDashboard() {
       <div style={topBar}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <span style={{ fontFamily: "'Cinzel', serif", color: 'var(--gold)', fontSize: '1rem', fontWeight: 700 }}>
-            ◈ TheBhagya Admin
+            ◈ Bhagya Admin
           </span>
           <span style={{ fontSize: '0.68rem', background: 'var(--gold-pale)', color: 'var(--gold)', padding: '0.2rem 0.7rem', borderRadius: '20px', border: '1px solid var(--border)' }}>
             SUPER ADMIN

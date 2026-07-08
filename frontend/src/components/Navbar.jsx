@@ -262,7 +262,7 @@ export default function Navbar() {
         {/* Center — Logo */}
         <Link to="/" style={s.logo}>
           <LogoMark size={48} />
-          <span style={s.logoMain}>TheBhagya</span>
+          <span style={s.logoMain}>Bhagya</span>
           <span style={s.logoSub}>भाग्य · DESTINY</span>
         </Link>
 
