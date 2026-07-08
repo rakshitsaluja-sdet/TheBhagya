@@ -15,6 +15,8 @@ import MyCharts from './pages/MyCharts'
 import DestinyChat from './pages/DestinyChat'
 import Numerology from './pages/Numerology'
 import Palmistry from './pages/Palmistry'
+import Horoscope from './pages/Horoscope'
+import SadeSati from './pages/SadeSati'
 import Pricing from './pages/Pricing'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
@@ -70,7 +72,9 @@ function AppShell() {
             <Navbar />
             <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>
               <Routes>
-                <Route path="/palmistry" element={<Palmistry />} />
+                <Route path="/palmistry"  element={<Palmistry />} />
+                <Route path="/horoscope" element={<Horoscope />} />
+                <Route path="/sade-sati" element={<SadeSati />} />
                 <Route path="/chart/new" element={<ChartForm />} />
                 <Route path="/chart/:id" element={<ChartResult />} />
                 <Route path="/my-charts" element={<MyCharts />} />

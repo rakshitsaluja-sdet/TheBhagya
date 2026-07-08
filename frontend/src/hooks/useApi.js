@@ -160,6 +160,35 @@ export async function trackPageView(page) {
   }
 }
 
+// ── Horoscope ─────────────────────────────────────────────────────────────
+
+export async function getTodayHoroscopes() {
+  const res = await fetch(`${BASE}/horoscope/today`)
+  if (!res.ok) throw new Error('Failed to load horoscopes')
+  return res.json()
+}
+
+export async function getTodayHoroscope(sign) {
+  const res = await fetch(`${BASE}/horoscope/today/${encodeURIComponent(sign)}`)
+  if (!res.ok) throw new Error('Failed to load horoscope')
+  return res.json()
+}
+
+// ── Sade Sati ─────────────────────────────────────────────────────────────
+
+export async function getSadeSatiByMoonSign(moon_sign) {
+  const res = await fetch(`${BASE}/sade-sati/by-moon-sign`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ moon_sign }),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Error ${res.status}`)
+  }
+  return res.json()
+}
+
 // ── Admin ─────────────────────────────────────────────────────────────────
 
 function adminHeaders() {

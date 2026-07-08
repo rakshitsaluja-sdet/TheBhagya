@@ -49,10 +49,12 @@ const S = {
 }
 
 const FEATURES = [
-  { icon: '☽', name: 'Kundali',      desc: 'Swiss Ephemeris precision. Natal chart, Vimshottari dasha, ashtakavarga — computed to the arc-second.', to: '/chart/new' },
-  { icon: '✦', name: 'Destiny Chat', desc: 'AI Jyotish assistant answers from your specific chart placements. Dashas, transits, yogas — deeply personal.', to: '/destiny-chat' },
-  { icon: '∑', name: 'Numerology',   desc: 'Pythagorean and Chaldean systems. Life path, destiny, soul urge, personal year, partner compatibility.', to: '/numerology' },
-  { icon: '📖', name: 'Lal Kitab',   desc: 'Ancient Punjabi remedies. Pucca Ghar planets, house map, personalised karmic remedy plan.', to: '/chart/new' },
+  { icon: '☽', name: 'Kundali',       desc: 'Swiss Ephemeris precision. Natal chart, Vimshottari dasha, ashtakavarga — computed to the arc-second.', to: '/chart/new' },
+  { icon: '✦', name: 'Destiny Chat',  desc: 'AI Jyotish assistant answers from your specific chart placements. Dashas, transits, yogas — deeply personal.', to: '/destiny-chat' },
+  { icon: '♈', name: 'Daily Horoscope', desc: 'Transit-based Rashi Rashifal. Love, career, money ratings and a detailed daily reading for all 12 signs.', to: '/horoscope' },
+  { icon: '♄', name: 'Sade Sati',     desc: "Saturn's 7.5-year transit over your Moon sign — past cycles, current status, next cycle, and remedies.", to: '/sade-sati' },
+  { icon: '∑', name: 'Numerology',    desc: 'Pythagorean and Chaldean systems. Life path, destiny, soul urge, personal year, partner compatibility.', to: '/numerology' },
+  { icon: '📖', name: 'Lal Kitab',    desc: 'Ancient Punjabi remedies. Pucca Ghar planets, house map, personalised karmic remedy plan.', to: '/chart/new' },
 ]
 
 const TESTIMONIALS = [
@@ -628,7 +630,7 @@ export default function Landing() {
               <Link to="/login"     style={S.btnO}>Sign In</Link>
             </div>
             <div style={S.ftrRow}>
-              {[{l:'My Charts',t:'/my-charts'},{l:'Destiny Chat',t:'/destiny-chat'},{l:'Numerology',t:'/numerology'},{l:'Pricing',t:'/pricing'},{l:'Sign In',t:'/login'}].map(lk => (
+              {[{l:'My Charts',t:'/my-charts'},{l:'Horoscope',t:'/horoscope'},{l:'Sade Sati',t:'/sade-sati'},{l:'Destiny Chat',t:'/destiny-chat'},{l:'Numerology',t:'/numerology'},{l:'Pricing',t:'/pricing'},{l:'Sign In',t:'/login'}].map(lk => (
                 <Link key={lk.l} to={lk.t} style={S.ftrA}>{lk.l}</Link>
               ))}
             </div>

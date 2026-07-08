@@ -30,6 +30,8 @@ from backend.app.api.v1.chat       import router as chat_router
 from backend.app.api.v1.numerology import router as numerology_router
 from backend.app.api.v1.payments   import router as payments_router
 from backend.app.api.v1.admin      import router as admin_router
+from backend.app.api.v1.horoscope  import router as horoscope_router
+from backend.app.api.v1.sade_sati  import router as sade_sati_router
 
 # ── Logging ───────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -124,6 +126,8 @@ app.include_router(chat_router,       prefix=API_PREFIX)
 app.include_router(numerology_router, prefix=API_PREFIX)
 app.include_router(payments_router,   prefix=API_PREFIX)
 app.include_router(admin_router,      prefix=API_PREFIX)
+app.include_router(horoscope_router,  prefix=API_PREFIX)
+app.include_router(sade_sati_router,  prefix=API_PREFIX)
 
 # ── System endpoints ──────────────────────────────────────────────────────
 @app.get("/health", tags=["System"])
@@ -143,5 +147,7 @@ async def root() -> dict:
             "chat":       f"{API_PREFIX}/chat",
             "numerology": f"{API_PREFIX}/numerology",
             "payments":   f"{API_PREFIX}/payments/plans",
+            "horoscope":  f"{API_PREFIX}/horoscope/today",
+            "sade_sati":  f"{API_PREFIX}/sade-sati/by-moon-sign",
         },
     }
