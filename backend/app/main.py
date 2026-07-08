@@ -17,15 +17,16 @@ from backend.app.db.database import init_db, AsyncSessionLocal
 from backend.app.db.models import User
 from backend.app.core.security import hash_password
 from sqlalchemy import select
-from backend.app.api.v1.auth       import router as auth_router
-from backend.app.api.v1.charts     import router as charts_router
-from backend.app.api.v1.chat       import router as chat_router
-from backend.app.api.v1.numerology import router as numerology_router
-from backend.app.api.v1.payments   import router as payments_router
-from backend.app.api.v1.admin      import router as admin_router
-from backend.app.api.v1.horoscope  import router as horoscope_router
-from backend.app.api.v1.sade_sati  import router as sade_sati_router
-from backend.app.api.v1.doshas     import router as doshas_router
+from backend.app.api.v1.auth            import router as auth_router
+from backend.app.api.v1.charts          import router as charts_router
+from backend.app.api.v1.chat            import router as chat_router
+from backend.app.api.v1.numerology      import router as numerology_router
+from backend.app.api.v1.payments        import router as payments_router
+from backend.app.api.v1.admin           import router as admin_router
+from backend.app.api.v1.horoscope       import router as horoscope_router
+from backend.app.api.v1.sade_sati       import router as sade_sati_router
+from backend.app.api.v1.doshas          import router as doshas_router
+from backend.app.api.v1.kundli_matching import router as kundli_matching_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -100,15 +101,16 @@ app.add_middleware(
 
 API_PREFIX = os.getenv("API_V1_PREFIX", "/v1")
 
-app.include_router(auth_router,       prefix=API_PREFIX)
-app.include_router(charts_router,     prefix=API_PREFIX)
-app.include_router(chat_router,       prefix=API_PREFIX)
-app.include_router(numerology_router, prefix=API_PREFIX)
-app.include_router(payments_router,   prefix=API_PREFIX)
-app.include_router(admin_router,      prefix=API_PREFIX)
-app.include_router(horoscope_router,  prefix=API_PREFIX)
-app.include_router(sade_sati_router,  prefix=API_PREFIX)
-app.include_router(doshas_router,     prefix=API_PREFIX)
+app.include_router(auth_router,            prefix=API_PREFIX)
+app.include_router(charts_router,          prefix=API_PREFIX)
+app.include_router(chat_router,            prefix=API_PREFIX)
+app.include_router(numerology_router,      prefix=API_PREFIX)
+app.include_router(payments_router,        prefix=API_PREFIX)
+app.include_router(admin_router,           prefix=API_PREFIX)
+app.include_router(horoscope_router,       prefix=API_PREFIX)
+app.include_router(sade_sati_router,       prefix=API_PREFIX)
+app.include_router(doshas_router,          prefix=API_PREFIX)
+app.include_router(kundli_matching_router, prefix=API_PREFIX)
 
 
 @app.get("/health", tags=["System"])
@@ -124,12 +126,13 @@ async def root() -> dict:
         "docs":    "/docs",
         "health":  "/health",
         "endpoints": {
-            "charts":     f"{API_PREFIX}/charts",
-            "chat":       f"{API_PREFIX}/chat",
-            "numerology": f"{API_PREFIX}/numerology",
-            "payments":   f"{API_PREFIX}/payments/plans",
-            "horoscope":  f"{API_PREFIX}/horoscope/today",
-            "sade_sati":  f"{API_PREFIX}/sade-sati/by-moon-sign",
-            "doshas":     f"{API_PREFIX}/doshas/compute",
+            "charts":          f"{API_PREFIX}/charts",
+            "chat":            f"{API_PREFIX}/chat",
+            "numerology":      f"{API_PREFIX}/numerology",
+            "payments":        f"{API_PREFIX}/payments/plans",
+            "horoscope":       f"{API_PREFIX}/horoscope/today",
+            "sade_sati":       f"{API_PREFIX}/sade-sati/by-moon-sign",
+            "doshas":          f"{API_PREFIX}/doshas/compute",
+            "kundli_matching": f"{API_PREFIX}/kundli-matching/compute",
         },
     }

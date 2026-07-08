@@ -204,6 +204,21 @@ export async function getSadeSatiByMoonSign(moon_sign) {
   return res.json()
 }
 
+// ── Kundli Matching ───────────────────────────────────────────────────────
+
+export async function computeKundliMatch(data) {
+  const res = await fetch(`${BASE}/kundli-matching/compute`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Error ${res.status}`)
+  }
+  return res.json()
+}
+
 // ── Admin ─────────────────────────────────────────────────────────────────
 
 function adminHeaders() {
