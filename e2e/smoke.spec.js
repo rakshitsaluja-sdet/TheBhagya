@@ -9,23 +9,27 @@
  */
 import { test, expect } from '@playwright/test'
 
-// Routes accessible without login
+// Routes accessible without login.
+// Use heading/paragraph selectors — avoids matching the hidden hamburger button
+// (aria-label="Menu", display:none on desktop) which appears first in DOM order.
 const PUBLIC_ROUTES = [
   { path: '/',               title: /bhagya|destiny|astro/i,  selector: 'h1, h2' },
-  { path: '/login',          title: /bhagya|login|sign/i,     selector: 'form, input' },
+  { path: '/login',          title: /bhagya|login|sign/i,     selector: 'form' },
   { path: '/pricing',        title: /bhagya|pricing|plan/i,   selector: 'h1, h2' },
-  { path: '/horoscope',      title: /bhagya|horoscope/i,      selector: 'select, button' },
-  { path: '/sade-sati',      title: /bhagya|sade/i,           selector: 'button, input' },
-  { path: '/doshas',         title: /bhagya|dosha/i,          selector: 'button, input' },
-  { path: '/kundli-matching',title: /bhagya|kundli|match/i,   selector: 'button, input' },
-  { path: '/lal-kitab',      title: /bhagya|lal kitab/i,      selector: 'button, input' },
-  { path: '/admin',          title: /bhagya|admin/i,          selector: 'form, input' },
+  { path: '/horoscope',      title: /bhagya|horoscope/i,      selector: 'h1, h2, h3' },
+  { path: '/sade-sati',      title: /bhagya|sade/i,           selector: 'h1, h2, h3' },
+  { path: '/doshas',         title: /bhagya|dosha/i,          selector: 'h1, h2, h3' },
+  { path: '/kundli-matching',title: /bhagya|kundli|match/i,   selector: 'h1, h2, h3' },
+  { path: '/lal-kitab',      title: /bhagya|lal kitab/i,      selector: 'h1, h2, h3' },
+  { path: '/admin',          title: /bhagya|admin/i,          selector: 'form' },
+  // Public routes (no PlanGate in App.jsx)
+  { path: '/chart/new',      title: /bhagya/i,                selector: 'h1, h2, h3' },
+  { path: '/my-charts',      title: /bhagya/i,                selector: 'h1, h2, h3, p' },
 ]
 
-// Routes that require login → should redirect to /login
+// Only PlanGate-wrapped routes redirect to /login when unauthenticated
+// /chart/new and /my-charts are public — no redirect expected
 const AUTH_GATED_ROUTES = [
-  '/my-charts',
-  '/chart/new',
   '/destiny-chat',
   '/numerology',
 ]
