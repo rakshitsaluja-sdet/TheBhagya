@@ -58,8 +58,9 @@ function AppShell() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
         {/* ── Standalone dark pages (no Navbar/Footer) ── */}
-        <Route path="/"      element={<Landing />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/"        element={<Landing />} />
+        <Route path="/login"   element={<Login />} />
+        <Route path="/pricing" element={<Pricing />} />
 
         {/* ── All other public routes (with Navbar/Footer + subtle gravity bg) ── */}
         <Route path="/*" element={
@@ -69,7 +70,6 @@ function AppShell() {
             <Navbar />
             <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>
               <Routes>
-                <Route path="/pricing"   element={<Pricing />} />
                 <Route path="/palmistry" element={<Palmistry />} />
                 <Route path="/chart/new" element={<ChartForm />} />
                 <Route path="/chart/:id" element={<ChartResult />} />

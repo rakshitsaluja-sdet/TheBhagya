@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import * as THREE from 'three'
+import LogoMark from '../components/LogoMark'
 
 /* ── Design tokens ──────────────────────────────────────────────────────── */
 const BG   = '#05050f'
@@ -314,7 +315,7 @@ function useOrrery(canvasRef) {
     // Rahu + Ketu
     const rkGroup = new THREE.Group()
     rkGroup.rotation.y = Math.random()*PI2
-    rrGroup: { rkGroup.rotation.z = (Math.random()-0.5)*0.22 }
+    rkGroup.rotation.z = (Math.random()-0.5)*0.22
     orrery.add(rkGroup)
     orrery.add(orbitLine(GRAHAS[7].r, 0x334466, 0.08))
     const rahuSph = makeSphere(GRAHAS[7].sz, GRAHAS[7].hex, GRAHAS[7].gl, GRAHAS[7].gsz)
@@ -438,7 +439,10 @@ export default function Landing() {
 
       {/* Inline nav — mix-blend-mode difference */}
       <nav style={S.nav}>
-        <Link to="/" style={S.navBrand}>THEBHAGYA</Link>
+        <Link to="/" style={{ ...S.navBrand, display:'flex', alignItems:'center', gap:'0.6rem' }}>
+          <LogoMark size={24} />
+          BHAGYA
+        </Link>
         <ul style={S.navLinks}>
           <li><a href="#features"  style={S.navA}>Features</a></li>
           <li><a href="#about"     style={S.navA}>Philosophy</a></li>

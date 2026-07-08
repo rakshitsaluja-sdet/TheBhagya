@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import GravityCanvas from '../components/GravityCanvas'
+import LogoMark from '../components/LogoMark'
 
 const API = '/v1'
 
@@ -186,8 +189,20 @@ export default function Pricing() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-deep)', padding: '3rem 1.5rem' }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+    <div data-theme="dark" style={{ minHeight: '100vh', background: '#05050f', padding: '0', position: 'relative' }}>
+      {/* Gravity yantra mesh background */}
+      <GravityCanvas density={32} force={5} radius={160} glow={55} />
+
+      {/* Inline nav — mix-blend-mode difference */}
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.2rem 5vw', mixBlendMode: 'difference', pointerEvents: 'none' }}>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', pointerEvents: 'auto' }}>
+          <LogoMark size={26} />
+          <span style={{ fontFamily: "'Cinzel', serif", fontWeight: 700, fontSize: '0.82rem', letterSpacing: '6px', color: '#fff' }}>BHAGYA</span>
+        </Link>
+        <Link to="/" style={{ fontSize: '0.60rem', letterSpacing: '2.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.50)', textDecoration: 'none', pointerEvents: 'auto' }}>← Back</Link>
+      </nav>
+
+      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '5rem 1.5rem 3rem', position: 'relative', zIndex: 1 }}>
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -303,3 +318,4 @@ export default function Pricing() {
     </div>
   )
 }
+

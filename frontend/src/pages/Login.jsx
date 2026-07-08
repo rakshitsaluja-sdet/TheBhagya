@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { authLogin, authRegister, authGoogleLogin } from '../hooks/useApi'
 import GravityCanvas from '../components/GravityCanvas'
+import LogoMark from '../components/LogoMark'
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
 
@@ -248,7 +249,10 @@ export default function Login() {
 
       {/* Top nav — mix-blend-mode difference */}
       <nav style={s.nav}>
-        <Link to="/" style={s.navBrand}>THEBHAGYA</Link>
+        <Link to="/" style={{ ...s.navBrand, display:'flex', alignItems:'center', gap:'0.6rem' }}>
+          <LogoMark size={24} />
+          BHAGYA
+        </Link>
         <Link to="/" style={s.navBack}>← Back</Link>
       </nav>
 
@@ -258,7 +262,7 @@ export default function Login() {
 
           {/* Logo */}
           <div style={s.logo}>
-            <span style={s.logoText}>TheBhagya</span>
+            <span style={s.logoText}>Bhagya</span>
             <span style={s.logoSub}>भाग्य · DESTINY</span>
           </div>
 
