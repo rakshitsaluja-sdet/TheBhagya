@@ -155,7 +155,7 @@ function RemedyDetail({ r }) {
   const toggle_style = { cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', fontWeight: 600, color: 'var(--gold-light)' }
 
   return (
-    <div style={{ marginTop: '0.85rem' }}>
+    <div style={{ marginTop: '0.85rem' }} onClick={e => e.stopPropagation()}>
       {/* Action */}
       <div style={{ background: 'rgba(223,168,79,0.05)', borderRadius: 10, padding: '0.75rem 0.9rem', marginBottom: '0.5rem', fontSize: '0.84rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>
         <strong style={{ color: 'var(--gold)' }}>Action Remedy: </strong>{r.action}
