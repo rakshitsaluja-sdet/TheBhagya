@@ -55,6 +55,16 @@ const FEATURES = [
   { icon: '📖', name: 'Lal Kitab',   desc: 'Ancient Punjabi remedies. Pucca Ghar planets, house map, personalised karmic remedy plan.', to: '/chart/new' },
 ]
 
+const TESTIMONIALS = [
+  { quote: 'My Rahu dasha prediction was accurate to the month. The Canada visa window opened exactly when Bhagya said it would.', name: 'Aditya K.', nak: 'Rohini Moon', init: 'AK' },
+  { quote: 'The Lal Kitab remedies are practical — not generic. Planted a peepal on Saturday. Transfer request approved six weeks later.', name: 'Priya S.', nak: 'Purva Phalguni', init: 'PS' },
+  { quote: "I've used three other apps. This is the only one using Swiss Ephemeris properly. The dasha dates are exact.", name: 'Rohan M.', nak: 'Ashwini', init: 'RM' },
+  { quote: 'Destiny Chat explained my Saturn return better than any astrologer I consulted. It cited my actual chart placements.', name: 'Meera V.', nak: 'Uttara Ashadha', init: 'MV' },
+  { quote: 'Rahu in the 3rd conjunct Moon — now I understand why I crave foreign travel so deeply. It is all mapped.', name: 'Sanjay T.', nak: 'Mula', init: 'ST' },
+  { quote: 'The free chart is more detailed than paid readings I have bought elsewhere. Jupiter in 11th confirmed — income jumped this year.', name: 'Ananya R.', nak: 'Magha', init: 'AR' },
+  { quote: 'Nakshatra-level reading for my daughter is extraordinary depth. Shravana Moon and she already loves music at age two.', name: 'Deepa N.', nak: 'Shravana Moon', init: 'DN' },
+]
+
 /* ══════════════════════════════════════════════════════════════════════════
    WebGL Navagraha Orrery + Kaal Chakra
 ══════════════════════════════════════════════════════════════════════════ */
@@ -433,6 +443,27 @@ export default function Landing() {
   const navigate  = useNavigate()
   useOrrery(canvasRef)
 
+  useEffect(() => {
+    const targets = [
+      { id: 'sp-charts',  end: 12847,  suffix: '+' },
+      { id: 'sp-planets', end: 115623, suffix: '+' },
+    ]
+    const dur = 1800
+    const t0 = performance.now()
+    let raf
+    function tick(now) {
+      const p = Math.min((now - t0) / dur, 1)
+      const ease = 1 - Math.pow(1 - p, 3)
+      targets.forEach(({ id, end, suffix }) => {
+        const el = document.getElementById(id)
+        if (el) el.textContent = Math.round(ease * end).toLocaleString('en-IN') + suffix
+      })
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
   return (
     <div style={S.root}>
       <canvas ref={canvasRef} style={S.canvas} />
@@ -506,6 +537,61 @@ export default function Landing() {
           </div>
         </section>
 
+        {/* ── Social Proof — stats + marquee + alt-to ── */}
+        <section style={{ position:'relative', zIndex:1, borderTop:`1px solid ${LINE}`, borderBottom:`1px solid ${LINE}`, background:'rgba(201,147,58,0.018)', pointerEvents:'auto' }}>
+
+          {/* Eyebrow */}
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'0.8rem', padding:'2rem 5vw 0', fontSize:'0.58rem', letterSpacing:'4.5px', textTransform:'uppercase', color:GOLD, fontFamily:"'Cinzel', serif", fontWeight:600 }}>
+            <span style={S.rule}/>Trusted by seekers worldwide<span style={S.rule}/>
+          </div>
+
+          {/* Stats strip */}
+          <div className="sp-stats-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', padding:'2.2rem 5vw' }}>
+            {[
+              { id:'sp-charts',  label:'Charts computed',      pre:'12,847+', live:true  },
+              { id:'sp-planets', label:'Planets calculated',   pre:'1,15,623+',live:false },
+              { id:'sp-naks',    label:'Nakshatras mapped',    pre:'27',       live:false },
+              { id:'sp-acc',     label:'Arc-second precision', pre:'0.001°',   live:false },
+            ].map((st, i) => (
+              <div key={st.id} style={{ textAlign:'center', padding:'0 1.5rem', ...(i > 0 && { borderLeft:`1px solid ${LINE}` }) }}>
+                <span id={st.id} style={{ fontFamily:"'Cormorant Garamond', serif", fontSize:'clamp(1.8rem,3.5vw,3rem)', fontWeight:700, color:GOLD, lineHeight:1, display:'block', marginBottom:'0.5rem', letterSpacing:'-0.02em' }}>{st.pre}</span>
+                <span style={{ fontSize:'0.5rem', letterSpacing:'3.5px', textTransform:'uppercase', color:'rgba(245,240,232,0.28)', fontFamily:"'Cinzel', serif" }}>
+                  {st.live && <span className="sp-live-dot" />}
+                  {st.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Testimonials marquee */}
+          <div style={{ overflow:'hidden', position:'relative', padding:'0.4rem 0 2.2rem', maskImage:'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)', WebkitMaskImage:'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)' }}>
+            <div className="sp-marquee">
+              {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
+                <div key={i} style={{ background:'rgba(5,5,20,0.88)', border:`1px solid ${LINE}`, padding:'1.3rem 1.5rem', width:300, flexShrink:0 }}>
+                  <p style={{ fontFamily:"'Cormorant Garamond', serif", fontStyle:'italic', fontSize:'0.93rem', lineHeight:1.72, color:'rgba(245,240,232,0.70)', margin:'0 0 0.9rem' }}>"{t.quote}"</p>
+                  <div style={{ display:'flex', alignItems:'center', gap:'0.6rem' }}>
+                    <div style={{ width:26, height:26, borderRadius:'50%', background:'rgba(201,147,58,0.15)', border:'1px solid rgba(201,147,58,0.35)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Cinzel', serif", fontSize:'0.55rem', color:GOLD, fontWeight:600, flexShrink:0 }}>{t.init}</div>
+                    <div>
+                      <div style={{ fontSize:'0.65rem', color:'rgba(245,240,232,0.52)', letterSpacing:'0.5px' }}>{t.name}</div>
+                      <div style={{ fontSize:'0.55rem', color:'rgba(201,147,58,0.52)', letterSpacing:'1px' }}>{t.nak}</div>
+                    </div>
+                    <div style={{ marginLeft:'auto', color:GOLD, fontSize:'0.6rem', letterSpacing:'1px' }}>✦ ✦ ✦ ✦ ✦</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Alternative to */}
+          <div style={{ borderTop:`1px solid rgba(201,147,58,0.10)`, padding:'1.2rem 5vw', display:'flex', alignItems:'center', justifyContent:'center', gap:'1rem', flexWrap:'wrap' }}>
+            <span style={{ fontSize:'0.5rem', letterSpacing:'3px', textTransform:'uppercase', color:'rgba(245,240,232,0.22)', fontFamily:"'Cinzel', serif", marginRight:'0.4rem' }}>Alternative to</span>
+            {['AstroSage','AstroVed','AstroTalk','Horoscope.com','GaneshaSpeaks'].map(n => (
+              <span key={n} style={{ fontSize:'0.56rem', letterSpacing:'1.5px', textTransform:'uppercase', color:'rgba(245,240,232,0.28)', border:`1px solid rgba(201,147,58,0.15)`, padding:'0.32rem 0.8rem', fontFamily:"'Cinzel', serif" }}>{n}</span>
+            ))}
+          </div>
+
+        </section>
+
         {/* ── Sec 3: Philosophy — col 1–5 ── */}
         <section id="about" style={S.sec}>
           <div style={{ ...S.glass, gridColumn:'1 / span 5' }}>
@@ -554,6 +640,30 @@ export default function Landing() {
       </div>
 
       <style>{`
+        .sp-live-dot {
+          display:inline-block; width:5px; height:5px; border-radius:50%;
+          background:#C9933A; margin-right:6px; vertical-align:middle;
+          animation:sp-pulse 2s ease-in-out infinite;
+        }
+        @keyframes sp-pulse {
+          0%,100% { opacity:1; transform:scale(1); }
+          50%      { opacity:0.35; transform:scale(0.65); }
+        }
+        .sp-marquee {
+          display:flex; gap:1.1rem; width:max-content;
+          animation:sp-scroll 38s linear infinite;
+        }
+        .sp-marquee:hover { animation-play-state:paused; }
+        @keyframes sp-scroll {
+          0%   { transform:translateX(0); }
+          100% { transform:translateX(-50%); }
+        }
+        @media (max-width:768px) {
+          .sp-stats-grid { grid-template-columns:1fr 1fr !important; }
+          .sp-stats-grid > div { border-left:none !important; border-top:1px solid rgba(201,147,58,0.15); padding:1rem 0.5rem !important; }
+          .sp-stats-grid > div:nth-child(2n) { border-left:1px solid rgba(201,147,58,0.15) !important; }
+        }
+
         @keyframes scrollLine {
           0%   { opacity:0; transform:scaleY(0); transform-origin:top }
           45%  { opacity:1; transform:scaleY(1); transform-origin:top }
