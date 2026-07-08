@@ -56,13 +56,15 @@ function AppShell() {
         <Route path="/admin"           element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-        {/* ── Public app routes (with Navbar/Footer) ── */}
+        {/* ── Landing: fully standalone (no Navbar/Footer — has its own dark nav) ── */}
+        <Route path="/" element={<Landing />} />
+
+        {/* ── All other public routes (with Navbar/Footer) ── */}
         <Route path="/*" element={
           <>
             <Navbar />
             <main style={{ flex: 1 }}>
               <Routes>
-                <Route path="/"          element={<Landing />} />
                 <Route path="/login"     element={<Login />} />
                 <Route path="/pricing"   element={<Pricing />} />
                 <Route path="/palmistry" element={<Palmistry />} />
