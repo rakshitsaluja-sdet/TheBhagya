@@ -34,22 +34,25 @@ const CITIES = [
 const P_SYMBOL = { Sun:'☉', Moon:'☽', Mercury:'☿', Venus:'♀', Mars:'♂', Jupiter:'♃', Saturn:'♄', Rahu:'☊', Ketu:'☋' }
 const P_COLOR  = { Sun:'#f39c12', Moon:'#bdc3c7', Mercury:'#2ecc71', Venus:'#e91e8c', Mars:'#e74c3c', Jupiter:'#f1c40f', Saturn:'#7f8c8d', Rahu:'#8e44ad', Ketu:'#d35400' }
 
+const GOLD_GRADIENT = 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)'
+
 /* ── Styles ────────────────────────────────────────────────────────────── */
 const s = {
   page:     { maxWidth: 1060, margin: '0 auto', padding: '2rem 1.5rem 5rem' },
-  heading:  { fontFamily: "'Cinzel', serif", fontSize: '1.6rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '0.3rem' },
-  subhead:  { fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '2rem' },
-  card:     { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px', padding: '1.5rem' },
-  cardTitle:{ fontFamily: "'Cinzel', serif", fontSize: '0.82rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem' },
+  eyebrow:  { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', letterSpacing: '3px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '0.6rem' },
+  heading:  { fontFamily: "'Fraunces', serif", fontSize: 'clamp(1.9rem, 4vw, 2.8rem)', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: '0.3rem' },
+  subhead:  { fontSize: '0.92rem', color: 'var(--text-muted)', marginBottom: '2rem' },
+  card:     { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: '1.5rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' },
+  cardTitle:{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '1.2rem' },
   label:    { display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.35rem' },
-  input:    { width: '100%', padding: '0.65rem 0.9rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', fontFamily: 'inherit' },
-  select:   { width: '100%', padding: '0.65rem 0.9rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', fontFamily: 'inherit', cursor: 'pointer' },
+  input:    { width: '100%', padding: '0.8rem 1rem', background: 'var(--bg-input)', border: '1px solid var(--border)', borderRadius: 10, color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', fontFamily: 'inherit' },
+  select:   { width: '100%', padding: '0.8rem 1rem', background: 'var(--bg-input)', border: '1px solid var(--border)', borderRadius: 10, color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', fontFamily: 'inherit', cursor: 'pointer' },
   row:      { marginBottom: '1rem' },
   grid2:    { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' },
-  btn:      { width: '100%', padding: '0.9rem', background: 'linear-gradient(135deg, var(--gold), #8B6020)', color: '#FFF8EC', border: 'none', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '1px', transition: 'opacity 0.2s', marginTop: '0.5rem' },
-  secHead:  { fontFamily: "'Cinzel', serif", fontSize: '0.8rem', color: 'var(--gold)', letterSpacing: '2px', textTransform: 'uppercase', margin: '1.75rem 0 0.8rem', paddingBottom: '0.4rem', borderBottom: '1px solid var(--border)' },
-  err:      { background: 'rgba(231,76,60,0.1)', border: '1px solid rgba(231,76,60,0.35)', borderRadius: '8px', padding: '1rem', color: '#e74c3c', fontSize: '0.875rem', marginBottom: '1.5rem' },
-  pill:     (bg, color) => ({ display: 'inline-block', padding: '0.28rem 0.9rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 600, background: bg, color, border: `1px solid ${color}44`, marginRight: '0.5rem', marginBottom: '0.4rem' }),
+  btn:      { width: '100%', padding: '0.95rem', background: GOLD_GRADIENT, color: '#1C1205', border: 'none', borderRadius: 999, fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', letterSpacing: '0.5px', boxShadow: '0 8px 28px rgba(223,168,79,0.28)', transition: 'opacity 0.2s', marginTop: '0.5rem' },
+  secHead:  { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '2.5px', textTransform: 'uppercase', margin: '1.75rem 0 0.8rem', paddingBottom: '0.4rem', borderBottom: '1px solid var(--border)' },
+  err:      { background: 'rgba(231,76,60,0.1)', border: '1px solid rgba(231,76,60,0.35)', borderRadius: 10, padding: '1rem', color: '#e74c3c', fontSize: '0.875rem', marginBottom: '1.5rem' },
+  pill:     (bg, color) => ({ display: 'inline-block', padding: '0.28rem 0.9rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 600, background: bg, color, border: `1px solid ${color}44`, marginRight: '0.5rem', marginBottom: '0.4rem' }),
 }
 
 /* ── North-Indian LK House Map SVG ────────────────────────────────────── */
@@ -74,7 +77,7 @@ function HouseMap({ houseMap, lagna }) {
       style={{ maxWidth: 340, display: 'block', margin: '0 auto' }}
     >
       {/* Outer border */}
-      <rect x={0} y={0} width={SIZE} height={SIZE} fill="none" stroke="rgba(201,147,58,0.35)" strokeWidth={1.5} />
+      <rect x={0} y={0} width={SIZE} height={SIZE} fill="none" stroke="rgba(223,168,79,0.35)" strokeWidth={1.5} />
 
       {/* Cell borders and content */}
       {Object.entries(HOUSE_POS).map(([hNum, [row, col]]) => {
@@ -88,20 +91,20 @@ function HouseMap({ houseMap, lagna }) {
           <g key={h}>
             <rect
               x={x} y={y} width={CELL} height={CELL}
-              fill={isLagna ? 'rgba(201,147,58,0.08)' : 'rgba(5,5,20,0.6)'}
-              stroke="rgba(201,147,58,0.22)"
+              fill={isLagna ? 'rgba(223,168,79,0.08)' : 'var(--bg-elevated)'}
+              stroke="rgba(223,168,79,0.22)"
               strokeWidth={0.8}
             />
             {/* House number */}
             <text
               x={x + 6} y={y + 14}
-              fontSize={10} fill="rgba(201,147,58,0.55)"
-              fontFamily="'Cinzel', serif"
+              fontSize={9} fill="rgba(223,168,79,0.55)"
+              fontFamily="'JetBrains Mono', monospace"
             >{h}</text>
 
             {/* Lagna marker */}
             {isLagna && (
-              <text x={x + CELL - 6} y={y + 14} fontSize={9} fill="rgba(201,147,58,0.7)" textAnchor="end" fontFamily="'Cinzel',serif">
+              <text x={x + CELL - 6} y={y + 14} fontSize={8} fill="rgba(223,168,79,0.7)" textAnchor="end" fontFamily="'JetBrains Mono', monospace">
                 {lagnaSign?.slice(0,3)}
               </text>
             )}
@@ -114,7 +117,7 @@ function HouseMap({ houseMap, lagna }) {
                 y={y + 32 + i * 18}
                 textAnchor="middle"
                 fontSize={13}
-                fill={P_COLOR[pname] || '#C9933A'}
+                fill={P_COLOR[pname] || '#DFA84F'}
                 fontFamily="Arial, sans-serif"
               >
                 {P_SYMBOL[pname] || pname.slice(0, 2)}
@@ -125,14 +128,14 @@ function HouseMap({ houseMap, lagna }) {
       })}
 
       {/* Center diamond lines */}
-      <line x1={CELL} y1={CELL} x2={CELL * 3} y2={CELL * 3} stroke="rgba(201,147,58,0.18)" strokeWidth={0.7} />
-      <line x1={CELL * 3} y1={CELL} x2={CELL} y2={CELL * 3} stroke="rgba(201,147,58,0.18)" strokeWidth={0.7} />
+      <line x1={CELL} y1={CELL} x2={CELL * 3} y2={CELL * 3} stroke="rgba(223,168,79,0.18)" strokeWidth={0.7} />
+      <line x1={CELL * 3} y1={CELL} x2={CELL} y2={CELL * 3} stroke="rgba(223,168,79,0.18)" strokeWidth={0.7} />
 
       {/* Center label */}
-      <text x={SIZE / 2} y={SIZE / 2 - 6} textAnchor="middle" fontSize={9} fill="rgba(201,147,58,0.4)" fontFamily="'Cinzel',serif">
+      <text x={SIZE / 2} y={SIZE / 2 - 6} textAnchor="middle" fontSize={8} fill="rgba(223,168,79,0.45)" fontFamily="'JetBrains Mono', monospace" letterSpacing="2">
         Lal Kitab
       </text>
-      <text x={SIZE / 2} y={SIZE / 2 + 8} textAnchor="middle" fontSize={8} fill="rgba(201,147,58,0.3)" fontFamily="'Cinzel',serif">
+      <text x={SIZE / 2} y={SIZE / 2 + 8} textAnchor="middle" fontSize={8} fill="rgba(223,168,79,0.3)" fontFamily="'JetBrains Mono', monospace">
         {lagnaSign}
       </text>
     </svg>
@@ -145,16 +148,16 @@ function RemedyDetail({ r }) {
   const toggle = (sec) => setSection(s => s === sec ? null : sec)
 
   const box = (active) => ({
-    background: active ? 'rgba(201,147,58,0.06)' : 'transparent',
-    border: `1px solid ${active ? 'rgba(201,147,58,0.3)' : 'var(--border)'}`,
-    borderRadius: '8px', padding: '0.7rem 0.9rem', marginTop: '0.6rem',
+    background: active ? 'rgba(223,168,79,0.06)' : 'transparent',
+    border: `1px solid ${active ? 'rgba(223,168,79,0.3)' : 'var(--border)'}`,
+    borderRadius: 10, padding: '0.7rem 0.9rem', marginTop: '0.6rem',
   })
   const toggle_style = { cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', fontWeight: 600, color: 'var(--gold-light)' }
 
   return (
     <div style={{ marginTop: '0.85rem' }}>
       {/* Action */}
-      <div style={{ background: 'rgba(201,147,58,0.05)', borderRadius: '8px', padding: '0.75rem 0.9rem', marginBottom: '0.5rem', fontSize: '0.84rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>
+      <div style={{ background: 'rgba(223,168,79,0.05)', borderRadius: 10, padding: '0.75rem 0.9rem', marginBottom: '0.5rem', fontSize: '0.84rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>
         <strong style={{ color: 'var(--gold)' }}>Action Remedy: </strong>{r.action}
       </div>
 
@@ -171,7 +174,7 @@ function RemedyDetail({ r }) {
               <div style={{ color: 'var(--text-muted)', fontSize: '0.78rem', fontStyle: 'italic', marginBottom: '0.6rem' }}>{r.mantra_simple_roman}</div>
               {r.mantra_beej && r.mantra_beej !== r.mantra_simple && (
                 <div style={{ marginBottom: '0.4rem' }}>
-                  <div style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem' }}>Beej Mantra</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '0.2rem' }}>Beej Mantra</div>
                   <div style={{ color: 'var(--gold)', fontSize: '0.9rem', lineHeight: 1.65 }}>{r.mantra_beej}</div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.77rem', fontStyle: 'italic' }}>{r.mantra_beej_roman}</div>
                 </div>
@@ -268,7 +271,7 @@ function ResultPanel({ data }) {
           <div style={s.cardTitle}>Chart Summary</div>
           <div style={{ marginBottom: '0.8rem' }}>
             <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>Ascendant (Lagna)</div>
-            <div style={{ fontWeight: 700, color: 'var(--gold)', fontSize: '1.05rem' }}>
+            <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)', fontSize: '1.15rem' }}>
               {lagna?.sign} {lagna?.degree?.toFixed(1)}°
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{lagna?.nakshatra} · Pada {lagna?.pada}</div>
@@ -277,7 +280,7 @@ function ResultPanel({ data }) {
           <div style={{ marginBottom: '0.8rem' }}>
             <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: '0.35rem' }}>Planets by House</div>
             {Object.entries(planets || {}).map(([name, pd]) => (
-              <div key={name} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', padding: '0.2rem 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <div key={name} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', padding: '0.2rem 0', borderBottom: '1px solid var(--border-soft)' }}>
                 <span style={{ color: P_COLOR[name] || 'var(--text-primary)' }}>{P_SYMBOL[name]} {name}</span>
                 <span style={{ color: 'var(--text-muted)' }}>
                   H{pd.house} · {pd.sign}
@@ -290,11 +293,11 @@ function ResultPanel({ data }) {
 
           {/* Badges */}
           <div style={{ marginTop: '0.8rem', display: 'flex', flexWrap: 'wrap' }}>
-            <span style={s.pill(lk.foreign_indicator ? 'rgba(201,147,58,0.12)' : 'rgba(255,255,255,0.04)', lk.foreign_indicator ? 'var(--gold)' : 'var(--text-muted)')}>
+            <span style={s.pill(lk.foreign_indicator ? 'rgba(223,168,79,0.12)' : 'var(--bg-elevated)', lk.foreign_indicator ? 'var(--gold)' : 'var(--text-muted)')}>
               {lk.foreign_indicator ? '✈ Foreign Karma: Active' : '✈ Foreign Karma: Mild'}
             </span>
             {lk.pucca_ghar_planets?.map(p => (
-              <span key={p.planet} style={s.pill('rgba(201,147,58,0.1)', 'var(--gold)')}>
+              <span key={p.planet} style={s.pill('rgba(223,168,79,0.1)', 'var(--gold)')}>
                 ★ {p.planet} Pucca H{p.house}
               </span>
             ))}
@@ -344,7 +347,7 @@ function ResultPanel({ data }) {
             Each remedy is specific to your planetary placement. Expand for mantra, step-by-step guide, rules, and when to avoid.
           </p>
           {lk.remedies.map((r, i) => (
-            <div key={i} style={{ background: 'var(--bg-card)', borderRadius: '10px', padding: '0.9rem 1.1rem', marginBottom: '0.7rem', border: openR === i ? '1px solid rgba(201,147,58,0.35)' : '1px solid var(--border)', cursor: 'pointer', transition: 'border 0.2s' }}
+            <div key={i} style={{ background: 'var(--bg-card)', borderRadius: 18, padding: '0.9rem 1.1rem', marginBottom: '0.7rem', border: openR === i ? '1px solid rgba(223,168,79,0.35)' : '1px solid var(--border)', cursor: 'pointer', transition: 'border 0.2s, transform 0.2s', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}
               onClick={() => setOpenR(openR === i ? null : i)}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: 'var(--gold)', fontWeight: 600, fontSize: '0.9rem' }}>
@@ -376,7 +379,7 @@ function ResultPanel({ data }) {
               how_to: guide.how_to || [], rules: guide.rules || [], when_to_avoid: guide.when_to_avoid || [],
             }
             return (
-              <div key={pr.planet} style={{ background: 'var(--bg-card)', borderRadius: '10px', padding: '0.9rem 1.1rem', marginBottom: '0.5rem', border: openP === i ? '1px solid rgba(201,147,58,0.3)' : '1px solid var(--border)', cursor: 'pointer', transition: 'border 0.2s' }}
+              <div key={pr.planet} style={{ background: 'var(--bg-card)', borderRadius: 18, padding: '0.9rem 1.1rem', marginBottom: '0.5rem', border: openP === i ? '1px solid rgba(223,168,79,0.3)' : '1px solid var(--border)', cursor: 'pointer', transition: 'border 0.2s, transform 0.2s', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}
                 onClick={() => setOpenP(openP === i ? null : i)}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ color: 'var(--gold)', fontWeight: 600, fontSize: '0.88rem' }}>
@@ -405,11 +408,11 @@ function ResultPanel({ data }) {
       )}
 
       {/* ── CTA ── */}
-      <div style={{ marginTop: '2rem', textAlign: 'center', padding: '1.5rem', background: 'var(--bg-card)', borderRadius: '12px', border: '1px solid var(--border)' }}>
+      <div style={{ ...s.card, marginTop: '2rem', textAlign: 'center' }}>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
           Get your full Vedic birth chart with Vimshottari Dasha, Ashtakavarga, nakshatra analysis and Lal Kitab in one place.
         </p>
-        <Link to="/chart/new" style={{ display: 'inline-block', padding: '0.7rem 2rem', background: 'linear-gradient(135deg, var(--gold), #8B6020)', color: '#FFF8EC', borderRadius: '8px', textDecoration: 'none', fontWeight: 700, fontSize: '0.875rem' }}>
+        <Link to="/chart/new" style={{ display: 'inline-block', padding: '0.7rem 2rem', background: GOLD_GRADIENT, color: '#1C1205', borderRadius: 999, textDecoration: 'none', fontWeight: 600, fontSize: '0.875rem', boxShadow: '0 8px 28px rgba(223,168,79,0.28)' }}>
           Create Full Kundali →
         </Link>
       </div>
@@ -460,13 +463,16 @@ export default function LalKitab() {
   return (
     <div style={s.page}>
       {/* Header */}
-      <h1 style={s.heading}>Lal Kitab Reading</h1>
-      <p style={s.subhead}>
-        19th-century Urdu wisdom — house-based karma, Pucca Ghar planets, Rahu-Ketu axis, and practical remedies.
-      </p>
+      <div className="bh-fade-up">
+        <div style={s.eyebrow}>Remedial Astrology</div>
+        <h1 style={s.heading}>Lal Kitab Reading</h1>
+        <p style={s.subhead}>
+          19th-century Urdu wisdom — house-based karma, Pucca Ghar planets, Rahu-Ketu axis, and practical remedies.
+        </p>
+      </div>
 
       {/* Info box */}
-      <div style={{ background: 'rgba(201,147,58,0.06)', border: '1px solid rgba(201,147,58,0.2)', borderRadius: '10px', padding: '1rem 1.3rem', fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '2rem' }}>
+      <div className="bh-fade-up-1" style={{ background: 'rgba(223,168,79,0.06)', border: '1px solid rgba(223,168,79,0.2)', borderRadius: 12, padding: '1rem 1.3rem', fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '2rem' }}>
         <strong style={{ color: 'var(--gold)' }}>About Lal Kitab: </strong>
         Unlike classical Vedic astrology, Lal Kitab focuses on house position rather than sign. A planet in its
         <strong> Pucca Ghar</strong> (permanent house) delivers its strongest lifetime results. Retrograde planets
@@ -474,10 +480,10 @@ export default function LalKitab() {
       </div>
 
       {/* Form */}
-      <div style={s.card}>
+      <div className="bh-fade-up-2" style={s.card}>
         <div style={s.cardTitle}>Enter Birth Details</div>
 
-        <div style={s.grid2}>
+        <div className="lk-grid2" style={s.grid2}>
           <div style={s.row}>
             <label style={s.label}>Date of Birth</label>
             <input type="date" style={s.input} value={form.dob} onChange={e => set('dob', e.target.value)} />
@@ -495,7 +501,7 @@ export default function LalKitab() {
           </select>
         </div>
 
-        <div style={s.grid2}>
+        <div className="lk-grid2" style={s.grid2}>
           <div style={s.row}>
             <label style={s.label}>Latitude</label>
             <input type="number" step="0.0001" style={s.input} placeholder="e.g. 28.6139" value={form.lat} onChange={e => set('lat', e.target.value)} />

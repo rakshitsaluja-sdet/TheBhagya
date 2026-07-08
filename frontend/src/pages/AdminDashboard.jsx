@@ -46,7 +46,7 @@ function DualBarChart({ data, height = 80 }) {
             <div style={{
               position: 'absolute', bottom: 0, left: '58%', width: '25%',
               height: `${Math.max((d.anon / max) * (height - 20), d.anon > 0 ? 4 : 0)}px`,
-              background: '#9B8EC4', borderRadius: '2px 2px 0 0', opacity: 0.8,
+              background: '#8B6FE8', borderRadius: '2px 2px 0 0', opacity: 0.8,
             }} />
           </div>
           <div style={{ fontSize: '0.52rem', color: 'var(--text-muted)', textAlign: 'center', whiteSpace: 'nowrap' }}>
@@ -63,19 +63,20 @@ function KpiCard({ icon, label, value, sub, color = 'var(--gold)', trend }) {
   return (
     <div style={{
       background: 'var(--bg-card)', border: '1px solid var(--border)',
-      borderRadius: '12px', padding: '1.25rem 1.4rem',
+      backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
+      borderRadius: '18px', padding: '1.25rem 1.4rem',
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
         <span style={{ fontSize: '1.4rem' }}>{icon}</span>
         {trend !== undefined && (
-          <span style={{ fontSize: '0.72rem', color: trend >= 0 ? '#4CAF50' : '#E07B39', fontWeight: 700 }}>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: trend >= 0 ? '#4CAF50' : '#E07B39', fontWeight: 600 }}>
             {trend >= 0 ? '▲' : '▼'} {Math.abs(trend)}
           </span>
         )}
       </div>
-      <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '1.5px',
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: 500, letterSpacing: '2px',
                     textTransform: 'uppercase', marginBottom: '0.3rem' }}>{label}</div>
-      <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1.8rem', fontWeight: 800, color, lineHeight: 1 }}>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.7rem', fontWeight: 700, color, lineHeight: 1 }}>
         {value}
       </div>
       {sub && <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>{sub}</div>}
@@ -87,8 +88,8 @@ function KpiCard({ icon, label, value, sub, color = 'var(--gold)', trend }) {
 function SectionHead({ children }) {
   return (
     <div style={{
-      fontFamily: "'Cinzel', serif", fontSize: '0.75rem', color: 'var(--gold)',
-      letterSpacing: '2px', textTransform: 'uppercase',
+      fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', color: 'var(--gold)',
+      letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 500,
       borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem',
       marginBottom: '1rem', marginTop: '2rem',
     }}>{children}</div>
@@ -97,11 +98,12 @@ function SectionHead({ children }) {
 
 /* ── Plan badge ─────────────────────────────────────────────── */
 function PlanBadge({ plan }) {
-  const colors = { starter: '#8B7B5E', pro: '#C9933A', jyotish: '#9B8EC4' }
+  const colors = { starter: '#8B7B5E', pro: '#DFA84F', jyotish: '#8B6FE8' }
   return (
     <span style={{
-      fontSize: '0.65rem', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase',
-      padding: '0.15rem 0.55rem', borderRadius: '10px',
+      fontFamily: "'JetBrains Mono', monospace",
+      fontSize: '0.62rem', fontWeight: 500, letterSpacing: '2px', textTransform: 'uppercase',
+      padding: '0.18rem 0.65rem', borderRadius: '999px',
       background: `${colors[plan] || '#5A4E38'}22`, color: colors[plan] || '#5A4E38',
       border: `1px solid ${colors[plan] || '#5A4E38'}44`,
     }}>{plan}</span>
@@ -159,6 +161,7 @@ export default function AdminDashboard() {
   }
   const topBar = {
     background: 'var(--bg-card)', borderBottom: '1px solid var(--border)',
+    backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
     padding: '0.85rem 1.75rem', display: 'flex', justifyContent: 'space-between',
     alignItems: 'center',
   }
@@ -167,14 +170,15 @@ export default function AdminDashboard() {
   const grid4 = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }
   const card  = {
     background: 'var(--bg-card)', border: '1px solid var(--border)',
-    borderRadius: '12px', padding: '1.25rem 1.4rem',
+    backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
+    borderRadius: '18px', padding: '1.25rem 1.4rem',
   }
 
   if (loading) {
     return (
       <div style={{ ...page, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center', color: 'var(--gold)' }}>
-          <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1.1rem', marginBottom: '0.5rem' }}>⟳ Loading dashboard...</div>
+          <div style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, letterSpacing: '-0.02em', fontSize: '1.1rem', marginBottom: '0.5rem' }}>⟳ Loading dashboard...</div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Querying all metrics</div>
         </div>
       </div>
@@ -186,7 +190,7 @@ export default function AdminDashboard() {
       <div style={{ ...page, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ color: '#E07B39', marginBottom: '1rem' }}>⚠ {error}</div>
-          <button onClick={load} style={{ background: 'var(--gold)', color: 'var(--bg-deep)', border: 'none', borderRadius: '8px', padding: '0.6rem 1.4rem', cursor: 'pointer', fontWeight: 700 }}>Retry</button>
+          <button onClick={load} style={{ background: 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)', color: '#1C1205', border: 'none', borderRadius: '999px', padding: '0.6rem 1.5rem', cursor: 'pointer', fontWeight: 600, boxShadow: '0 8px 28px rgba(223,168,79,0.28)' }}>Retry</button>
         </div>
       </div>
     )
@@ -201,8 +205,8 @@ export default function AdminDashboard() {
   const planTotal = (u.by_plan?.starter || 0) + (u.by_plan?.pro || 0) + (u.by_plan?.jyotish || 0) || 1
   const planBars = [
     { plan: 'Starter (Free)', count: u.by_plan?.starter || 0, color: '#8B7B5E' },
-    { plan: 'Bhagya Pro',     count: u.by_plan?.pro     || 0, color: '#C9933A' },
-    { plan: 'Jyotish',        count: u.by_plan?.jyotish || 0, color: '#9B8EC4' },
+    { plan: 'Bhagya Pro',     count: u.by_plan?.pro     || 0, color: '#DFA84F' },
+    { plan: 'Jyotish',        count: u.by_plan?.jyotish || 0, color: '#8B6FE8' },
   ]
 
   return (
@@ -213,13 +217,13 @@ export default function AdminDashboard() {
           <span style={{ fontFamily: "'Cinzel', serif", color: 'var(--gold)', fontSize: '1rem', fontWeight: 700 }}>
             ◈ Bhagya Admin
           </span>
-          <span style={{ fontSize: '0.68rem', background: 'var(--gold-pale)', color: 'var(--gold)', padding: '0.2rem 0.7rem', borderRadius: '20px', border: '1px solid var(--border)' }}>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '2px', background: 'var(--gold-pale)', color: 'var(--gold)', padding: '0.22rem 0.75rem', borderRadius: '999px', border: '1px solid var(--border)' }}>
             SUPER ADMIN
           </span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
           {lastSync && <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Last sync: {lastSync}</span>}
-          <button onClick={load} style={{ background: 'none', border: '1px solid var(--border)', borderRadius: '6px', color: 'var(--gold)', padding: '0.35rem 0.75rem', cursor: 'pointer', fontSize: '0.78rem' }}>
+          <button onClick={load} style={{ background: 'transparent', border: '1px solid var(--border-hover)', borderRadius: '999px', color: 'var(--gold)', padding: '0.35rem 0.9rem', cursor: 'pointer', fontSize: '0.78rem' }}>
             ↻ Refresh
           </button>
           <button onClick={toggleTheme} title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
@@ -233,8 +237,8 @@ export default function AdminDashboard() {
       </div>
 
       <div style={wrap}>
-        <div style={{ marginBottom: '1.75rem' }}>
-          <h1 style={{ fontFamily: "'Cinzel', serif", color: 'var(--gold)', fontSize: '1.4rem', margin: '0 0 0.25rem' }}>
+        <div className="bh-fade-up" style={{ marginBottom: '1.75rem' }}>
+          <h1 style={{ fontFamily: "'Fraunces', serif", color: 'var(--text-primary)', fontWeight: 600, letterSpacing: '-0.02em', fontSize: '1.6rem', margin: '0 0 0.25rem' }}>
             Business Dashboard
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: 0 }}>
@@ -243,24 +247,24 @@ export default function AdminDashboard() {
         </div>
 
         {/* ── TOP KPIs ── */}
-        <div style={grid4}>
-          <KpiCard icon="👥" label="Total Users"        value={u.total || 0}         sub={`+${u.new_today} today`}               color="#C9933A" trend={u.new_today} />
-          <KpiCard icon="📊" label="Charts Generated"   value={c.total || 0}         sub={`${c.today} today · avg ${c.avg_per_user}/user`} color="#E8B86D" trend={c.today} />
-          <KpiCard icon="👁" label="Page Views Today"    value={t.views_today || 0}   sub={`${t.unique_sessions_today} unique sessions`}     color="#9B8EC4" trend={t.views_today} />
+        <div className="admin-stats-grid bh-fade-up-1" style={grid4}>
+          <KpiCard icon="👥" label="Total Users"        value={u.total || 0}         sub={`+${u.new_today} today`}               color="#DFA84F" trend={u.new_today} />
+          <KpiCard icon="📊" label="Charts Generated"   value={c.total || 0}         sub={`${c.today} today · avg ${c.avg_per_user}/user`} color="#F2CB84" trend={c.today} />
+          <KpiCard icon="👁" label="Page Views Today"    value={t.views_today || 0}   sub={`${t.unique_sessions_today} unique sessions`}     color="#8B6FE8" trend={t.views_today} />
           <KpiCard icon="₹" label="Est. MRR"            value={`₹${r.mrr_inr?.toLocaleString() || 0}`} sub={`${r.paid_total} paid subscribers`} color="#4CAF50" />
         </div>
 
-        <div style={{ ...grid4, marginTop: '1rem' }}>
+        <div className="admin-stats-grid bh-fade-up-2" style={{ ...grid4, marginTop: '1rem' }}>
           <KpiCard icon="🆓" label="Anon Hits Today"    value={t.anon_today || 0}    sub={`${t.anon_week} this week (no sign-in)`}  color="#8B7B5E" />
           <KpiCard icon="🔄" label="Returning Sessions"  value={t.returning_sessions || 0} sub="Visited more than once"           color="#E07B39" />
-          <KpiCard icon="💎" label="Paid Subscribers"   value={r.paid_total || 0}    sub={`Pro: ${r.pro_subs} · Jyotish: ${r.jyotish_subs}`} color="#9B8EC4" />
-          <KpiCard icon="📅" label="New This Month"     value={u.new_month || 0}     sub={`${u.new_week} this week`}              color="#C9933A" />
+          <KpiCard icon="💎" label="Paid Subscribers"   value={r.paid_total || 0}    sub={`Pro: ${r.pro_subs} · Jyotish: ${r.jyotish_subs}`} color="#8B6FE8" />
+          <KpiCard icon="📅" label="New This Month"     value={u.new_month || 0}     sub={`${u.new_week} this week`}              color="#DFA84F" />
         </div>
 
         {/* ── USER GROWTH ── */}
         <SectionHead>◈ User Growth — Last 14 Days</SectionHead>
         <div style={card}>
-          <BarChart data={u.signups_14d} valueKey="count" labelKey="date" color="#C9933A" height={100} />
+          <BarChart data={u.signups_14d} valueKey="count" labelKey="date" color="#DFA84F" height={100} />
           <div style={{ display: 'flex', gap: '2rem', marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
             <span>⬆ +{u.new_today} today</span>
             <span>⬆ +{u.new_week} this week</span>
@@ -277,7 +281,7 @@ export default function AdminDashboard() {
               <span style={{ width: '10px', height: '10px', borderRadius: '2px', background: 'var(--gold)', display: 'inline-block' }} /> All visits
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <span style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#9B8EC4', display: 'inline-block' }} /> Anonymous (no login)
+              <span style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#8B6FE8', display: 'inline-block' }} /> Anonymous (no login)
             </span>
           </div>
           <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
@@ -288,7 +292,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* ── PLAN + TOP PAGES ── */}
-        <div style={{ ...grid2, marginTop: '0' }}>
+        <div className="admin-grid" style={{ ...grid2, marginTop: '0' }}>
           <div>
             <SectionHead>◈ Users by Plan</SectionHead>
             <div style={card}>
@@ -314,7 +318,7 @@ export default function AdminDashboard() {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.3rem' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Jyotish × ₹799</span>
-                  <span style={{ color: '#9B8EC4', fontWeight: 600 }}>₹{(r.jyotish_subs * 799).toLocaleString()}</span>
+                  <span style={{ color: '#8B6FE8', fontWeight: 600 }}>₹{(r.jyotish_subs * 799).toLocaleString()}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid var(--border)' }}>
                   <span style={{ color: 'var(--gold)', fontWeight: 700, fontSize: '0.85rem' }}>Total MRR</span>
@@ -333,7 +337,7 @@ export default function AdminDashboard() {
                 return (
                   <div key={i} style={{ marginBottom: '0.65rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.2rem' }}>
-                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>{p.page || '/'}</span>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>{p.page || '/'}</span>
                       <span style={{ fontSize: '0.78rem', color: 'var(--gold)', fontWeight: 600 }}>{p.hits}</span>
                     </div>
                     <div style={{ background: 'var(--bg-elevated)', borderRadius: '3px', height: '4px' }}>
@@ -366,7 +370,7 @@ export default function AdminDashboard() {
                   <tr key={i} style={{ borderBottom: '1px solid var(--border)' }}>
                     <td style={{ padding: '0.6rem 0.75rem', color: 'var(--text-primary)' }}>{row.email}</td>
                     <td style={{ padding: '0.6rem 0.75rem' }}><PlanBadge plan={row.plan} /></td>
-                    <td style={{ padding: '0.6rem 0.75rem', color: 'var(--text-muted)', fontFamily: 'monospace', fontSize: '0.76rem' }}>{row.created_at}</td>
+                    <td style={{ padding: '0.6rem 0.75rem', color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem' }}>{row.created_at}</td>
                   </tr>
                 ))}
               </tbody>
@@ -376,7 +380,7 @@ export default function AdminDashboard() {
 
         {/* ── QUICK STATS FOOTER ── */}
         <SectionHead>◈ At a Glance</SectionHead>
-        <div style={grid4}>
+        <div className="admin-stats-grid" style={grid4}>
           {[
             { label: 'Conversion Rate',  value: u.total ? `${((r.paid_total / u.total) * 100).toFixed(1)}%` : '0%', sub: 'Free → Paid' },
             { label: 'Charts / User',    value: c.avg_per_user,  sub: 'Average' },
@@ -384,8 +388,8 @@ export default function AdminDashboard() {
             { label: 'Returning Rate',   value: t.unique_sessions_week ? `${Math.round((t.returning_sessions / (t.unique_sessions_week || 1)) * 100)}%` : '0%', sub: 'Multi-page visitors' },
           ].map((item, i) => (
             <div key={i} style={{ ...card, textAlign: 'center' }}>
-              <div style={{ fontSize: '0.67rem', color: 'var(--text-muted)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{item.label}</div>
-              <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1.5rem', color: 'var(--gold)', fontWeight: 800 }}>{item.value}</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: 'var(--text-muted)', fontWeight: 500, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{item.label}</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.4rem', color: 'var(--gold)', fontWeight: 700 }}>{item.value}</div>
               <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>{item.sub}</div>
             </div>
           ))}

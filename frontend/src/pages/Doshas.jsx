@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { computeDoshas } from '../hooks/useApi'
 
-const GOLD   = '#C9933A'
-const GOLD_L = '#E8B96A'
+const GOLD   = '#DFA84F'
+const GOLD_L = '#F2CB84'
 
 // ── City presets ───────────────────────────────────────────────────────────────
 const CITIES = [
@@ -35,14 +35,14 @@ function SeverityBadge({ severity }) {
   const map = {
     high:      { color: '#E53935', bg: 'rgba(229,57,53,0.12)',   label: 'High Severity' },
     medium:    { color: '#E07B39', bg: 'rgba(224,123,57,0.12)',  label: 'Medium Severity' },
-    low:       { color: GOLD_L,    bg: 'rgba(232,185,106,0.12)', label: 'Low Severity' },
-    reduced:   { color: GOLD,      bg: 'rgba(201,147,58,0.12)',  label: 'Reduced (Partial Cancellation)' },
+    low:       { color: GOLD_L,    bg: 'rgba(242,203,132,0.12)', label: 'Low Severity' },
+    reduced:   { color: GOLD,      bg: 'rgba(223,168,79,0.12)',  label: 'Reduced (Partial Cancellation)' },
     cancelled: { color: '#43A047', bg: 'rgba(67,160,71,0.12)',   label: 'Cancelled by Cancellations' },
     none:      { color: '#43A047', bg: 'rgba(67,160,71,0.12)',   label: 'Not Present' },
   }
   const cfg = map[severity] || map.none
   return (
-    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.5px', color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}44`, borderRadius: '12px', padding: '0.2rem 0.6rem' }}>
+    <span style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.5px', color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}44`, borderRadius: 999, padding: '0.2rem 0.7rem' }}>
       {cfg.label}
     </span>
   )
@@ -52,8 +52,8 @@ function RemedyList({ remedies, title }) {
   const [open, setOpen] = useState(false)
   if (!remedies?.length) return null
   return (
-    <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '10px', padding: '0.9rem 1.1rem', marginTop: '1rem' }}>
-      <button onClick={() => setOpen(o => !o)} style={{ background: 'none', border: 'none', color: GOLD, fontFamily: "'Cinzel', serif", fontSize: '0.78rem', letterSpacing: '2px', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', width: '100%', padding: 0 }}>
+    <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 18, padding: '0.9rem 1.1rem', marginTop: '1rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
+      <button onClick={() => setOpen(o => !o)} style={{ background: 'none', border: 'none', color: GOLD, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', width: '100%', padding: 0 }}>
         <span>{title}</span><span>{open ? '▲' : '▼'}</span>
       </button>
       {open && (
@@ -75,10 +75,10 @@ function MangalPanel({ data }) {
   return (
     <div>
       {/* Status banner */}
-      <div style={{ background: present && severity !== 'cancelled' ? 'rgba(229,57,53,0.08)' : 'rgba(67,160,71,0.08)', border: `1px solid ${statusColor}33`, borderRadius: '12px', padding: '1.1rem 1.3rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+      <div style={{ background: present && severity !== 'cancelled' ? 'rgba(229,57,53,0.08)' : 'rgba(67,160,71,0.08)', border: `1px solid ${statusColor}33`, borderRadius: 18, padding: '1.1rem 1.3rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-start', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
         <div style={{ fontSize: '1.5rem', color: statusColor, lineHeight: 1, flexShrink: 0 }}>{statusIcon}</div>
         <div>
-          <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1rem', color: statusColor, fontWeight: 700, marginBottom: '0.3rem' }}>
+          <div style={{ fontFamily: "'Fraunces', serif", fontSize: '1.05rem', letterSpacing: '-0.02em', color: statusColor, fontWeight: 600, marginBottom: '0.3rem' }}>
             {present ? 'Mangal Dosha Present' : 'No Mangal Dosha'}
           </div>
           <SeverityBadge severity={severity} />
@@ -94,17 +94,17 @@ function MangalPanel({ data }) {
       </div>
 
       {/* Position table */}
-      <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '10px', padding: '0.9rem 1.1rem', marginBottom: '1rem' }}>
-        <div style={{ fontSize: '0.68rem', color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', fontFamily: "'Cinzel', serif", marginBottom: '0.75rem' }}>Position Analysis</div>
+      <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 18, padding: '0.9rem 1.1rem', marginBottom: '1rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
+        <div style={{ fontSize: '0.64rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', fontFamily: "'JetBrains Mono', monospace", marginBottom: '0.75rem' }}>Position Analysis</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
           {[
             { label: 'From Lagna', data: from_lagna },
             { label: 'From Moon',  data: from_moon  },
             { label: 'From Venus', data: from_venus  },
           ].map(({ label, data: d }) => (
-            <div key={label} style={{ background: d.has_dosha ? 'rgba(229,57,53,0.06)' : 'var(--bg-card)', border: `1px solid ${d.has_dosha ? 'rgba(229,57,53,0.3)' : 'var(--border)'}`, borderRadius: '8px', padding: '0.7rem 0.8rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '0.3rem' }}>{label}</div>
-              <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1.3rem', color: d.has_dosha ? '#E53935' : '#43A047', fontWeight: 700 }}>H{d.house}</div>
+            <div key={label} style={{ background: d.has_dosha ? 'rgba(229,57,53,0.06)' : 'var(--bg-card)', border: `1px solid ${d.has_dosha ? 'rgba(229,57,53,0.3)' : 'var(--border)'}`, borderRadius: 10, padding: '0.7rem 0.8rem', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.62rem', color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '0.3rem' }}>{label}</div>
+              <div style={{ fontFamily: "'Fraunces', serif", fontSize: '1.3rem', letterSpacing: '-0.02em', color: d.has_dosha ? '#E53935' : '#43A047', fontWeight: 600 }}>H{d.house}</div>
               <div style={{ fontSize: '0.7rem', color: d.has_dosha ? '#E07B39' : '#43A047', marginTop: '0.15rem' }}>{d.has_dosha ? 'Dosha' : 'Clear'}</div>
             </div>
           ))}
@@ -117,11 +117,11 @@ function MangalPanel({ data }) {
 
       {/* Cancellations */}
       {cancellations?.length > 0 && (
-        <div style={{ background: 'rgba(67,160,71,0.06)', border: '1px solid rgba(67,160,71,0.3)', borderRadius: '10px', padding: '0.9rem 1.1rem', marginBottom: '1rem' }}>
-          <div style={{ fontSize: '0.68rem', color: '#43A047', letterSpacing: '2px', textTransform: 'uppercase', fontFamily: "'Cinzel', serif", marginBottom: '0.6rem' }}>Cancellations Found</div>
+        <div style={{ background: 'rgba(67,160,71,0.06)', border: '1px solid rgba(67,160,71,0.3)', borderRadius: 18, padding: '0.9rem 1.1rem', marginBottom: '1rem' }}>
+          <div style={{ fontSize: '0.64rem', color: '#43A047', letterSpacing: '2.5px', textTransform: 'uppercase', fontFamily: "'JetBrains Mono', monospace", marginBottom: '0.6rem' }}>Cancellations Found</div>
           {cancellations.map((c, i) => (
             <div key={i} style={{ marginBottom: '0.5rem' }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#43A047', marginBottom: '0.15rem' }}>✓ {c.label}</div>
+              <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#43A047', marginBottom: '0.15rem' }}>✓ {c.label}</div>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>{c.desc}</div>
             </div>
           ))}
@@ -130,8 +130,8 @@ function MangalPanel({ data }) {
 
       {/* Partner note */}
       {present && (
-        <div style={{ background: 'rgba(201,147,58,0.06)', border: '1px solid rgba(201,147,58,0.25)', borderRadius: '10px', padding: '0.9rem 1.1rem', marginBottom: '1rem' }}>
-          <div style={{ fontSize: '0.68rem', color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', fontFamily: "'Cinzel', serif", marginBottom: '0.4rem' }}>Marriage Matching Note</div>
+        <div style={{ background: 'rgba(223,168,79,0.06)', border: '1px solid rgba(223,168,79,0.25)', borderRadius: 18, padding: '0.9rem 1.1rem', marginBottom: '1rem' }}>
+          <div style={{ fontSize: '0.64rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', fontFamily: "'JetBrains Mono', monospace", marginBottom: '0.4rem' }}>Marriage Matching Note</div>
           <p style={{ fontSize: '0.83rem', color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>{partner_note.desc}</p>
         </div>
       )}
@@ -152,10 +152,10 @@ function KaalSarpPanel({ data }) {
   return (
     <div>
       {/* Status banner */}
-      <div style={{ background: present ? 'rgba(224,123,57,0.08)' : 'rgba(67,160,71,0.08)', border: `1px solid ${statusColor}33`, borderRadius: '12px', padding: '1.1rem 1.3rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+      <div style={{ background: present ? 'rgba(224,123,57,0.08)' : 'rgba(67,160,71,0.08)', border: `1px solid ${statusColor}33`, borderRadius: 18, padding: '1.1rem 1.3rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-start', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
         <div style={{ fontSize: '1.5rem', color: statusColor, lineHeight: 1, flexShrink: 0 }}>{statusIcon}</div>
         <div>
-          <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1rem', color: statusColor, fontWeight: 700, marginBottom: '0.3rem' }}>{status_label}</div>
+          <div style={{ fontFamily: "'Fraunces', serif", fontSize: '1.05rem', letterSpacing: '-0.02em', color: statusColor, fontWeight: 600, marginBottom: '0.3rem' }}>{status_label}</div>
           {type && (
             <div style={{ fontSize: '0.78rem', color: GOLD_L, marginBottom: '0.4rem' }}>
               {type.name} Kaal Sarp · Rahu in {rahu_position.sign} (House {data.rahu_house})
@@ -177,15 +177,15 @@ function KaalSarpPanel({ data }) {
 
       {/* Type info */}
       {present && type && (
-        <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '10px', padding: '0.9rem 1.1rem', marginBottom: '1rem' }}>
-          <div style={{ fontSize: '0.68rem', color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', fontFamily: "'Cinzel', serif", marginBottom: '0.5rem' }}>Type: {type.name} Kaal Sarp</div>
+        <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 18, padding: '0.9rem 1.1rem', marginBottom: '1rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
+          <div style={{ fontSize: '0.64rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', fontFamily: "'JetBrains Mono', monospace", marginBottom: '0.5rem' }}>Type: {type.name} Kaal Sarp</div>
           <div style={{ fontSize: '0.82rem', color: 'var(--text-dim)', marginBottom: '0.3rem' }}>Serpent: {type.serpent} · Domain: {type.domain}</div>
         </div>
       )}
 
       {/* Planet positions */}
-      <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '10px', padding: '0.9rem 1.1rem', marginBottom: '1rem' }}>
-        <div style={{ fontSize: '0.68rem', color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', fontFamily: "'Cinzel', serif", marginBottom: '0.75rem' }}>Rahu-Ketu Axis Analysis</div>
+      <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 18, padding: '0.9rem 1.1rem', marginBottom: '1rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
+        <div style={{ fontSize: '0.64rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', fontFamily: "'JetBrains Mono', monospace", marginBottom: '0.75rem' }}>Rahu-Ketu Axis Analysis</div>
         <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '0.7rem', flexWrap: 'wrap' }}>
           <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
             <span style={{ color: GOLD }}>Rahu:</span> {rahu_position.sign} {rahu_position.degree.toFixed(1)}°
@@ -199,7 +199,7 @@ function KaalSarpPanel({ data }) {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '0.5rem' }}>
           {(planets_hemmed || []).map(p => (
-            <span key={p} style={{ fontSize: '0.75rem', background: present ? 'rgba(224,123,57,0.15)' : 'rgba(67,160,71,0.15)', border: `1px solid ${present ? 'rgba(224,123,57,0.4)' : 'rgba(67,160,71,0.4)'}`, borderRadius: '6px', padding: '0.2rem 0.5rem', color: present ? '#E07B39' : '#43A047' }}>{p}</span>
+            <span key={p} style={{ fontSize: '0.75rem', background: present ? 'rgba(224,123,57,0.15)' : 'rgba(67,160,71,0.15)', border: `1px solid ${present ? 'rgba(224,123,57,0.4)' : 'rgba(67,160,71,0.4)'}`, borderRadius: 999, padding: '0.2rem 0.6rem', color: present ? '#E07B39' : '#43A047' }}>{p}</span>
           ))}
         </div>
         {planets_outside?.length > 0 && (
@@ -207,7 +207,7 @@ function KaalSarpPanel({ data }) {
             <div style={{ marginBottom: '0.3rem', fontSize: '0.75rem', color: 'var(--text-dim)' }}>Outside axis ({planets_outside.length}/7):</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
               {planets_outside.map(p => (
-                <span key={p} style={{ fontSize: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '6px', padding: '0.2rem 0.5rem', color: 'var(--text-muted)' }}>{p}</span>
+                <span key={p} style={{ fontSize: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 999, padding: '0.2rem 0.6rem', color: 'var(--text-muted)' }}>{p}</span>
               ))}
             </div>
           </>
@@ -222,13 +222,14 @@ function KaalSarpPanel({ data }) {
 // ── Main page ──────────────────────────────────────────────────────────────────
 
 const inp = {
-  width: '100%', background: 'var(--bg-card)', border: '1px solid var(--border)',
-  borderRadius: '8px', color: 'var(--text-primary)', padding: '0.7rem 1rem',
+  width: '100%', background: 'var(--bg-input)', border: '1px solid var(--border)',
+  borderRadius: 10, color: 'var(--text-primary)', padding: '0.8rem 1rem',
   fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box',
 }
 const lbl = {
-  color: 'var(--text-dim)', fontSize: '0.75rem', fontWeight: 600,
-  letterSpacing: '1px', textTransform: 'uppercase', display: 'block', marginBottom: '0.4rem',
+  color: 'var(--text-dim)', fontSize: '0.68rem', fontWeight: 500,
+  fontFamily: "'JetBrains Mono', monospace",
+  letterSpacing: '2px', textTransform: 'uppercase', display: 'block', marginBottom: '0.4rem',
 }
 
 export default function Doshas() {
@@ -280,11 +281,11 @@ export default function Doshas() {
     <div style={{ maxWidth: '820px', margin: '0 auto', padding: '2rem 1.5rem 4rem' }}>
 
       {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.7rem', color: GOLD, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+      <div className="bh-fade-up" style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', color: 'var(--gold)', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
           Vedic Astrology · Dosha Analysis
         </div>
-        <h1 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.5rem, 4vw, 2.4rem)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.5rem' }}>
+        <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(1.9rem, 4vw, 2.8rem)', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: '0 0 0.5rem' }}>
           Dosha Calculator
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.7, maxWidth: '480px', margin: '0 auto' }}>
@@ -293,14 +294,14 @@ export default function Doshas() {
       </div>
 
       {/* Tab selector (always visible) */}
-      <div style={{ display: 'flex', gap: '0.5rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '10px', padding: '0.3rem', marginBottom: '1.75rem' }}>
+      <div className="bh-fade-up-1" style={{ display: 'flex', gap: '0.5rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 999, padding: '0.3rem', marginBottom: '1.75rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
         {TAB_CONFIG.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)} style={{
             flex: 1, background: tab === t.id ? `${GOLD}22` : 'transparent',
             border: `1px solid ${tab === t.id ? GOLD : 'transparent'}`,
-            borderRadius: '8px', padding: '0.6rem', cursor: 'pointer',
-            fontFamily: "'Cinzel', serif", fontSize: '0.78rem', color: tab === t.id ? GOLD : 'var(--text-muted)',
-            fontWeight: tab === t.id ? 700 : 400, transition: 'all 0.15s',
+            borderRadius: 999, padding: '0.6rem', cursor: 'pointer',
+            fontSize: '0.82rem', color: tab === t.id ? GOLD : 'var(--text-muted)',
+            fontWeight: tab === t.id ? 600 : 400, transition: 'all 0.15s',
           }}>
             {t.icon} {t.label}
             <div style={{ fontSize: '0.66rem', color: 'var(--text-dim)', fontFamily: 'inherit', marginTop: '0.15rem' }}>{t.hi}</div>
@@ -310,8 +311,8 @@ export default function Doshas() {
 
       {/* Birth form */}
       {step === 'form' && (
-        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '14px', padding: '1.75rem 2rem', marginBottom: '1.5rem' }}>
-          <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.75rem', color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem' }}>
+        <div className="bh-fade-up-2" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: '1.75rem 2rem', marginBottom: '1.5rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)', boxShadow: 'var(--shadow-card)' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '1.2rem' }}>
             Enter Birth Details
           </div>
 
@@ -331,7 +332,7 @@ export default function Doshas() {
               <input type='date' value={form.dob} onChange={e => upd('dob', e.target.value)} style={inp} />
             </div>
             <div>
-              <label style={lbl}>Time of Birth * <span style={{ color: 'var(--text-dim)', fontSize: '0.68rem' }}>(24-hr, critical for Lagna)</span></label>
+              <label style={lbl}>Time of Birth * <span style={{ color: 'var(--text-dim)', fontSize: '0.62rem' }}>(24-hr, critical for Lagna)</span></label>
               <input type='time' value={form.tob} onChange={e => upd('tob', e.target.value)} style={inp} />
             </div>
           </div>
@@ -355,14 +356,15 @@ export default function Doshas() {
           </div>
 
           {error && (
-            <div style={{ background: 'rgba(229,57,53,0.1)', border: '1px solid rgba(229,57,53,0.3)', borderRadius: '8px', padding: '0.75rem 1rem', color: '#ef9a9a', fontSize: '0.85rem', marginBottom: '1rem' }}>{error}</div>
+            <div style={{ background: 'rgba(229,57,53,0.1)', border: '1px solid rgba(229,57,53,0.3)', borderRadius: 10, padding: '0.75rem 1rem', color: '#ef9a9a', fontSize: '0.85rem', marginBottom: '1rem' }}>{error}</div>
           )}
 
           <button onClick={compute} disabled={loading} style={{
-            width: '100%', background: loading ? 'rgba(201,147,58,0.4)' : `linear-gradient(135deg, ${GOLD}, #8B6020)`,
-            color: '#FFF8EC', border: 'none', borderRadius: '8px', padding: '0.85rem',
-            fontFamily: "'Cinzel', serif", fontSize: '0.82rem', fontWeight: 700,
-            letterSpacing: '2px', cursor: loading ? 'not-allowed' : 'pointer',
+            width: '100%', background: loading ? 'rgba(223,168,79,0.4)' : 'linear-gradient(135deg,#F2CB84 0%,#DFA84F 42%,#A8752B 100%)',
+            color: '#1C1205', border: 'none', borderRadius: 999, padding: '0.85rem',
+            fontSize: '0.9rem', fontWeight: 600,
+            letterSpacing: '0.02em', cursor: loading ? 'not-allowed' : 'pointer',
+            boxShadow: loading ? 'none' : '0 8px 28px rgba(223,168,79,0.28)',
           }}>
             {loading ? 'Computing…' : 'Compute Doshas →'}
           </button>
@@ -371,8 +373,8 @@ export default function Doshas() {
 
       {/* Results */}
       {step === 'result' && result && (
-        <div>
-          <button onClick={() => { setStep('form'); setResult(null) }} style={{ background: 'none', border: 'none', color: 'var(--text-dim)', fontSize: '0.82rem', cursor: 'pointer', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: 0 }}>
+        <div className="bh-fade-up-2">
+          <button onClick={() => { setStep('form'); setResult(null) }} style={{ background: 'transparent', border: '1px solid var(--border-hover)', color: 'var(--text-muted)', fontSize: '0.8rem', cursor: 'pointer', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.9rem', borderRadius: 999 }}>
             ← Compute for different details
           </button>
 
@@ -387,10 +389,10 @@ export default function Doshas() {
 
           {/* Planet snapshot */}
           <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
-            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '0.6rem' }}>Birth Planet Positions (Sidereal · Lahiri)</div>
+            <div style={{ fontSize: '0.62rem', color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.6rem' }}>Birth Planet Positions (Sidereal · Lahiri)</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
               {result.positions && Object.entries(result.positions).map(([planet, pos]) => (
-                <div key={planet} style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '6px', padding: '0.25rem 0.55rem', fontSize: '0.74rem' }}>
+                <div key={planet} style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 999, padding: '0.25rem 0.65rem', fontSize: '0.74rem' }}>
                   <span style={{ color: 'var(--text-dim)' }}>{planet}</span>
                   <span style={{ color: GOLD, marginLeft: '0.3rem' }}>{pos.sign} {pos.degree.toFixed(1)}°</span>
                 </div>
@@ -399,14 +401,14 @@ export default function Doshas() {
           </div>
 
           {/* CTA */}
-          <div style={{ marginTop: '1.75rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '12px', padding: '1.2rem 1.4rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <div style={{ marginTop: '1.75rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 18, padding: '1.2rem 1.4rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
             <div>
-              <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.8rem', color: GOLD, letterSpacing: '1px', marginBottom: '0.2rem' }}>Want a complete chart?</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Want a complete chart?</div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.83rem', margin: 0 }}>
                 Get your full Kundali — Vimshottari Dasha, all yogas, Lal Kitab remedies, and AI interpretation.
               </p>
             </div>
-            <Link to='/chart/new' style={{ background: GOLD, color: '#000', fontFamily: "'Cinzel', serif", fontSize: '0.78rem', fontWeight: 700, letterSpacing: '1.5px', padding: '0.65rem 1.5rem', borderRadius: '6px', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
+            <Link to='/chart/new' style={{ background: 'linear-gradient(135deg,#F2CB84 0%,#DFA84F 42%,#A8752B 100%)', color: '#1C1205', fontSize: '0.82rem', fontWeight: 600, letterSpacing: '0.02em', padding: '0.65rem 1.5rem', borderRadius: 999, boxShadow: '0 8px 28px rgba(223,168,79,0.28)', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
               Free Chart →
             </Link>
           </div>
@@ -415,8 +417,8 @@ export default function Doshas() {
 
       {/* Info box (form step only) */}
       {step === 'form' && (
-        <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '12px', padding: '1.1rem 1.3rem' }}>
-          <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.72rem', color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+        <div style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 18, padding: '1.1rem 1.3rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
             {tab === 'mangal' ? 'About Mangal Dosha' : 'About Kaal Sarp Dosha'}
           </div>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.75, margin: 0 }}>

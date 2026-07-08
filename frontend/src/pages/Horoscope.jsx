@@ -19,8 +19,8 @@ const RASHIS = [
   { en: 'Pisces',      hi: 'मीन',      symbol: '♓', lord: 'Jupiter' },
 ]
 
-const GOLD = '#C9933A'
-const GOLD_L = '#E8B96A'
+const GOLD = '#DFA84F'
+const GOLD_L = '#F2CB84'
 const DARK = '#05050f'
 
 // ── Sub-components ─────────────────────────────────────────────────────────────
@@ -28,7 +28,7 @@ const DARK = '#05050f'
 function StarRow({ label, value }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.45rem 0', borderBottom: '1px solid var(--border)' }}>
-      <span style={{ color: 'var(--text-dim)', fontSize: '0.78rem', letterSpacing: '1px', textTransform: 'uppercase' }}>{label}</span>
+      <span style={{ color: 'var(--text-dim)', fontSize: '0.72rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px', textTransform: 'uppercase' }}>{label}</span>
       <span style={{ color: GOLD, fontSize: '1rem', letterSpacing: '2px' }}>
         {'★'.repeat(value)}{'☆'.repeat(5 - value)}
       </span>
@@ -39,14 +39,14 @@ function StarRow({ label, value }) {
 function LuckyPill({ label, value, color }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem', flex: 1 }}>
-      <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', letterSpacing: '1px', textTransform: 'uppercase' }}>{label}</div>
+      <div style={{ fontSize: '0.62rem', color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px', textTransform: 'uppercase' }}>{label}</div>
       <div style={{
         background: color ? `${color}22` : 'var(--bg-elevated)',
         border: `1px solid ${color || 'var(--border)'}`,
-        borderRadius: '20px',
+        borderRadius: 999,
         padding: '0.3rem 0.85rem',
         fontSize: '0.82rem',
-        fontWeight: 700,
+        fontWeight: 600,
         color: color || 'var(--text-primary)',
         whiteSpace: 'nowrap',
       }}>{value}</div>
@@ -58,7 +58,7 @@ function ReadingBlock({ title, text }) {
   if (!text) return null
   return (
     <div style={{ marginBottom: '1rem' }}>
-      <div style={{ fontSize: '0.72rem', color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem', fontFamily: "'Cinzel', serif" }}>{title}</div>
+      <div style={{ fontSize: '0.66rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '0.4rem', fontFamily: "'JetBrains Mono', monospace" }}>{title}</div>
       <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.75, margin: 0 }}>{text}</p>
     </div>
   )
@@ -84,12 +84,12 @@ function HoroscopeDetail({ data }) {
       </div>
 
       {/* Star ratings */}
-      <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '10px', padding: '1rem 1.2rem', marginBottom: '1.5rem' }}>
+      <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: '1rem 1.2rem', marginBottom: '1.5rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
         <StarRow label="Love & Relationships" value={ratings.love}   />
         <StarRow label="Career & Work"        value={ratings.career} />
         <StarRow label="Finance & Money"      value={ratings.money}  />
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.5rem' }}>
-          <span style={{ color: 'var(--text-dim)', fontSize: '0.78rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Overall Day</span>
+          <span style={{ color: 'var(--text-dim)', fontSize: '0.72rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px', textTransform: 'uppercase' }}>Overall Day</span>
           <span style={{ color: GOLD_L, fontSize: '1.05rem', letterSpacing: '2px' }}>
             {'★'.repeat(ratings.overall)}{'☆'.repeat(5 - ratings.overall)}
           </span>
@@ -104,10 +104,10 @@ function HoroscopeDetail({ data }) {
         <ReadingBlock title="Finance & Money"    text={reading.money}    />
         <ReadingBlock title="General Guidance"   text={reading.general}  />
         {reading.sade_note && (
-          <div style={{ background: 'rgba(201,147,58,0.08)', border: '1px solid rgba(201,147,58,0.3)', borderRadius: '8px', padding: '0.85rem 1rem', marginTop: '0.5rem' }}>
-            <div style={{ fontSize: '0.72rem', color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.35rem', fontFamily: "'Cinzel', serif" }}>⚠ Saturn Note</div>
+          <div style={{ background: 'rgba(223,168,79,0.08)', border: '1px solid rgba(223,168,79,0.3)', borderRadius: 10, padding: '0.85rem 1rem', marginTop: '0.5rem' }}>
+            <div style={{ fontSize: '0.66rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '0.35rem', fontFamily: "'JetBrains Mono', monospace" }}>⚠ Saturn Note</div>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: 1.7, margin: 0 }}>{reading.sade_note}</p>
-            <Link to="/sade-sati" style={{ color: GOLD, fontSize: '0.8rem', textDecoration: 'none', display: 'inline-block', marginTop: '0.5rem' }}>Run your Sade Sati report →</Link>
+            <Link to="/sade-sati" style={{ color: GOLD, fontSize: '0.8rem', textDecoration: 'none', display: 'inline-block', marginTop: '0.5rem', fontWeight: 600 }}>Run your Sade Sati report →</Link>
           </div>
         )}
         {reading.retro?.length > 0 && (
@@ -120,10 +120,10 @@ function HoroscopeDetail({ data }) {
       {/* Transit snapshot */}
       {transits_snapshot && (
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
-          <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '0.6rem' }}>Today's Planet Positions</div>
+          <div style={{ fontSize: '0.62rem', color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.6rem' }}>Today's Planet Positions</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
             {Object.entries(transits_snapshot).map(([planet, sign]) => (
-              <div key={planet} style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '6px', padding: '0.28rem 0.6rem', fontSize: '0.76rem' }}>
+              <div key={planet} style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 999, padding: '0.28rem 0.7rem', fontSize: '0.76rem' }}>
                 <span style={{ color: 'var(--text-dim)' }}>{planet}</span>
                 <span style={{ color: GOLD, marginLeft: '0.35rem' }}>{sign}</span>
               </div>
@@ -189,38 +189,38 @@ export default function Horoscope() {
   return (
     <div style={page}>
       {/* Header */}
-      <div style={headerArea}>
-        <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.7rem', color: GOLD, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '0.6rem' }}>
+      <div className="bh-fade-up" style={headerArea}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', color: 'var(--gold)', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '0.6rem' }}>
           Today · Rashi Rashifal
         </div>
-        <h1 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.6rem, 4vw, 2.5rem)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.4rem' }}>
+        <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(1.9rem, 4vw, 2.8rem)', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: '0 0 0.4rem' }}>
           Daily Horoscope
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: '0 0 0.5rem' }}>
           Transit-based · Swiss Ephemeris · Sidereal Lahiri
         </p>
-        <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>{todayStr}</div>
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace" }}>{todayStr}</div>
       </div>
 
       {loading && (
         <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-dim)' }}>
-          <div style={{ fontSize: '1.8rem', marginBottom: '0.75rem', animation: 'spin 2s linear infinite', display: 'inline-block' }}>✦</div>
+          <div style={{ fontSize: '1.8rem', marginBottom: '0.75rem', animation: 'spin 2s linear infinite', display: 'inline-block', color: 'var(--gold)' }}>✦</div>
           <div>Computing today's transits…</div>
           <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
         </div>
       )}
 
       {error && (
-        <div style={{ background: 'rgba(229,57,53,0.1)', border: '1px solid rgba(229,57,53,0.3)', borderRadius: '10px', padding: '1rem 1.2rem', color: '#ef9a9a', marginBottom: '1rem' }}>
+        <div style={{ background: 'rgba(229,57,53,0.1)', border: '1px solid rgba(229,57,53,0.3)', borderRadius: 10, padding: '1rem 1.2rem', color: '#ef9a9a', marginBottom: '1rem' }}>
           {error}
         </div>
       )}
 
       {allData && (
-        <div style={grid}>
+        <div className="horoscope-grid bh-fade-up-1" style={grid}>
           {/* Left: sign selector */}
           <div>
-            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.8rem' }}>Select Your Rashi</div>
+            <div style={{ fontSize: '0.62rem', color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.8rem' }}>Select Your Rashi</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               {RASHIS.map((r, i) => {
                 const isActive = selected === i
@@ -235,7 +235,7 @@ export default function Horoscope() {
                       gap: '0.75rem',
                       background: isActive ? `${GOLD}18` : 'transparent',
                       border: `1px solid ${isActive ? GOLD : 'var(--border)'}`,
-                      borderRadius: '8px',
+                      borderRadius: 10,
                       padding: '0.55rem 0.8rem',
                       cursor: 'pointer',
                       textAlign: 'left',
@@ -244,7 +244,7 @@ export default function Horoscope() {
                   >
                     <span style={{ fontSize: '1.2rem', flexShrink: 0 }}>{r.symbol}</span>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive ? GOLD : 'var(--text-primary)', fontFamily: "'Cinzel', serif" }}>{r.en}</div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive ? GOLD : 'var(--text-primary)' }}>{r.en}</div>
                       <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>{r.hi}</div>
                     </div>
                     {d && (
@@ -258,8 +258,8 @@ export default function Horoscope() {
             </div>
 
             {/* CTA */}
-            <div style={{ marginTop: '1.5rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '10px', padding: '1rem 1.1rem' }}>
-              <div style={{ fontSize: '0.75rem', color: GOLD, fontFamily: "'Cinzel', serif", letterSpacing: '1px', marginBottom: '0.4rem' }}>Know your Rashi?</div>
+            <div style={{ marginTop: '1.5rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 18, padding: '1rem 1.1rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' }}>
+              <div style={{ fontSize: '0.66rem', color: GOLD, fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem' }}>Know your Rashi?</div>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', lineHeight: 1.6, margin: '0 0 0.75rem' }}>
                 Your Rashi is your Moon sign — not your Sun sign. Get your precise chart to find out.
               </p>
@@ -271,7 +271,7 @@ export default function Horoscope() {
 
           {/* Right: detail */}
           {selectedData && (
-            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '14px', padding: '1.75rem 2rem' }}>
+            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: '1.75rem 2rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)', boxShadow: 'var(--shadow-card)' }}>
               {/* Rashi header */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '1.5rem' }}>
                 <div style={{
@@ -284,7 +284,7 @@ export default function Horoscope() {
                   {RASHIS[selectedData.rashi_index]?.symbol}
                 </div>
                 <div>
-                  <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: '1.4rem', color: 'var(--text-primary)', margin: '0 0 0.1rem' }}>{selectedData.rashi}</h2>
+                  <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: '1.4rem', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: '0 0 0.1rem' }}>{selectedData.rashi}</h2>
                   <div style={{ color: 'var(--text-dim)', fontSize: '0.9rem' }}>{selectedData.rashi_hi} · Lord: {selectedData.lord}</div>
                 </div>
               </div>

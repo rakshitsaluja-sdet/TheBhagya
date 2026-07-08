@@ -27,35 +27,43 @@ function guessTimezone(countryCode, lon) {
 
 const s = {
   wrap: { maxWidth: '620px', margin: '3rem auto', padding: '0 1.5rem' },
-  heading: { fontFamily: "'Cinzel', serif", fontSize: '1.8rem', color: 'var(--gold)', marginBottom: '0.5rem' },
+  heading: {
+    fontFamily: "'Fraunces', serif", fontWeight: 600, letterSpacing: '-0.02em',
+    fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', color: 'var(--text-primary)', marginBottom: '0.5rem',
+  },
   sub: { color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '0.95rem' },
   card: {
     background: 'var(--bg-card)', border: '1px solid var(--border)',
-    borderRadius: '16px', padding: '2.5rem',
+    borderRadius: '18px', padding: '2.5rem',
+    backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
+    boxShadow: 'var(--shadow-card)',
   },
   group: { marginBottom: '1.5rem' },
   labelRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.4rem' },
-  label: { fontSize: '0.8rem', color: 'var(--text-muted)', letterSpacing: '0.5px', fontWeight: 500 },
-  req:  { fontSize: '0.75rem', color: '#E05050' },
-  opt:  { fontSize: '0.75rem', color: 'var(--text-dim)' },
+  label: {
+    fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem',
+    color: 'var(--text-dim)', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 500,
+  },
+  req:  { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', letterSpacing: '1px', color: '#E05050' },
+  opt:  { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', letterSpacing: '1px', color: 'var(--text-dim)' },
   input: {
-    width: '100%', background: 'var(--bg-deep)', border: '1px solid var(--border)',
-    borderRadius: '8px', padding: '0.7rem 1rem', color: 'var(--text-primary)',
-    fontSize: '0.95rem', boxSizing: 'border-box',
+    width: '100%', background: 'var(--bg-input)', border: '1px solid var(--border)',
+    borderRadius: '10px', padding: '0.8rem 1rem', color: 'var(--text-primary)',
+    fontSize: '0.95rem', boxSizing: 'border-box', outline: 'none', transition: 'border-color 0.2s',
   },
   inputDisabled: {
-    width: '100%', background: 'var(--bg-deep)', border: '1px solid var(--border)',
-    borderRadius: '8px', padding: '0.7rem 1rem', color: 'var(--text-dim)',
+    width: '100%', background: 'var(--bg-input)', border: '1px solid var(--border)',
+    borderRadius: '10px', padding: '0.8rem 1rem', color: 'var(--text-dim)',
     fontSize: '0.9rem', boxSizing: 'border-box', fontStyle: 'italic',
   },
   row: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' },
-  error: { color: '#E05050', fontSize: '0.85rem', marginTop: '1rem', padding: '0.75rem', background: 'rgba(224,80,80,0.08)', borderRadius: '8px', border: '1px solid rgba(224,80,80,0.2)' },
+  error: { color: '#E05050', fontSize: '0.85rem', marginTop: '1rem', padding: '0.75rem', background: 'rgba(224,80,80,0.08)', borderRadius: '10px', border: '1px solid rgba(224,80,80,0.2)' },
   geoStatus: { fontSize: '0.78rem', marginTop: '0.3rem' },
   btnRow: { display: 'flex', gap: '1rem', marginTop: '2rem' },
   hint: { fontSize: '0.78rem', color: 'var(--text-dim)', marginTop: '0.3rem' },
 }
 
-const FOCUS = 'rgba(201,147,58,0.6)'
+const FOCUS = 'var(--gold)'
 const BLUR  = 'var(--border)'
 const onFocus = e => e.target.style.borderColor = FOCUS
 const onBlur  = e => e.target.style.borderColor = BLUR
@@ -118,15 +126,17 @@ export default function ChartForm() {
 
   return (
     <div style={s.wrap}>
-      {focus === 'lalkitab' && (
-        <div style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', background:'rgba(201,147,58,0.1)', border:'1px solid rgba(201,147,58,0.25)', borderRadius:'20px', padding:'0.3rem 1rem', marginBottom:'1rem', fontSize:'0.82rem', color:'var(--gold)' }}>
-          ◈ Lal Kitab Reading
-        </div>
-      )}
-      <h1 style={s.heading}>{focus === 'lalkitab' ? 'Lal Kitab Chart' : 'Your Birth Chart'}</h1>
-      <p style={s.sub}>{focus === 'lalkitab' ? 'Enter your birth details — we\'ll compute your house map, Pucca Ghar planets and personalised remedies.' : 'Enter your birth details for the most accurate reading.'}</p>
+      <div className="bh-fade-up">
+        {focus === 'lalkitab' && (
+          <div style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', background:'rgba(223,168,79,0.1)', border:'1px solid rgba(223,168,79,0.25)', borderRadius:'999px', padding:'0.3rem 1rem', marginBottom:'1rem', fontFamily:"'JetBrains Mono', monospace", fontSize:'0.68rem', letterSpacing:'2px', textTransform:'uppercase', color:'var(--gold)' }}>
+            ◈ Lal Kitab Reading
+          </div>
+        )}
+        <h1 style={s.heading}>{focus === 'lalkitab' ? 'Lal Kitab Chart' : 'Your Birth Chart'}</h1>
+        <p style={s.sub}>{focus === 'lalkitab' ? 'Enter your birth details — we\'ll compute your house map, Pucca Ghar planets and personalised remedies.' : 'Enter your birth details for the most accurate reading.'}</p>
+      </div>
 
-      <form onSubmit={handleSubmit} style={s.card}>
+      <form onSubmit={handleSubmit} className="bh-fade-up-1" style={s.card}>
 
         {/* NAME — optional, used for numerology */}
         <div style={s.group}>
@@ -243,7 +253,12 @@ export default function ChartForm() {
 
         <div style={s.btnRow}>
           <button type="submit" className="btn-primary" disabled={loading}
-            style={{ flex: 1, opacity: loading ? 0.7 : 1 }}>
+            style={{
+              flex: 1, opacity: loading ? 0.7 : 1,
+              background: 'linear-gradient(135deg,#F2CB84 0%,#DFA84F 42%,#A8752B 100%)',
+              color: '#1C1205', fontWeight: 600, border: 'none', borderRadius: '999px',
+              boxShadow: '0 8px 28px rgba(223,168,79,0.28)',
+            }}>
             {loading ? '✦ Computing your stars...' : '✦ Reveal My Destiny'}
           </button>
         </div>

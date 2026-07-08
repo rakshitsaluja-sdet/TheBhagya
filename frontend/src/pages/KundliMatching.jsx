@@ -44,20 +44,23 @@ const VERDICT_COLORS = {
   emerald:'#2ecc71',
 }
 
+const GOLD_GRADIENT = 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)'
+
 const s = {
   page: { maxWidth: 1100, margin: '0 auto', padding: '2rem 1.5rem 4rem' },
-  heading: { fontFamily: "'Cinzel', serif", fontSize: '1.6rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '0.3rem' },
-  subhead: { fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '2.2rem' },
+  eyebrow: { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', letterSpacing: '3px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '0.6rem' },
+  heading: { fontFamily: "'Fraunces', serif", fontSize: 'clamp(1.9rem, 4vw, 2.8rem)', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: '0.3rem' },
+  subhead: { fontSize: '0.92rem', color: 'var(--text-muted)', marginBottom: '2.2rem' },
   formGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' },
-  card: { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px', padding: '1.5rem' },
-  cardTitle: { fontFamily: "'Cinzel', serif", fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' },
+  card: { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: '1.5rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' },
+  cardTitle: { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' },
   label: { display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.5px', marginBottom: '0.35rem' },
-  input: { width: '100%', padding: '0.65rem 0.9rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', fontFamily: 'inherit' },
-  select: { width: '100%', padding: '0.65rem 0.9rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', fontFamily: 'inherit', cursor: 'pointer' },
+  input: { width: '100%', padding: '0.8rem 1rem', background: 'var(--bg-input)', border: '1px solid var(--border)', borderRadius: 10, color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', fontFamily: 'inherit' },
+  select: { width: '100%', padding: '0.8rem 1rem', background: 'var(--bg-input)', border: '1px solid var(--border)', borderRadius: 10, color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', fontFamily: 'inherit', cursor: 'pointer' },
   row: { marginBottom: '1rem' },
-  btn: { width: '100%', padding: '0.9rem', background: 'linear-gradient(135deg, var(--gold), #8B6020)', color: '#FFF8EC', border: 'none', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '1px', transition: 'opacity 0.2s' },
-  vsCircle: { display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', color: 'var(--text-muted)', fontFamily: "'Cinzel', serif", fontWeight: 700 },
-  err: { background: 'rgba(231,76,60,0.1)', border: '1px solid rgba(231,76,60,0.35)', borderRadius: '8px', padding: '1rem', color: '#e74c3c', fontSize: '0.875rem', marginBottom: '1.5rem' },
+  btn: { width: '100%', padding: '0.95rem', background: GOLD_GRADIENT, color: '#1C1205', border: 'none', borderRadius: 999, fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', letterSpacing: '0.5px', boxShadow: '0 8px 28px rgba(223,168,79,0.28)', transition: 'opacity 0.2s' },
+  vsCircle: { display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', color: 'var(--text-muted)', fontFamily: "'Fraunces', serif", fontWeight: 600 },
+  err: { background: 'rgba(231,76,60,0.1)', border: '1px solid rgba(231,76,60,0.35)', borderRadius: 10, padding: '1rem', color: '#e74c3c', fontSize: '0.875rem', marginBottom: '1.5rem' },
 }
 
 /* ── Person form ─────────────────────────────────────────────────────────── */
@@ -127,7 +130,7 @@ function ScoreBar({ koot }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-primary)' }}>{koot.koot}</span>
           {hasBadge && (
-            <span style={{ fontSize: '0.65rem', padding: '0.15rem 0.5rem', borderRadius: '10px', background: 'rgba(231,76,60,0.15)', color: '#e74c3c', border: '1px solid rgba(231,76,60,0.3)', fontWeight: 700 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', padding: '0.15rem 0.6rem', borderRadius: 999, background: 'rgba(231,76,60,0.15)', color: '#e74c3c', border: '1px solid rgba(231,76,60,0.3)', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' }}>
               DOSHA
             </span>
           )}
@@ -168,18 +171,18 @@ function ResultPanel({ result }) {
       {/* ── Names + Moon info ── */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
         <div style={{ ...s.card, textAlign: 'center' }}>
-          <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '0.3rem' }}>{person1.name}</div>
+          <div style={{ fontFamily: "'Fraunces', serif", fontSize: '1.1rem', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: '0.3rem' }}>{person1.name}</div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{person1.moon_sign} · {person1.nakshatra}</div>
           <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: '0.2rem', opacity: 0.6 }}>Moon {person1.moon_lon}°</div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.2rem' }}>
           <div style={{ fontSize: '1.6rem', color: 'var(--gold)' }}>♥</div>
-          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', letterSpacing: '1px' }}>match</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: 'var(--text-muted)', letterSpacing: '2px', textTransform: 'uppercase' }}>match</div>
         </div>
 
         <div style={{ ...s.card, textAlign: 'center' }}>
-          <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1rem', fontWeight: 700, color: 'var(--gold)', marginBottom: '0.3rem' }}>{person2.name}</div>
+          <div style={{ fontFamily: "'Fraunces', serif", fontSize: '1.1rem', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: '0.3rem' }}>{person2.name}</div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{person2.moon_sign} · {person2.nakshatra}</div>
           <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: '0.2rem', opacity: 0.6 }}>Moon {person2.moon_lon}°</div>
         </div>
@@ -187,10 +190,10 @@ function ResultPanel({ result }) {
 
       {/* ── Score gauge ── */}
       <div style={{ ...s.card, textAlign: 'center', marginBottom: '1.5rem' }}>
-        <div style={{ fontSize: '3.5rem', fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, color: vColor, lineHeight: 1 }}>
+        <div style={{ fontSize: '3.5rem', fontFamily: "'Fraunces', serif", fontWeight: 600, letterSpacing: '-0.02em', color: vColor, lineHeight: 1 }}>
           {total}<span style={{ fontSize: '1.8rem', color: 'var(--text-muted)', fontWeight: 400 }}>/36</span>
         </div>
-        <div style={{ fontFamily: "'Cinzel', serif", fontSize: '1rem', fontWeight: 700, color: vColor, margin: '0.5rem 0' }}>
+        <div style={{ fontFamily: "'Fraunces', serif", fontSize: '1.1rem', fontWeight: 600, letterSpacing: '-0.02em', color: vColor, margin: '0.5rem 0' }}>
           {verdict.label}
         </div>
         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', maxWidth: 520, margin: '0 auto', lineHeight: 1.65 }}>
@@ -202,7 +205,7 @@ function ResultPanel({ result }) {
           <div style={{ height: 10, background: 'var(--border)', borderRadius: 5, overflow: 'hidden' }}>
             <div style={{ height: '100%', width: `${verdict.pct}%`, background: `linear-gradient(90deg, var(--gold), ${vColor})`, borderRadius: 5, transition: 'width 1s ease' }} />
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
             <span>0</span><span>18 (min)</span><span>24</span><span>28</span><span>36</span>
           </div>
         </div>
@@ -211,7 +214,7 @@ function ResultPanel({ result }) {
       {/* ── Doshas ── */}
       {doshas.length > 0 && (
         <div style={{ marginBottom: '1.5rem' }}>
-          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '0.7rem' }}>Doshas Found</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '0.7rem' }}>Doshas Found</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem' }}>
             {doshas.map((d, i) => (
               <div key={i} style={{
@@ -219,7 +222,7 @@ function ResultPanel({ result }) {
                 padding: '0.9rem 1rem',
                 background: d.severity === 'critical' ? 'rgba(231,76,60,0.08)' : d.severity === 'high' ? 'rgba(231,76,60,0.05)' : 'rgba(230,126,34,0.06)',
                 border: `1px solid ${d.severity === 'critical' ? 'rgba(231,76,60,0.35)' : d.severity === 'high' ? 'rgba(231,76,60,0.25)' : 'rgba(230,126,34,0.25)'}`,
-                borderRadius: '8px',
+                borderRadius: 10,
               }}>
                 <span style={{ fontSize: '1rem', flexShrink: 0 }}>{d.severity === 'critical' ? '⚠' : d.severity === 'high' ? '!' : 'ℹ'}</span>
                 <div>
@@ -239,11 +242,11 @@ function ResultPanel({ result }) {
       </div>
 
       {/* ── CTA ── */}
-      <div style={{ marginTop: '1.5rem', textAlign: 'center', padding: '1.5rem', background: 'var(--bg-card)', borderRadius: '12px', border: '1px solid var(--border)' }}>
+      <div style={{ ...s.card, marginTop: '1.5rem', textAlign: 'center' }}>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
           For a complete picture, view your individual birth charts and Vimshottari Dasha timelines.
         </p>
-        <Link to="/chart/new" style={{ display: 'inline-block', padding: '0.7rem 1.8rem', background: 'transparent', border: '1px solid var(--gold)', color: 'var(--gold)', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '0.875rem', transition: 'background 0.2s' }}>
+        <Link to="/chart/new" style={{ display: 'inline-block', padding: '0.7rem 1.8rem', background: 'transparent', border: '1px solid var(--border-hover)', color: 'var(--gold)', borderRadius: 999, textDecoration: 'none', fontWeight: 600, fontSize: '0.875rem', transition: 'background 0.2s, border-color 0.2s' }}>
           Create Full Kundali →
         </Link>
       </div>
@@ -284,20 +287,21 @@ export default function KundliMatching() {
   return (
     <div style={s.page}>
       {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
+      <div className="bh-fade-up" style={{ marginBottom: '2rem' }}>
+        <div style={s.eyebrow}>Vedic Compatibility</div>
         <h1 style={s.heading}>Kundli Matching · Ashtakoot</h1>
         <p style={s.subhead}>
           36-Guna compatibility analysis — eight cosmic dimensions compared to reveal the harmony between two charts.
         </p>
 
         {/* Info box */}
-        <div style={{ background: 'rgba(201,147,58,0.06)', border: '1px solid rgba(201,147,58,0.2)', borderRadius: '10px', padding: '1.1rem 1.3rem', fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
+        <div style={{ background: 'rgba(223,168,79,0.06)', border: '1px solid rgba(223,168,79,0.2)', borderRadius: 12, padding: '1.1rem 1.3rem', fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
           <strong style={{ color: 'var(--gold)' }}>How it works:</strong> Ashtakoot matching computes 8 Kootas (Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakut, Nadi) from the Moon's sidereal position in each chart. A score of 18+/36 is the traditional minimum for marriage. Nadi Dosha (same Nadi) is the most critical.
         </div>
       </div>
 
       {/* Forms */}
-      <div style={s.formGrid}>
+      <div className="km-form-grid bh-fade-up-1" style={s.formGrid}>
         <PersonForm label="Person 1" icon="☽" data={p1} onChange={setP1} />
         <PersonForm label="Person 2" icon="☽" data={p2} onChange={setP2} />
       </div>
@@ -305,6 +309,7 @@ export default function KundliMatching() {
       {error && <div style={s.err}>{error}</div>}
 
       <button
+        className="bh-fade-up-2"
         style={{ ...s.btn, opacity: (!valid || loading) ? 0.6 : 1 }}
         onClick={handleCompute}
         disabled={!valid || loading}

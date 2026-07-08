@@ -160,67 +160,70 @@ const s = {
   wrap:       { maxWidth: '960px', margin: '2.5rem auto', padding: '0 1.5rem' },
   backLink:   { color: 'var(--text-muted)', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '1.5rem', textDecoration: 'none' },
   header:     { marginBottom: '2rem' },
-  name:       { fontFamily: "'Cinzel', serif", fontSize: '2rem', color: 'var(--gold)' },
-  meta:       { color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '0.25rem' },
+  name:       { fontFamily: "'Fraunces', serif", fontWeight: 600, letterSpacing: '-0.02em', fontSize: 'clamp(1.9rem, 4vw, 2.8rem)', color: 'var(--text-primary)' },
+  meta:       { color: 'var(--text-muted)', fontSize: '0.82rem', marginTop: '0.35rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.3px' },
 
-  storyCard:  { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '14px', padding: '2rem', marginBottom: '1.5rem' },
-  storyTitle: { fontFamily: "'Cinzel', serif", fontSize: '1rem', color: 'var(--gold)', letterSpacing: '2px', marginBottom: '1.25rem' },
+  storyCard:  { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '18px', padding: '2rem', marginBottom: '1.5rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' },
+  storyTitle: { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: 'var(--gold)', letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '1.25rem' },
   storyText:  { color: 'var(--text-primary)', fontSize: '0.97rem', lineHeight: 1.85, marginBottom: '0.75rem' },
 
   dashaHighlight: {
     background: 'var(--bg-elevated)', border: '1px solid var(--border-hover)',
-    borderRadius: '10px', padding: '1.25rem 1.5rem', marginBottom: '1.5rem',
+    borderRadius: '18px', padding: '1.25rem 1.5rem', marginBottom: '1.5rem',
+    backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
   },
-  dashaLabel:  { color: 'var(--gold)', fontWeight: 600, fontSize: '0.95rem', marginBottom: '0.5rem', fontFamily: "'Cinzel', serif" },
+  dashaLabel:  { color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.02rem', marginBottom: '0.5rem', fontFamily: "'Fraunces', serif", letterSpacing: '-0.01em' },
   dashaText:   { color: 'var(--text-primary)', fontSize: '0.92rem', lineHeight: 1.75, marginBottom: '0.5rem' },
   dashaSub:    { color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.6 },
 
   grid:      { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' },
-  card:      { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px', padding: '1.5rem' },
-  cardTitle: { fontFamily: "'Cinzel', serif", fontSize: '0.82rem', color: 'var(--gold)', letterSpacing: '2px', marginBottom: '1rem', textTransform: 'uppercase' },
+  card:      { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '18px', padding: '1.5rem', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)' },
+  cardTitle: { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: 'var(--gold)', letterSpacing: '2.5px', marginBottom: '1rem', textTransform: 'uppercase' },
 
-  row:          { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0.45rem 0', borderBottom: '1px solid var(--border)' },
+  row:          { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0.45rem 0.35rem', borderBottom: '1px solid var(--border-soft)', borderRadius: '6px', transition: 'background 0.15s' },
   planetName:   { color: 'var(--gold-light)', fontWeight: 500, fontSize: '0.9rem', display: 'flex', gap: '0.4rem', alignItems: 'center' },
   planetSymbol: { fontSize: '1rem', color: 'var(--gold)', width: '1.2rem' },
-  planetDetail: { color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'right' },
+  planetDetail: { color: 'var(--text-muted)', fontSize: '0.74rem', textAlign: 'right', fontFamily: "'JetBrains Mono', monospace" },
   pucca:        { color: 'var(--gold)', fontSize: '0.7rem', marginLeft: '0.3rem' },
 
-  lagnaBlock: { textAlign: 'center', padding: '1.5rem', background: 'var(--bg-elevated)', borderRadius: '8px', marginBottom: '0.75rem', border: '1px solid var(--border)' },
-  lagnaSign:  { fontFamily: "'Cinzel', serif", fontSize: '1.6rem', color: 'var(--gold)' },
-  lagnaDeg:   { color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '0.25rem' },
-  lagnaNak:   { color: 'var(--text-dim)', fontSize: '0.8rem', marginTop: '0.15rem' },
+  lagnaBlock: { textAlign: 'center', padding: '1.5rem', background: 'var(--bg-elevated)', borderRadius: '10px', marginBottom: '0.75rem', border: '1px solid var(--border)' },
+  lagnaSign:  { fontFamily: "'Fraunces', serif", fontWeight: 600, letterSpacing: '-0.01em', fontSize: '1.7rem', color: 'var(--gold)' },
+  lagnaDeg:   { color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', fontFamily: "'JetBrains Mono', monospace" },
+  lagnaNak:   { color: 'var(--text-dim)', fontSize: '0.75rem', marginTop: '0.15rem', fontFamily: "'JetBrains Mono', monospace" },
   lagnaDesc:  { color: 'var(--text-muted)', fontSize: '0.83rem', lineHeight: 1.6, marginTop: '0.75rem', fontStyle: 'italic' },
 
   houseGrid: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' },
-  houseCell: { background: 'var(--bg-elevated)', borderRadius: '6px', border: '1px solid var(--border)', padding: '0.5rem', textAlign: 'center', fontSize: '0.75rem' },
-  houseNum:  { color: 'var(--text-dim)', marginBottom: '0.2rem' },
+  houseCell: { background: 'var(--bg-elevated)', borderRadius: '10px', border: '1px solid var(--border)', padding: '0.5rem', textAlign: 'center', fontSize: '0.75rem' },
+  houseNum:  { color: 'var(--text-dim)', marginBottom: '0.2rem', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', letterSpacing: '1px' },
   houseOcc:  { color: 'var(--text-muted)' },
 
-  mdCard:  { background: 'var(--bg-elevated)', border: '1px solid var(--border-hover)', borderRadius: '8px', padding: '1rem', marginBottom: '0.75rem' },
+  mdCard:  { background: 'var(--bg-elevated)', border: '1px solid var(--border-hover)', borderRadius: '10px', padding: '1rem', marginBottom: '0.75rem' },
   mdLabel: { color: 'var(--gold)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.2rem' },
-  mdDate:  { color: 'var(--text-muted)', fontSize: '0.8rem' },
-  adRow:   { marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem' },
+  mdDate:  { color: 'var(--text-muted)', fontSize: '0.72rem', fontFamily: "'JetBrains Mono', monospace" },
+  adRow:   { marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid var(--border-soft)', display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem' },
   adLabel: { color: 'var(--text-muted)' },
-  adDate:  { color: 'var(--text-dim)' },
-  mdLight: { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '8px', padding: '0.85rem', marginBottom: '0.5rem' },
+  adDate:  { color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem' },
+  mdLight: { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '10px', padding: '0.85rem', marginBottom: '0.5rem' },
 
-  lkItem:   { display: 'flex', gap: '0.75rem', padding: '0.5rem 0', borderBottom: '1px solid var(--border)', alignItems: 'flex-start' },
+  lkItem:   { display: 'flex', gap: '0.75rem', padding: '0.5rem 0', borderBottom: '1px solid var(--border-soft)', alignItems: 'flex-start' },
   lkBullet: { color: 'var(--gold)', flexShrink: 0, marginTop: '2px' },
   lkText:   { color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.5 },
 
-  loading: { textAlign: 'center', padding: '6rem 2rem', color: 'var(--text-muted)', fontFamily: "'Cinzel', serif", fontSize: '1.2rem' },
+  loading: { textAlign: 'center', padding: '6rem 2rem', color: 'var(--text-muted)', fontFamily: "'Fraunces', serif", fontSize: '1.2rem' },
   error:   { textAlign: 'center', padding: '4rem', color: '#E05050' },
 
-  sectionDivider: { borderTop: '1px solid var(--border)', margin: '2rem 0 1.5rem', paddingTop: '1.5rem' },
-  sectionHead:    { fontFamily: "'Cinzel', serif", fontSize: '1rem', color: 'var(--gold)', letterSpacing: '2px', marginBottom: '1.25rem' },
+  sectionDivider: { borderTop: '1px solid var(--border-soft)', margin: '2rem 0 1.5rem', paddingTop: '1.5rem' },
+  sectionHead:    { fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: 'var(--gold)', letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '1.25rem' },
 }
 
 /* ── Sub-components ──────────────────────────────────────── */
 function PlanetTable({ planets }) {
   return (
-    <div>
+    <div className="planet-table-wrap">
       {Object.entries(planets).map(([name, p]) => (
-        <div key={name} style={s.row}>
+        <div key={name} style={s.row}
+          onMouseEnter={e => e.currentTarget.style.background = 'var(--gold-pale)'}
+          onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
           <span style={s.planetName}>
             <span style={s.planetSymbol}>{PLANET_SYMBOLS[name] || '●'}</span>
             {name}
@@ -289,12 +292,12 @@ function RemedyDetail({ r }) {
   const [section, setSection] = useState(null)
   const toggle = (e, k) => { e.stopPropagation(); setSection(section === k ? null : k) }
 
-  const subHead = { fontSize:'0.76rem', fontWeight:700, letterSpacing:'1.5px', textTransform:'uppercase', color:'var(--gold)', marginBottom:'0.5rem' }
+  const subHead = { fontFamily:"'JetBrains Mono', monospace", fontSize:'0.66rem', fontWeight:700, letterSpacing:'2px', textTransform:'uppercase', color:'var(--gold)', marginBottom:'0.5rem' }
   const listItem = { color:'var(--text-muted)', fontSize:'0.84rem', lineHeight:1.7, marginBottom:'0.35rem', paddingLeft:'0.25rem' }
   const sectionBox = (active) => ({
-    border: `1px solid ${active ? 'rgba(201,147,58,0.4)' : 'var(--border)'}`,
-    borderRadius:'8px', marginTop:'0.6rem', overflow:'hidden',
-    background: active ? 'rgba(201,147,58,0.04)' : 'transparent',
+    border: `1px solid ${active ? 'rgba(223,168,79,0.4)' : 'var(--border)'}`,
+    borderRadius:'10px', marginTop:'0.6rem', overflow:'hidden',
+    background: active ? 'rgba(223,168,79,0.04)' : 'transparent',
   })
   const sectionToggle = (active) => ({
     display:'flex', justifyContent:'space-between', alignItems:'center',
@@ -315,7 +318,7 @@ function RemedyDetail({ r }) {
       </div>
 
       {/* Specific action */}
-      <div style={{ background:'rgba(201,147,58,0.07)', borderRadius:'8px', padding:'0.7rem 1rem', border:'1px solid rgba(201,147,58,0.2)' }}>
+      <div style={{ background:'rgba(223,168,79,0.07)', borderRadius:'10px', padding:'0.7rem 1rem', border:'1px solid rgba(223,168,79,0.2)' }}>
         <div style={{ ...subHead, marginBottom:'0.35rem' }}>◈ Lal Kitab Action</div>
         <p style={{ color:'var(--text-muted)', fontSize:'0.85rem', lineHeight:1.7, margin:0 }}>{r.action}</p>
       </div>
@@ -329,12 +332,12 @@ function RemedyDetail({ r }) {
           </div>
           {section === 'mantra' && (
             <div style={{ padding:'0 0.9rem 0.85rem' }}>
-              <div style={{ background:'rgba(0,0,0,0.15)', borderRadius:'6px', padding:'0.7rem 1rem', marginBottom:'0.6rem', border:'1px solid rgba(201,147,58,0.15)' }}>
+              <div style={{ background:'rgba(0,0,0,0.15)', borderRadius:'6px', padding:'0.7rem 1rem', marginBottom:'0.6rem', border:'1px solid rgba(223,168,79,0.15)' }}>
                 <div style={{ color:'var(--gold)', fontSize:'1rem', fontWeight:600, letterSpacing:'0.5px', marginBottom:'0.25rem', lineHeight:1.6 }}>{r.mantra_simple}</div>
                 <div style={{ color:'var(--text-dim)', fontSize:'0.78rem', fontStyle:'italic' }}>{r.mantra_simple_roman}</div>
               </div>
               {r.mantra_beej && r.mantra_beej !== r.mantra_simple && (
-                <div style={{ background:'rgba(0,0,0,0.12)', borderRadius:'6px', padding:'0.65rem 1rem', marginBottom:'0.6rem', border:'1px solid rgba(201,147,58,0.1)' }}>
+                <div style={{ background:'rgba(0,0,0,0.12)', borderRadius:'6px', padding:'0.65rem 1rem', marginBottom:'0.6rem', border:'1px solid rgba(223,168,79,0.1)' }}>
                   <div style={{ color:'var(--text-dim)', fontSize:'0.72rem', fontWeight:600, letterSpacing:'1px', textTransform:'uppercase', marginBottom:'0.25rem' }}>Beej Mantra (Advanced)</div>
                   <div style={{ color:'var(--gold-light)', fontSize:'0.9rem', lineHeight:1.6, marginBottom:'0.2rem' }}>{r.mantra_beej}</div>
                   <div style={{ color:'var(--text-dim)', fontSize:'0.77rem', fontStyle:'italic' }}>{r.mantra_beej_roman}</div>
@@ -409,7 +412,7 @@ function LalKitabView({ lk }) {
   const [openPlanet, setOpenPlanet] = useState(null)
   if (!lk) return <p style={{ color: 'var(--text-dim)', fontSize: '0.88rem' }}>Lal Kitab data not available.</p>
 
-  const sectionHead = { fontFamily:"'Cinzel',serif", fontSize:'0.82rem', color:'var(--gold)', letterSpacing:'2px', textTransform:'uppercase', margin:'1.75rem 0 0.9rem', paddingBottom:'0.4rem', borderBottom:'1px solid var(--border)' }
+  const sectionHead = { fontFamily:"'JetBrains Mono', monospace", fontSize:'0.7rem', color:'var(--gold)', letterSpacing:'2.5px', textTransform:'uppercase', margin:'1.75rem 0 0.9rem', paddingBottom:'0.4rem', borderBottom:'1px solid var(--border-soft)' }
   const pill = (color) => ({ display:'inline-block', width:'8px', height:'8px', borderRadius:'50%', background:color, marginRight:'0.5rem', flexShrink:0 })
 
   return (
@@ -422,11 +425,11 @@ function LalKitabView({ lk }) {
 
       {/* Foreign + Pucca summary pills */}
       <div style={{ display:'flex', gap:'0.75rem', flexWrap:'wrap', marginBottom:'1.5rem' }}>
-        <span style={{ padding:'0.3rem 0.9rem', borderRadius:'20px', fontSize:'0.78rem', fontWeight:600, background: lk.foreign_indicator ? 'rgba(201,147,58,0.15)' : 'rgba(255,255,255,0.05)', color: lk.foreign_indicator ? 'var(--gold)' : 'var(--text-dim)', border:'1px solid var(--border)' }}>
+        <span style={{ padding:'0.3rem 0.9rem', borderRadius:'999px', fontSize:'0.78rem', fontWeight:600, background: lk.foreign_indicator ? 'rgba(223,168,79,0.15)' : 'rgba(255,255,255,0.05)', color: lk.foreign_indicator ? 'var(--gold)' : 'var(--text-dim)', border:'1px solid var(--border)' }}>
           {lk.foreign_indicator ? '✈ Foreign karma: Active' : '✈ Foreign karma: Mild'}
         </span>
         {lk.pucca_ghar_planets?.map(p => (
-          <span key={p.planet} style={{ padding:'0.3rem 0.9rem', borderRadius:'20px', fontSize:'0.78rem', fontWeight:600, background:'rgba(201,147,58,0.1)', color:'var(--gold)', border:'1px solid rgba(201,147,58,0.25)' }}>
+          <span key={p.planet} style={{ padding:'0.3rem 0.9rem', borderRadius:'999px', fontSize:'0.78rem', fontWeight:600, background:'rgba(223,168,79,0.1)', color:'var(--gold)', border:'1px solid rgba(223,168,79,0.25)' }}>
             ★ {p.planet} Pucca H{p.house}
           </span>
         ))}
@@ -466,7 +469,7 @@ function LalKitabView({ lk }) {
             Each remedy below is specific to your planetary placement. Click to expand the full guide — mantra, how-to steps, rules and when to avoid.
           </p>
           {lk.remedies.map((r, i) => (
-            <div key={i} style={{ background:'var(--bg-elevated)', borderRadius:'10px', padding:'0.9rem 1.1rem', marginBottom:'0.75rem', border: openPlanet === i ? '1px solid rgba(201,147,58,0.35)' : '1px solid var(--border)', cursor:'pointer', transition:'border 0.2s' }}
+            <div key={i} style={{ background:'var(--bg-elevated)', borderRadius:'10px', padding:'0.9rem 1.1rem', marginBottom:'0.75rem', border: openPlanet === i ? '1px solid rgba(223,168,79,0.35)' : '1px solid var(--border)', cursor:'pointer', transition:'border 0.2s' }}
               onClick={() => setOpenPlanet(openPlanet === i ? null : i)}>
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                 <span style={{ color:'var(--gold-light)', fontWeight:600, fontSize:'0.9rem' }}>
@@ -504,7 +507,7 @@ function LalKitabView({ lk }) {
               when_to_avoid:      guide.when_to_avoid || [],
             }
             return (
-              <div key={pr.planet} style={{ background:'var(--bg-elevated)', borderRadius:'10px', padding:'0.9rem 1.1rem', marginBottom:'0.5rem', border: openPlanet === key ? '1px solid rgba(201,147,58,0.3)' : '1px solid var(--border)', cursor:'pointer', transition:'border 0.2s' }}
+              <div key={pr.planet} style={{ background:'var(--bg-elevated)', borderRadius:'10px', padding:'0.9rem 1.1rem', marginBottom:'0.5rem', border: openPlanet === key ? '1px solid rgba(223,168,79,0.3)' : '1px solid var(--border)', cursor:'pointer', transition:'border 0.2s' }}
                 onClick={() => setOpenPlanet(openPlanet === key ? null : key)}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                   <span style={{ color:'var(--gold-light)', fontWeight:600, fontSize:'0.88rem' }}>
@@ -558,10 +561,11 @@ function LifeReadingsView({ readings }) {
           <div key={r.id}
             style={{
               ...chipBase,
-              background: open === r.id ? 'var(--gold)' : 'var(--bg-card)',
-              color:      open === r.id ? '#1A1000' : 'var(--text-muted)',
-              borderColor: open === r.id ? 'var(--gold)' : 'var(--border)',
+              background: open === r.id ? 'linear-gradient(135deg,#F2CB84 0%,#DFA84F 42%,#A8752B 100%)' : 'var(--bg-card)',
+              color:      open === r.id ? '#1C1205' : 'var(--text-muted)',
+              borderColor: open === r.id ? 'transparent' : 'var(--border)',
               transform:  open === r.id ? 'translateY(-2px)' : 'none',
+              boxShadow:  open === r.id ? '0 8px 28px rgba(223,168,79,0.28)' : 'none',
             }}
             onClick={() => setOpen(r.id)}>
             <div style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>{r.icon}</div>
@@ -596,10 +600,12 @@ function SignInPrompt() {
   return (
     <div style={{
       background: 'var(--bg-card)', border: '1px solid var(--border)',
-      borderRadius: '14px', padding: '3rem 2rem', textAlign: 'center',
+      borderRadius: '18px', padding: '3rem 2rem', textAlign: 'center',
+      backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
+      boxShadow: 'var(--shadow-card)',
     }}>
       <div style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--gold)' }}>✦</div>
-      <h3 style={{ fontFamily: "'Cinzel', serif", color: 'var(--gold)', marginBottom: '0.75rem', fontSize: '1.1rem' }}>
+      <h3 style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--text-primary)', marginBottom: '0.75rem', fontSize: '1.25rem' }}>
         Sign In to Read Your Stars
       </h3>
       <p style={{ color: 'var(--text-muted)', maxWidth: '380px', margin: '0 auto 1.75rem', lineHeight: 1.65, fontSize: '0.92rem' }}>
@@ -607,9 +613,10 @@ function SignInPrompt() {
       </p>
       <Link to="/login" style={{
         display: 'inline-block',
-        background: 'linear-gradient(135deg, #C9933A, #8B6020)',
-        color: '#FFF8EC', padding: '0.75rem 2rem', borderRadius: '8px',
+        background: 'linear-gradient(135deg,#F2CB84 0%,#DFA84F 42%,#A8752B 100%)',
+        color: '#1C1205', padding: '0.75rem 2rem', borderRadius: '999px',
         fontWeight: 600, textDecoration: 'none', fontSize: '0.95rem',
+        boxShadow: '0 8px 28px rgba(223,168,79,0.28)',
       }}>Sign In Free →</Link>
       <p style={{ marginTop: '1.25rem', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
         The <strong style={{ color: 'var(--text-primary)' }}>Chart Details</strong> tab is always free.
@@ -684,7 +691,7 @@ export default function ChartResult() {
     <div style={s.wrap}>
       <Link to="/my-charts" style={s.backLink}>← {isHindi ? 'सभी कुंडलियाँ' : 'All Charts'}</Link>
 
-      <div style={{ ...s.header, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.75rem' }}>
+      <div className="bh-fade-up" style={{ ...s.header, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div>
           <h1 style={s.name}>{chart.label || 'Your Chart'}</h1>
           <p style={s.meta}>
@@ -698,7 +705,7 @@ export default function ChartResult() {
             <a
               href={`/v1/charts/${id}/pdf`}
               download
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '8px', padding: '0.5rem 0.9rem', color: 'var(--gold-light)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', transition: 'border-color 0.18s' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '999px', padding: '0.5rem 1rem', color: 'var(--gold-light)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', transition: 'border-color 0.18s' }}
               onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--gold)'}
               onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
               title={isHindi ? 'PDF रिपोर्ट डाउनलोड करें' : 'Download PDF Report'}
@@ -709,7 +716,7 @@ export default function ChartResult() {
             <Link
               to={isLoggedIn ? '/pricing' : '/login'}
               state={isLoggedIn ? { upgradeFor: 'pdf' } : { from: `/chart/${id}` }}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '8px', padding: '0.5rem 0.9rem', color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', opacity: 0.65 }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '999px', padding: '0.5rem 1rem', color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', opacity: 0.65 }}
               title={isLoggedIn ? 'Upgrade to download PDF' : 'Sign in to download PDF'}
             >
               ↓ {isHindi ? 'PDF' : 'PDF Report'} 🔒
@@ -719,7 +726,7 @@ export default function ChartResult() {
           {isLoggedIn && canUse('chat') ? (
             <Link
               to={`/destiny-chat?chart=${id}`}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(201,147,58,0.1)', border: '1px solid rgba(201,147,58,0.3)', borderRadius: '8px', padding: '0.5rem 0.9rem', color: 'var(--gold)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(223,168,79,0.1)', border: '1px solid rgba(223,168,79,0.3)', borderRadius: '999px', padding: '0.5rem 1rem', color: 'var(--gold)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer' }}
               title={isHindi ? 'इस चार्ट के बारे में AI से पूछें' : 'Ask AI about this chart'}
             >
               ◎ {isHindi ? 'भाग्य चैट' : 'Ask Bhagya'}
@@ -728,7 +735,7 @@ export default function ChartResult() {
             <Link
               to={isLoggedIn ? '/pricing' : '/login'}
               state={isLoggedIn ? { upgradeFor: 'chat' } : { from: `/chart/${id}` }}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(201,147,58,0.05)', border: '1px solid rgba(201,147,58,0.15)', borderRadius: '8px', padding: '0.5rem 0.9rem', color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', opacity: 0.65 }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(223,168,79,0.05)', border: '1px solid rgba(223,168,79,0.15)', borderRadius: '999px', padding: '0.5rem 1rem', color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', opacity: 0.65 }}
               title={isLoggedIn ? 'Upgrade to chat' : 'Sign in to chat'}
             >
               ◎ {isHindi ? 'भाग्य चैट' : 'Ask Bhagya'} 🔒
@@ -739,7 +746,7 @@ export default function ChartResult() {
 
       {/* ── Age context banner ── */}
       {isChild && (
-        <div style={{ background: 'linear-gradient(135deg, rgba(201,147,58,0.12), rgba(201,147,58,0.05))', border: '1px solid rgba(201,147,58,0.3)', borderRadius: '10px', padding: '0.9rem 1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+        <div style={{ background: 'linear-gradient(135deg, rgba(223,168,79,0.12), rgba(223,168,79,0.05))', border: '1px solid rgba(223,168,79,0.3)', borderRadius: '10px', padding: '0.9rem 1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
           <span style={{ fontSize: '1.2rem', flexShrink: 0 }}>✦</span>
           <div>
             <div style={{ color: 'var(--gold)', fontWeight: 600, fontSize: '0.88rem', marginBottom: '0.25rem' }}>
@@ -757,7 +764,7 @@ export default function ChartResult() {
 
       {/* ── Lal Kitab focus banner ── */}
       {focus === 'lalkitab' && (
-        <div style={{ background: 'rgba(201,147,58,0.08)', border: '1px solid rgba(201,147,58,0.2)', borderRadius: '10px', padding: '0.75rem 1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+        <div style={{ background: 'rgba(223,168,79,0.08)', border: '1px solid rgba(223,168,79,0.2)', borderRadius: '10px', padding: '0.75rem 1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <span style={{ color: 'var(--gold)', fontSize: '1rem' }}>◈</span>
           <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
             <strong style={{ color: 'var(--gold-light)' }}>Lal Kitab Reading</strong> — you are viewing this chart through the Lal Kitab lens. The Lal Kitab tab is shown first. All other tabs are available for the full Vedic picture.
@@ -766,17 +773,18 @@ export default function ChartResult() {
       )}
 
       {/* Tab bar */}
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
+      <div className="chart-tabs bh-fade-up-1" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
         {TABS.map(t => {
           const isActive = tab === t.id
           return (
             <button key={t.id}
               style={{
-                padding: '0.5rem 1.25rem', borderRadius: '6px', cursor: 'pointer', fontSize: '0.9rem',
-                fontWeight: 500, border: '1px solid',
-                background: isActive ? 'var(--gold)' : 'transparent',
-                color:      isActive ? '#1A1000' : 'var(--text-muted)',
-                borderColor: isActive ? 'var(--gold)' : 'var(--border)',
+                padding: '0.55rem 1.3rem', borderRadius: '999px', cursor: 'pointer', fontSize: '0.88rem',
+                fontWeight: isActive ? 600 : 500, border: '1px solid',
+                background: isActive ? 'linear-gradient(135deg,#F2CB84 0%,#DFA84F 42%,#A8752B 100%)' : 'transparent',
+                color:      isActive ? '#1C1205' : 'var(--text-muted)',
+                borderColor: isActive ? 'transparent' : 'var(--border)',
+                boxShadow:  isActive ? '0 8px 28px rgba(223,168,79,0.28)' : 'none',
                 transition: 'all 0.2s',
               }}
               onClick={() => handleTabClick(t.id)}
@@ -894,7 +902,7 @@ export default function ChartResult() {
       {tab === 'life' && isLoggedIn && (
         <>
           {isChild && (
-            <div style={{ background: 'rgba(201,147,58,0.08)', border: '1px solid var(--border)', borderRadius: '10px', padding: '0.85rem 1.2rem', marginBottom: '1.5rem' }}>
+            <div style={{ background: 'rgba(223,168,79,0.08)', border: '1px solid var(--border)', borderRadius: '10px', padding: '0.85rem 1.2rem', marginBottom: '1.5rem' }}>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.7, margin: 0 }}>
                 <strong style={{ color: 'var(--gold-light)' }}>Reading these as Future Potential</strong> — this person is {ageYears < 1 ? 'under 1 year' : `${ageYears} years`} old. Each section below describes the karmic blueprint for that area of life — what will naturally unfold as they grow into adulthood. Current dasha timing applies to early childhood experiences.
               </p>

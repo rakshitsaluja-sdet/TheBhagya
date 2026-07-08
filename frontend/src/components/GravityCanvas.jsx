@@ -120,8 +120,8 @@ export default function GravityCanvas({
       if (mouse.active) {
         const r = cfg.radius
         const mg = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, r * 0.5)
-        mg.addColorStop(0, `rgba(201,147,58,${gl * 0.20})`)
-        mg.addColorStop(0.5, `rgba(180,110,30,${gl * 0.08})`)
+        mg.addColorStop(0, `rgba(223,168,79,${gl * 0.20})`)
+        mg.addColorStop(0.5, `rgba(139,111,232,${gl * 0.07})`)
         mg.addColorStop(1, 'transparent')
         ctx.fillStyle = mg
         ctx.beginPath(); ctx.arc(mouse.x, mouse.y, r * 0.5, 0, Math.PI * 2); ctx.fill()

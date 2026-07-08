@@ -105,6 +105,8 @@ export default function DestinyChat() {
     },
     header: {
       background: 'var(--bg-elevated)',
+      backdropFilter: 'blur(18px) saturate(1.4)',
+      WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
       borderBottom: '1px solid var(--border)',
       padding: '1rem 1.5rem',
       display: 'flex',
@@ -113,16 +115,17 @@ export default function DestinyChat() {
       flexWrap: 'wrap',
     },
     title: {
-      fontFamily: "'Cinzel', serif",
-      color: 'var(--gold)',
+      fontFamily: "'Fraunces', serif",
+      color: 'var(--text-primary)',
       fontSize: '1.1rem',
-      fontWeight: 700,
+      fontWeight: 600,
+      letterSpacing: '-0.02em',
       flex: 1,
     },
     chartSelect: {
-      background: 'var(--bg-card)',
+      background: 'var(--bg-input)',
       border: '1px solid var(--border)',
-      borderRadius: '8px',
+      borderRadius: '10px',
       color: 'var(--text-muted)',
       padding: '0.45rem 0.8rem',
       fontSize: '0.84rem',
@@ -144,23 +147,25 @@ export default function DestinyChat() {
       maxWidth: '80%',
       alignSelf: role === 'user' ? 'flex-end' : 'flex-start',
       background: role === 'user'
-        ? 'linear-gradient(135deg, var(--gold) 0%, #B8843A 100%)'
+        ? 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)'
         : 'var(--bg-elevated)',
-      color: role === 'user' ? '#1A0E00' : 'var(--text-muted)',
+      color: role === 'user' ? '#1C1205' : 'var(--text-muted)',
       padding: '0.85rem 1.1rem',
-      borderRadius: role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
+      borderRadius: role === 'user' ? '18px 18px 6px 18px' : '18px',
       border: role === 'user' ? 'none' : '1px solid var(--border)',
+      boxShadow: role === 'user' ? '0 8px 28px rgba(223,168,79,0.18)' : 'none',
       fontSize: '0.9rem',
       lineHeight: 1.7,
       whiteSpace: 'pre-wrap',
       fontWeight: role === 'user' ? 600 : 400,
     }),
     assistantLabel: {
-      fontSize: '0.72rem',
+      fontSize: '0.66rem',
       color: 'var(--gold)',
       marginBottom: '0.3rem',
-      fontFamily: "'Cinzel', serif",
-      letterSpacing: '1px',
+      fontFamily: "'JetBrains Mono', monospace",
+      letterSpacing: '2px',
+      textTransform: 'uppercase',
     },
     inputRow: {
       background: 'var(--bg-elevated)',
@@ -175,11 +180,11 @@ export default function DestinyChat() {
     },
     textarea: {
       flex: 1,
-      background: 'var(--bg-card)',
+      background: 'var(--bg-input)',
       border: '1px solid var(--border)',
-      borderRadius: '12px',
+      borderRadius: '999px',
       color: 'var(--text-primary)',
-      padding: '0.8rem 1rem',
+      padding: '0.8rem 1.25rem',
       fontSize: '0.9rem',
       resize: 'none',
       outline: 'none',
@@ -188,14 +193,17 @@ export default function DestinyChat() {
       maxHeight: '140px',
     },
     sendBtn: {
-      background: loading ? 'var(--bg-card)' : 'var(--gold)',
-      color: loading ? 'var(--text-dim)' : '#1A0E00',
+      background: loading
+        ? 'var(--bg-card)'
+        : 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)',
+      color: loading ? 'var(--text-dim)' : '#1C1205',
       border: 'none',
-      borderRadius: '12px',
-      padding: '0.8rem 1.2rem',
+      borderRadius: '999px',
+      padding: '0.8rem 1.3rem',
       cursor: loading ? 'default' : 'pointer',
-      fontWeight: 700,
+      fontWeight: 600,
       fontSize: '0.9rem',
+      boxShadow: loading ? 'none' : '0 8px 28px rgba(223,168,79,0.28)',
       transition: 'all 0.18s',
       flexShrink: 0,
     },
@@ -227,7 +235,7 @@ export default function DestinyChat() {
 
         {savedCharts.length === 0 && (
           <button
-            style={{ background: 'none', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--gold)', padding: '0.4rem 0.8rem', cursor: 'pointer', fontSize: '0.82rem' }}
+            style={{ background: 'transparent', border: '1px solid var(--border-hover)', borderRadius: '999px', color: 'var(--gold)', padding: '0.4rem 1rem', cursor: 'pointer', fontSize: '0.82rem' }}
             onClick={() => navigate('/chart/new')}
           >
             + {isHindi ? 'चार्ट बनाएं' : 'Create a chart first'}
@@ -237,7 +245,7 @@ export default function DestinyChat() {
 
       {/* Chart context pill */}
       {selectedChart && (
-        <div style={{ background: 'rgba(201,147,58,0.08)', borderBottom: '1px solid rgba(201,147,58,0.2)', padding: '0.6rem 1.5rem', fontSize: '0.8rem', color: 'var(--gold-light)', display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+        <div style={{ background: 'rgba(223,168,79,0.08)', borderBottom: '1px solid rgba(223,168,79,0.2)', padding: '0.6rem 1.5rem', fontSize: '0.8rem', color: 'var(--gold-light)', fontFamily: "'JetBrains Mono', monospace", display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
           <span>☽ {selectedChart.lagna?.sign} Lagna</span>
           <span>◉ Moon: {selectedChart.planets?.Moon?.sign} H{selectedChart.planets?.Moon?.house}</span>
           <span>⟳ {selectedChart.current_dasha?.mahadasha?.lord} MD / {selectedChart.current_dasha?.antardasha?.lord} AD</span>
@@ -251,9 +259,9 @@ export default function DestinyChat() {
 
           {/* Welcome / suggestions */}
           {messages.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>◎</div>
-              <div style={{ fontFamily: "'Cinzel', serif", color: 'var(--gold)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>
+            <div className="bh-fade-up" style={{ textAlign: 'center', padding: '2rem 1rem' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem', color: 'var(--gold)' }}>◎</div>
+              <div style={{ fontFamily: "'Fraunces', serif", color: 'var(--text-primary)', fontSize: '1.35rem', fontWeight: 600, letterSpacing: '-0.02em', marginBottom: '0.5rem' }}>
                 {isHindi ? 'भाग्य चैट में स्वागत है' : 'Welcome to Destiny Chat'}
               </div>
               <p style={{ color: 'var(--text-dim)', fontSize: '0.88rem', maxWidth: '500px', margin: '0 auto 1.5rem', lineHeight: 1.7 }}>
@@ -264,7 +272,7 @@ export default function DestinyChat() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', justifyContent: 'center' }}>
                 {suggestions.map((s, i) => (
                   <button key={i}
-                    style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '20px', color: 'var(--text-muted)', padding: '0.5rem 1rem', cursor: 'pointer', fontSize: '0.82rem', transition: 'all 0.18s', textAlign: 'left' }}
+                    style={{ background: 'var(--bg-elevated)', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)', border: '1px solid var(--border)', borderRadius: '999px', color: 'var(--text-muted)', padding: '0.5rem 1.1rem', cursor: 'pointer', fontSize: '0.82rem', transition: 'all 0.18s', textAlign: 'left' }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--gold)'; e.currentTarget.style.color = 'var(--gold-light)' }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)' }}
                     onClick={() => send(s)}>
@@ -297,7 +305,7 @@ export default function DestinyChat() {
 
           {/* Error */}
           {error && (
-            <div style={{ background: 'rgba(224,123,57,0.1)', border: '1px solid rgba(224,123,57,0.3)', borderRadius: '8px', padding: '0.8rem 1rem', color: '#E07B39', fontSize: '0.85rem' }}>
+            <div style={{ background: 'rgba(224,123,57,0.1)', border: '1px solid rgba(224,123,57,0.3)', borderRadius: '10px', padding: '0.8rem 1rem', color: '#E07B39', fontSize: '0.85rem' }}>
               ⚠ {error}
             </div>
           )}
@@ -307,7 +315,7 @@ export default function DestinyChat() {
       </div>
 
       {/* Input row */}
-      <div style={{ background: 'var(--bg-elevated)', borderTop: '1px solid var(--border)', padding: '1rem 1.5rem' }}>
+      <div style={{ background: 'var(--bg-elevated)', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)', borderTop: '1px solid var(--border)', padding: '1rem 1.5rem' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', gap: '0.75rem', alignItems: 'flex-end' }}>
           <textarea
             style={s.textarea}

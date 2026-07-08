@@ -34,32 +34,36 @@ export default function AdminLogin() {
     },
     card: {
       background: 'var(--bg-card)', border: '1px solid var(--border)',
-      borderRadius: '16px', padding: '2.5rem', width: '100%', maxWidth: '400px',
-      boxShadow: 'var(--shadow)',
+      backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
+      borderRadius: '20px', padding: '2.5rem', width: '100%', maxWidth: '400px',
+      boxShadow: 'var(--shadow-card), var(--shadow-glow)',
     },
     badge: {
       display: 'inline-block', background: 'var(--gold-pale)',
-      border: '1px solid var(--border-hover)', borderRadius: '20px',
-      padding: '0.25rem 0.9rem', fontSize: '0.7rem', color: 'var(--gold)',
-      letterSpacing: '2px', fontWeight: 700, marginBottom: '1.25rem',
+      border: '1px solid var(--border-hover)', borderRadius: '999px',
+      padding: '0.3rem 0.95rem', fontSize: '0.64rem', color: 'var(--gold)',
+      fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase',
+      letterSpacing: '2.5px', fontWeight: 500, marginBottom: '1.25rem',
     },
     heading: {
-      fontFamily: "'Cinzel', serif", fontSize: '1.5rem', color: 'var(--gold)',
+      fontFamily: "'Fraunces', serif", fontSize: '1.6rem', color: 'var(--text-primary)',
+      fontWeight: 600, letterSpacing: '-0.02em',
       marginBottom: '0.3rem',
     },
     sub: { color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '2rem' },
-    label: { display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600,
-              letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '0.4rem' },
+    label: { display: 'block', fontSize: '0.66rem', color: 'var(--text-muted)', fontWeight: 500,
+              fontFamily: "'JetBrains Mono', monospace",
+              letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem' },
     input: {
-      width: '100%', padding: '0.7rem 1rem', border: '1px solid var(--border)',
-      borderRadius: '8px', background: 'var(--bg-elevated)', color: 'var(--text-primary)',
+      width: '100%', padding: '0.8rem 1rem', border: '1px solid var(--border)',
+      borderRadius: '10px', background: 'var(--bg-input)', color: 'var(--text-primary)',
       fontSize: '0.9rem', boxSizing: 'border-box', outline: 'none', fontFamily: 'inherit',
       transition: 'border-color 0.2s',
     },
     pwdWrap: { position: 'relative' },
     pwdInput: {
-      width: '100%', padding: '0.7rem 2.8rem 0.7rem 1rem', border: '1px solid var(--border)',
-      borderRadius: '8px', background: 'var(--bg-elevated)', color: 'var(--text-primary)',
+      width: '100%', padding: '0.8rem 2.8rem 0.8rem 1rem', border: '1px solid var(--border)',
+      borderRadius: '10px', background: 'var(--bg-input)', color: 'var(--text-primary)',
       fontSize: '0.9rem', boxSizing: 'border-box', outline: 'none', fontFamily: 'inherit',
       transition: 'border-color 0.2s',
     },
@@ -69,19 +73,20 @@ export default function AdminLogin() {
     },
     field: { marginBottom: '1.25rem' },
     btn: {
-      width: '100%', padding: '0.85rem', border: 'none', borderRadius: '10px',
-      background: 'linear-gradient(135deg, #C9933A, #8B6020)',
-      color: '#FFF8EC', fontFamily: "'Cinzel', serif", fontSize: '0.95rem', fontWeight: 700,
-      cursor: 'pointer', marginTop: '0.5rem', letterSpacing: '1px', transition: 'opacity 0.2s',
+      width: '100%', padding: '0.85rem', border: 'none', borderRadius: '999px',
+      background: 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)',
+      color: '#1C1205', fontFamily: 'inherit', fontSize: '0.92rem', fontWeight: 600,
+      boxShadow: '0 8px 28px rgba(223,168,79,0.28)',
+      cursor: 'pointer', marginTop: '0.5rem', letterSpacing: '0.5px', transition: 'opacity 0.2s',
     },
     error: {
       background: 'rgba(200,50,50,0.1)', border: '1px solid rgba(200,50,50,0.3)',
-      borderRadius: '8px', padding: '0.65rem 0.9rem', color: '#E07B39',
+      borderRadius: '10px', padding: '0.65rem 0.9rem', color: '#E07B39',
       fontSize: '0.83rem', marginBottom: '1rem',
     },
     hint: {
       marginTop: '1.5rem', padding: '0.75rem 1rem',
-      background: 'var(--gold-pale)', borderRadius: '8px', border: '1px solid var(--border)',
+      background: 'var(--gold-pale)', borderRadius: '10px', border: '1px solid var(--border)',
       fontSize: '0.77rem', color: 'var(--text-muted)', lineHeight: 1.6,
     },
   }
@@ -101,7 +106,7 @@ export default function AdminLogin() {
         {theme === 'dark' ? '☀' : '🌙'}
       </button>
 
-      <div style={s.card}>
+      <div className="bh-fade-up" style={s.card}>
         <div style={s.badge}>⚙ SUPER ADMIN</div>
         <div style={s.heading}>Bhagya Admin</div>
         <p style={s.sub}>Restricted access — authorised personnel only</p>
@@ -114,8 +119,8 @@ export default function AdminLogin() {
             <input style={s.input} type="email" value={email} autoFocus
               placeholder="admin@thebhagya.com"
               onChange={e => setEmail(e.target.value)}
-              onFocus={e => e.target.style.borderColor='rgba(201,147,58,0.6)'}
-              onBlur={e  => e.target.style.borderColor='rgba(201,147,58,0.2)'}
+              onFocus={e => e.target.style.borderColor='rgba(223,168,79,0.6)'}
+              onBlur={e  => e.target.style.borderColor='rgba(223,168,79,0.22)'}
             />
           </div>
 
@@ -125,8 +130,8 @@ export default function AdminLogin() {
               <input style={s.pwdInput} type={showPwd ? 'text' : 'password'}
                 value={pwd} placeholder="••••••••••••"
                 onChange={e => setPwd(e.target.value)}
-                onFocus={e => e.target.style.borderColor='rgba(201,147,58,0.6)'}
-                onBlur={e  => e.target.style.borderColor='rgba(201,147,58,0.2)'}
+                onFocus={e => e.target.style.borderColor='rgba(223,168,79,0.6)'}
+                onBlur={e  => e.target.style.borderColor='rgba(223,168,79,0.22)'}
               />
               <button type="button" style={s.eyeBtn} onClick={() => setShowPwd(v => !v)}>
                 {showPwd
@@ -145,8 +150,8 @@ export default function AdminLogin() {
         {import.meta.env.DEV && (
           <div style={s.hint}>
             <strong style={{ color: 'var(--text-muted)' }}>Default credentials</strong><br />
-            Email: <code style={{ color: '#C9933A' }}>admin@thebhagya.com</code><br />
-            Password set in <code style={{ color: '#C9933A' }}>.env → ADMIN_PASSWORD</code>
+            Email: <code style={{ color: 'var(--gold)' }}>admin@thebhagya.com</code><br />
+            Password set in <code style={{ color: 'var(--gold)' }}>.env → ADMIN_PASSWORD</code>
           </div>
         )}
       </div>

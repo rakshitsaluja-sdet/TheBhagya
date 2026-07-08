@@ -71,7 +71,7 @@ const PLANS = [
     period: '/month',
     tag: 'Full Access',
     tagHi: 'पूर्ण एक्सेस',
-    color: '#9B8EC4',
+    color: 'var(--violet)',
     features: [
       'Everything in Pro',
       'Palmistry reading (when live)',
@@ -169,7 +169,7 @@ export default function Pricing() {
           }
         },
         prefill: { name: '', email: '', contact: '' },
-        theme: { color: '#C9933A' },
+        theme: { color: '#DFA84F' },
         modal: { ondismiss: () => setLoading('') },
       }
 
@@ -189,7 +189,7 @@ export default function Pricing() {
   }
 
   return (
-    <div data-theme="dark" style={{ minHeight: '100vh', background: '#05050f', padding: '0', position: 'relative' }}>
+    <div data-theme="dark" style={{ minHeight: '100vh', background: 'radial-gradient(ellipse 65% 45% at 72% -5%, rgba(139,111,232,0.14), transparent 62%), radial-gradient(ellipse 55% 40% at 15% 100%, rgba(223,168,79,0.09), transparent 65%), #07060F', padding: '0', position: 'relative' }}>
       {/* Gravity yantra mesh background */}
       <GravityCanvas density={32} force={5} radius={160} glow={55} />
 
@@ -205,8 +205,8 @@ export default function Pricing() {
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '5rem 1.5rem 3rem', position: 'relative', zIndex: 1 }}>
 
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h1 style={{ fontFamily: "'Cinzel', serif", color: 'var(--gold)', fontSize: '1.8rem', fontWeight: 700, margin: '0 0 0.75rem' }}>
+        <div className="bh-fade-up" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <h1 style={{ fontFamily: "'Fraunces', serif", color: 'var(--text-primary)', fontSize: 'clamp(1.9rem, 4vw, 2.8rem)', fontWeight: 600, letterSpacing: '-0.02em', margin: '0 0 0.75rem' }}>
             {isHindi ? 'सरल मूल्य निर्धारण' : 'Simple Pricing'}
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '480px', margin: '0 auto' }}>
@@ -217,36 +217,39 @@ export default function Pricing() {
         </div>
 
         {/* Plan cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '3rem' }}>
+        <div className="pricing-grid bh-fade-up-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '3rem' }}>
           {PLANS.map(plan => {
             const paid = paymentStatus[plan.id] === 'success'
             const features = isHindi ? plan.featuresHi : plan.features
 
             return (
               <div key={plan.id} style={{
-                background: plan.highlight ? 'linear-gradient(180deg, rgba(201,147,58,0.08) 0%, var(--bg-card) 100%)' : 'var(--bg-card)',
-                border: plan.highlight ? '1.5px solid rgba(201,147,58,0.5)' : '1px solid var(--border)',
-                borderRadius: '16px',
+                background: plan.highlight ? 'linear-gradient(180deg, rgba(223,168,79,0.08) 0%, var(--bg-card) 100%)' : 'var(--bg-card)',
+                backdropFilter: 'blur(18px) saturate(1.4)',
+                WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
+                border: plan.highlight ? '1px solid rgba(242,203,132,0.45)' : '1px solid var(--border)',
+                boxShadow: plan.highlight ? '0 0 44px rgba(223,168,79,0.12)' : 'none',
+                borderRadius: '20px',
                 padding: '1.75rem',
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
               }}>
                 {plan.highlight && (
-                  <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: 'var(--gold)', color: '#1A0E00', fontSize: '0.7rem', fontWeight: 800, letterSpacing: '1.5px', padding: '0.25rem 0.9rem', borderRadius: '20px' }}>
+                  <div style={{ position: 'absolute', top: '-13px', left: '50%', transform: 'translateX(-50%)', background: 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)', color: '#1C1205', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', padding: '0.3rem 1rem', borderRadius: '999px', boxShadow: '0 8px 28px rgba(223,168,79,0.28)', whiteSpace: 'nowrap' }}>
                     {isHindi ? plan.tagHi : plan.tag}
                   </div>
                 )}
 
                 <div style={{ marginBottom: '1.25rem' }}>
-                  <div style={{ fontSize: '0.75rem', color: plan.color, fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', color: plan.color, fontWeight: 500, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '0.4rem', minHeight: '1em' }}>
                     {!plan.highlight && (isHindi ? plan.tagHi : plan.tag)}
                   </div>
-                  <div style={{ fontFamily: "'Cinzel', serif", color: 'var(--text-primary)', fontSize: '1.15rem', fontWeight: 700 }}>
+                  <div style={{ fontFamily: "'Fraunces', serif", color: 'var(--text-primary)', fontSize: '1.2rem', fontWeight: 600, letterSpacing: '-0.02em' }}>
                     {isHindi ? plan.nameHi : plan.name}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.3rem', marginTop: '0.75rem' }}>
-                    <span style={{ fontSize: '2rem', fontWeight: 800, color: plan.color, fontFamily: "'Cinzel', serif" }}>{plan.price}</span>
+                    <span style={{ fontSize: '2.4rem', fontWeight: 600, color: 'var(--text-primary)', fontFamily: "'Fraunces', serif", letterSpacing: '-0.02em' }}>{plan.price}</span>
                     <span style={{ color: 'var(--text-dim)', fontSize: '0.85rem' }}>{plan.period}</span>
                   </div>
                 </div>
@@ -254,14 +257,14 @@ export default function Pricing() {
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.5rem', flex: 1 }}>
                   {features.map((f, i) => (
                     <li key={i} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start', padding: '0.35rem 0', color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>
-                      <span style={{ color: plan.color, flexShrink: 0, marginTop: '2px' }}>✓</span>
+                      <span style={{ color: 'var(--gold)', flexShrink: 0, marginTop: '2px' }}>✓</span>
                       {f}
                     </li>
                   ))}
                 </ul>
 
                 {paid ? (
-                  <div style={{ background: 'rgba(76,175,80,0.1)', border: '1px solid rgba(76,175,80,0.3)', borderRadius: '10px', padding: '0.75rem', textAlign: 'center', color: '#4CAF50', fontWeight: 700, fontSize: '0.9rem' }}>
+                  <div style={{ background: 'rgba(76,175,80,0.1)', border: '1px solid rgba(76,175,80,0.3)', borderRadius: '999px', padding: '0.75rem', textAlign: 'center', color: '#4CAF50', fontWeight: 600, fontSize: '0.9rem' }}>
                     ✓ {isHindi ? 'सक्रिय' : 'Active'}
                   </div>
                 ) : (
@@ -270,16 +273,17 @@ export default function Pricing() {
                     disabled={loading === plan.id}
                     style={{
                       background: plan.highlight
-                        ? 'linear-gradient(135deg, var(--gold), #B8843A)'
-                        : plan.id === 'starter' ? 'var(--bg-elevated)' : 'transparent',
-                      color: plan.highlight ? '#1A0E00' : plan.color,
-                      border: plan.highlight ? 'none' : `1.5px solid ${plan.color}`,
-                      borderRadius: '10px',
+                        ? 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)'
+                        : 'transparent',
+                      color: plan.highlight ? '#1C1205' : 'var(--gold)',
+                      border: plan.highlight ? 'none' : '1px solid var(--border-hover)',
+                      borderRadius: '999px',
                       padding: '0.8rem',
-                      fontWeight: 700,
+                      fontWeight: 600,
                       cursor: plan.id === 'starter' ? 'default' : 'pointer',
                       fontSize: '0.9rem',
-                      fontFamily: "'Cinzel', serif",
+                      fontFamily: "'Inter', sans-serif",
+                      boxShadow: plan.highlight ? '0 8px 28px rgba(223,168,79,0.28)' : 'none',
                       transition: 'all 0.18s',
                       opacity: loading === plan.id ? 0.6 : 1,
                     }}>
@@ -292,17 +296,17 @@ export default function Pricing() {
         </div>
 
         {/* Backend-not-configured notice */}
-        <div style={{ background: 'rgba(201,147,58,0.06)', borderRadius: '10px', border: '1px solid rgba(201,147,58,0.15)', padding: '1rem 1.25rem', marginBottom: '2.5rem', fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.6 }}>
+        <div className="bh-fade-up-2" style={{ background: 'rgba(223,168,79,0.06)', borderRadius: '10px', border: '1px solid rgba(223,168,79,0.15)', padding: '1rem 1.25rem', marginBottom: '2.5rem', fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.6 }}>
           <strong style={{ color: 'var(--gold-light)' }}>⚙ Setup note:</strong> To enable payments, add <code style={{ background: 'rgba(0,0,0,0.2)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>RAZORPAY_KEY_ID</code> and <code style={{ background: 'rgba(0,0,0,0.2)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>RAZORPAY_KEY_SECRET</code> to your <code>.env</code> file. Get them from <a href="https://dashboard.razorpay.com" target="_blank" rel="noreferrer" style={{ color: 'var(--gold)' }}>dashboard.razorpay.com</a>.
         </div>
 
         {/* FAQ */}
-        <div style={{ maxWidth: '640px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: "'Cinzel', serif", color: 'var(--gold)', textAlign: 'center', fontSize: '1rem', marginBottom: '1.25rem' }}>
+        <div className="bh-fade-up-2" style={{ maxWidth: '640px', margin: '0 auto' }}>
+          <h2 style={{ fontFamily: "'Fraunces', serif", color: 'var(--text-primary)', fontWeight: 600, letterSpacing: '-0.02em', textAlign: 'center', fontSize: '1.2rem', marginBottom: '1.25rem' }}>
             {isHindi ? 'अक्सर पूछे जाने वाले प्रश्न' : 'Frequently Asked Questions'}
           </h2>
           {FAQ.map((faq, i) => (
-            <div key={i} style={{ border: '1px solid var(--border)', borderRadius: '10px', marginBottom: '0.6rem', overflow: 'hidden', cursor: 'pointer' }} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+            <div key={i} style={{ border: '1px solid var(--border)', borderRadius: '10px', background: 'var(--bg-card)', backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)', marginBottom: '0.6rem', overflow: 'hidden', cursor: 'pointer' }} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.9rem 1.1rem' }}>
                 <span style={{ color: openFaq === i ? 'var(--gold-light)' : 'var(--text-muted)', fontWeight: openFaq === i ? 600 : 400, fontSize: '0.88rem' }}>{faq.q}</span>
                 <span style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>{openFaq === i ? '▲' : '▼'}</span>

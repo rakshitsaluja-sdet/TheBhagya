@@ -31,16 +31,17 @@ const GoogleIcon = () => (
 )
 
 /* ── Styles (all hardcoded dark — no CSS vars) ──────────────────────────── */
-const GOLD = '#C9933A'
-const BG   = '#05050f'
+const GOLD = '#DFA84F'
+const BG   = '#07060F'
 const FG   = '#F5F0E8'
 const MUT  = 'rgba(245,240,232,0.50)'
 const DIM  = 'rgba(245,240,232,0.26)'
-const LINE = 'rgba(201,147,58,0.20)'
+const LINE = 'rgba(223,168,79,0.22)'
 
 const s = {
   root: {
-    background: BG, minHeight: '100vh',
+    background: `radial-gradient(ellipse 65% 45% at 72% -5%, rgba(139,111,232,0.14), transparent 62%), radial-gradient(ellipse 55% 40% at 12% 100%, rgba(223,168,79,0.09), transparent 65%), ${BG}`,
+    minHeight: '100vh',
     position: 'relative', overflow: 'hidden',
   },
   nav: {
@@ -54,6 +55,7 @@ const s = {
     color: '#fff', textDecoration: 'none', pointerEvents: 'auto',
   },
   navBack: {
+    fontFamily: "'JetBrains Mono', monospace",
     fontSize: '0.60rem', letterSpacing: '2.5px', textTransform: 'uppercase',
     color: 'rgba(255,255,255,0.50)', textDecoration: 'none', pointerEvents: 'auto',
   },
@@ -65,24 +67,27 @@ const s = {
     pointerEvents: 'none',
   },
   card: {
-    background: 'rgba(5,5,20,0.72)',
-    backdropFilter: 'blur(28px) saturate(1.5)',
-    WebkitBackdropFilter: 'blur(28px) saturate(1.5)',
+    background: 'rgba(7,6,15,0.72)',
+    backdropFilter: 'blur(24px) saturate(1.4)',
+    WebkitBackdropFilter: 'blur(24px) saturate(1.4)',
     border: `1px solid ${LINE}`,
+    borderRadius: '24px',
     padding: '2.6rem 2.2rem 2.2rem',
     width: '100%', maxWidth: '400px',
     pointerEvents: 'auto',
-    boxShadow: `0 0 80px rgba(201,147,58,0.06), 0 24px 64px rgba(0,0,0,0.5)`,
+    boxShadow: `0 0 48px rgba(223,168,79,0.14), 0 24px 64px rgba(0,0,0,0.5)`,
   },
   logo: { textAlign: 'center', marginBottom: '2rem' },
   logoText: {
     fontFamily: "'Cinzel', serif", fontSize: '1.6rem',
     color: GOLD, letterSpacing: '5px', display: 'block',
-    textShadow: `0 0 40px rgba(201,147,58,0.30)`,
+    textShadow: `0 0 40px rgba(223,168,79,0.30)`,
   },
   logoSub: {
-    fontSize: '0.60rem', color: 'rgba(201,147,58,0.45)',
+    fontFamily: "'JetBrains Mono', monospace",
+    fontSize: '0.60rem', color: 'rgba(223,168,79,0.5)',
     letterSpacing: '4px', display: 'block', marginTop: '0.3rem',
+    textTransform: 'uppercase',
   },
   tabs: { display: 'flex', marginBottom: '1.8rem', borderBottom: `1px solid ${LINE}` },
   tab: (active) => ({
@@ -94,35 +99,36 @@ const s = {
     marginBottom: '-1px', transition: 'all 0.2s', letterSpacing: '0.5px',
   }),
   label: {
-    display: 'block', fontSize: '0.72rem', fontWeight: 600,
-    color: MUT, letterSpacing: '1px', marginBottom: '0.4rem',
+    display: 'block', fontSize: '0.66rem', fontWeight: 500,
+    fontFamily: "'JetBrains Mono', monospace",
+    color: MUT, letterSpacing: '2px', marginBottom: '0.4rem',
     textTransform: 'uppercase',
   },
   input: {
-    width: '100%', padding: '0.75rem 1rem',
+    width: '100%', padding: '0.8rem 1rem',
     border: `1px solid ${LINE}`,
     background: 'rgba(255,255,255,0.04)',
     color: FG, fontFamily: 'inherit', fontSize: '0.92rem',
     outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s',
-    borderRadius: 0,
+    borderRadius: '10px',
   },
   otpInput: {
     width: '100%', padding: '1rem', textAlign: 'center',
     border: `1px solid ${LINE}`,
     background: 'rgba(255,255,255,0.04)',
-    color: FG, fontFamily: "'Cinzel', serif", fontSize: '1.8rem',
+    color: FG, fontFamily: "'JetBrains Mono', monospace", fontSize: '1.8rem',
     letterSpacing: '0.6em',
     outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s',
-    borderRadius: 0,
+    borderRadius: '10px',
   },
   pwdWrapper: { position: 'relative' },
   pwdInput: {
-    width: '100%', padding: '0.75rem 3rem 0.75rem 1rem',
+    width: '100%', padding: '0.8rem 3rem 0.8rem 1rem',
     border: `1px solid ${LINE}`,
     background: 'rgba(255,255,255,0.04)',
     color: FG, fontFamily: 'inherit', fontSize: '0.92rem',
     outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s',
-    borderRadius: 0,
+    borderRadius: '10px',
   },
   eyeBtn: {
     position: 'absolute', right: '0.875rem', top: '50%',
@@ -133,12 +139,12 @@ const s = {
   field: { marginBottom: '1.1rem' },
   btn: {
     width: '100%', padding: '0.9rem', border: 'none', cursor: 'pointer',
-    background: `linear-gradient(135deg, ${GOLD}, #8B6020)`,
-    color: '#FFF8EC', fontFamily: 'inherit', fontSize: '0.88rem', fontWeight: 600,
+    background: 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)',
+    color: '#1C1205', fontFamily: 'inherit', fontSize: '0.88rem', fontWeight: 600,
     marginTop: '0.25rem', transition: 'opacity 0.2s',
-    letterSpacing: '2px', textTransform: 'uppercase',
-    boxShadow: `0 0 28px rgba(201,147,58,0.20)`,
-    borderRadius: 0,
+    letterSpacing: '1px',
+    boxShadow: '0 8px 28px rgba(223,168,79,0.28)',
+    borderRadius: '999px',
   },
   googleBtn: {
     width: '100%', padding: '0.8rem',
@@ -147,15 +153,15 @@ const s = {
     color: FG, fontFamily: 'inherit', fontSize: '0.88rem', fontWeight: 500,
     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
     transition: 'border-color 0.2s, background 0.2s', cursor: 'pointer',
-    borderRadius: 0,
+    borderRadius: '999px',
   },
   outlineBtn: {
     width: '100%', padding: '0.8rem', cursor: 'pointer',
     border: `1px solid ${LINE}`,
-    background: 'rgba(255,255,255,0.03)',
-    color: MUT, fontFamily: 'inherit', fontSize: '0.82rem', fontWeight: 500,
+    background: 'transparent',
+    color: GOLD, fontFamily: 'inherit', fontSize: '0.82rem', fontWeight: 500,
     transition: 'border-color 0.2s, color 0.2s',
-    borderRadius: 0,
+    borderRadius: '999px',
   },
   orDivider: {
     display: 'flex', alignItems: 'center', gap: '1rem',
@@ -164,17 +170,17 @@ const s = {
   orLine: { flex: 1, height: 1, background: LINE },
   error: {
     background: 'rgba(200,50,50,0.12)', border: '1px solid rgba(200,50,50,0.30)',
-    padding: '0.65rem 0.9rem', color: '#E07B39',
+    padding: '0.65rem 0.9rem', color: '#E07B39', borderRadius: '10px',
     fontSize: '0.82rem', marginBottom: '1rem',
   },
   success: {
     background: 'rgba(50,180,80,0.10)', border: '1px solid rgba(50,180,80,0.30)',
-    padding: '0.65rem 0.9rem', color: '#4CAF50',
+    padding: '0.65rem 0.9rem', color: '#4CAF50', borderRadius: '10px',
     fontSize: '0.82rem', marginBottom: '1rem',
   },
   info: {
-    background: 'rgba(201,147,58,0.07)', border: `1px solid ${LINE}`,
-    padding: '0.65rem 0.9rem', color: 'rgba(201,147,58,0.85)',
+    background: 'rgba(223,168,79,0.07)', border: `1px solid ${LINE}`,
+    padding: '0.65rem 0.9rem', color: 'rgba(242,203,132,0.85)', borderRadius: '10px',
     fontSize: '0.82rem', marginBottom: '1rem', lineHeight: 1.5,
   },
   hint: { fontSize: '0.70rem', color: DIM, marginTop: '0.4rem' },
@@ -355,7 +361,7 @@ export default function Login() {
 
       {/* Glass card */}
       <div style={s.center}>
-        <div style={s.card}>
+        <div className="bhagya-login-card" style={s.card}>
 
           {/* Logo */}
           <div style={s.logo}>
@@ -461,7 +467,7 @@ export default function Login() {
                     style={{ ...s.googleBtn, opacity: gLoading ? 0.6 : 1 }}
                     onClick={handleGoogle}
                     disabled={gLoading}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,147,58,0.45)'; e.currentTarget.style.background = 'rgba(255,255,255,0.07)' }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(223,168,79,0.45)'; e.currentTarget.style.background = 'rgba(255,255,255,0.07)' }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = LINE; e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
                   >
                     <GoogleIcon />
