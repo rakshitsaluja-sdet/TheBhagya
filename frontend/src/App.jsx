@@ -5,6 +5,7 @@ import { LanguageProvider } from './context/LanguageContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import GravityCanvas from './components/GravityCanvas'
 import ScrollToTop from './components/ScrollToTop'
 import Landing from './pages/Landing'
 import Login from './pages/Login'
@@ -60,11 +61,13 @@ function AppShell() {
         <Route path="/"      element={<Landing />} />
         <Route path="/login" element={<Login />} />
 
-        {/* ── All other public routes (with Navbar/Footer) ── */}
+        {/* ── All other public routes (with Navbar/Footer + subtle gravity bg) ── */}
         <Route path="/*" element={
           <>
+            {/* Gravity mesh on all inner pages — low opacity, theme-neutral */}
+            <GravityCanvas density={38} force={3} radius={145} glow={38} opacity={0.18} />
             <Navbar />
-            <main style={{ flex: 1 }}>
+            <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>
               <Routes>
                 <Route path="/pricing"   element={<Pricing />} />
                 <Route path="/palmistry" element={<Palmistry />} />
@@ -76,7 +79,7 @@ function AppShell() {
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
-            <Footer />
+            <div style={{ position: 'relative', zIndex: 1 }}><Footer /></div>
           </>
         } />
       </Routes>
