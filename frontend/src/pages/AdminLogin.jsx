@@ -101,7 +101,7 @@ export default function AdminLogin() {
           borderRadius: '50%', width: '36px', height: '36px',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           cursor: 'pointer', fontSize: '1rem', color: 'var(--gold)',
-          boxShadow: 'var(--shadow)', zIndex: 10,
+          boxShadow: 'var(--shadow-card)', zIndex: 10,
         }}>
         {theme === 'dark' ? '☀' : '🌙'}
       </button>
