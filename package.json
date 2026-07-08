@@ -1,0 +1,18 @@
+{
+  "name": "bhagyaai-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright E2E test suite for TheBhagya",
+  "scripts": {
+    "test":              "playwright test",
+    "test:smoke":        "playwright test e2e/smoke.spec.js",
+    "test:ui":           "playwright test --ui",
+    "test:headed":       "playwright test --headed",
+    "test:mobile":       "playwright test --project=mobile-chrome --project=mobile-safari",
+    "test:report":       "playwright show-report",
+    "test:ci":           "playwright test --reporter=github"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  }
+}
