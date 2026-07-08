@@ -56,13 +56,13 @@ const FEATURES = [
 ]
 
 const TESTIMONIALS = [
-  { quote: 'My Rahu dasha prediction was accurate to the month. The Canada visa window opened exactly when Bhagya said it would.', name: 'Aditya K.', nak: 'Rohini Moon', init: 'AK' },
-  { quote: 'The Lal Kitab remedies are practical — not generic. Planted a peepal on Saturday. Transfer request approved six weeks later.', name: 'Priya S.', nak: 'Purva Phalguni', init: 'PS' },
-  { quote: "I've used three other apps. This is the only one using Swiss Ephemeris properly. The dasha dates are exact.", name: 'Rohan M.', nak: 'Ashwini', init: 'RM' },
-  { quote: 'Destiny Chat explained my Saturn return better than any astrologer I consulted. It cited my actual chart placements.', name: 'Meera V.', nak: 'Uttara Ashadha', init: 'MV' },
-  { quote: 'Rahu in the 3rd conjunct Moon — now I understand why I crave foreign travel so deeply. It is all mapped.', name: 'Sanjay T.', nak: 'Mula', init: 'ST' },
-  { quote: 'The free chart is more detailed than paid readings I have bought elsewhere. Jupiter in 11th confirmed — income jumped this year.', name: 'Ananya R.', nak: 'Magha', init: 'AR' },
-  { quote: 'Nakshatra-level reading for my daughter is extraordinary depth. Shravana Moon and she already loves music at age two.', name: 'Deepa N.', nak: 'Shravana Moon', init: 'DN' },
+  { quote: 'The dasha timeline is the most accurate I have seen. It flagged a career shift 8 months out — it happened exactly on schedule.', name: 'Vikram P.', nak: 'Hasta Moon', init: 'VP' },
+  { quote: 'I have tried AstroSage and two others. Bhagya is the only one that gets the nakshatra placements right every time.', name: 'Nandita R.', nak: 'Chitra Moon', init: 'NR' },
+  { quote: 'The Lal Kitab house readings are detailed and the remedies are actionable — not vague like most apps give you.', name: 'Arjun S.', nak: 'Punarvasu Moon', init: 'AS' },
+  { quote: 'Destiny Chat cited my actual house placements in every answer. It did not feel like a generic horoscope at all.', name: 'Kavya M.', nak: 'Anuradha Moon', init: 'KM' },
+  { quote: 'Free tier gives more than paid readings elsewhere. The ashtakavarga alone is worth it.', name: 'Tarun B.', nak: 'Vishakha Moon', init: 'TB' },
+  { quote: 'Saturn transit reading was precise. The Sade Sati analysis explained the last three years of my life better than anything.', name: 'Swati G.', nak: 'Jyeshtha Moon', init: 'SG' },
+  { quote: 'The nakshatra-level breakdown is something no other free tool offers. My Ardra placement finally makes sense.', name: 'Mehul D.', nak: 'Ardra Moon', init: 'MD' },
 ]
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -485,8 +485,8 @@ export default function Landing() {
       <div style={S.content}>
 
         {/* ── Sec 1: Hero — col 1–8 ── */}
-        <section id="sec-hero" style={S.sec}>
-          <div style={{ ...S.glass, gridColumn:'1 / span 8' }}>
+        <section id="sec-hero" style={{ ...S.sec, paddingTop:'7rem' }}>
+          <div style={{ ...S.glass, gridColumn:'1 / span 8', paddingTop:'4.5rem' }}>
             <div style={S.eyebrow}><span style={S.rule}/>Vedic Astrology · Jyotisha · भाग्य</div>
             <h1 style={S.h1}>
               Know<br />Your<br />
