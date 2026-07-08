@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TheBhagya — Know Your Destiny</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #07070f;
+      --text:    #F5F0E8;
+      --gold:    #C9933A;
+      --gold2:   #E8B860;
+      --purple:  #9B6FD4;
+      --teal:    #4BC8B8;
+      --glass:   rgba(7, 7, 20, 0.75);
+      --border:  rgba(201, 147, 58, 0.18);
+      --borderB: rgba(201, 147, 58, 0.42);
+    }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── Canvas ── */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3.5rem;
+      mix-blend-mode: difference;
+    }
+
+    .nav-brand {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+    }
+
+    .nav-brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 7px;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .nav-brand-sub {
+      font-size: 0.52rem;
+      letter-spacing: 5px;
+      color: #fff;
+      opacity: 0.55;
+      margin-top: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── 12-col grid ── */
+    .g12 {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 1.5rem;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 3.5rem;
+      width: 100%;
+    }
+
+    /* ── Sections ── */
+    section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      z-index: 10;
+      padding: 7rem 0 5rem;
+    }
+
+    /* ── Glass panels ── */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(22px) saturate(1.3);
+      -webkit-backdrop-filter: blur(22px) saturate(1.3);
+      border: 1px solid var(--border);
+      border-radius: 1px;
+    }
+
+    /* ── Typography ── */
+    .eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      font-weight: 600;
+    }
+
+    .d1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3.2rem, 7.5vw, 7.5rem);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .d2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .d3 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.9rem, 4vw, 4rem);
+      font-weight: 800;
+      line-height: 1;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .d4 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+      font-weight: 900;
+      line-height: 0.9;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .accent { color: var(--gold); }
+    .accent2 { color: var(--gold2); }
+
+    .body-text {
+      font-size: 0.9rem;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.8;
+    }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #C9933A 0%, #8B6020 100%);
+      color: #FFF8EC;
+      padding: 0.9rem 2.4rem;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.82; transform: translateY(-2px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      padding: 0.9rem 2.4rem;
+      border: 1px solid var(--borderB);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); background: rgba(201,147,58,0.07); }
+
+    /* ── Scroll indicator ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0.35;
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      animation: sline 2s ease-in-out infinite;
+    }
+
+    @keyframes sline {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      20%  { opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ── Section divider ── */
+    .section-num {
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      color: rgba(245,240,232,0.22);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-num::after { content:''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Feature cards ── */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .feat-card {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 1.8rem;
+      transition: background 0.25s;
+    }
+    .feat-card:hover { background: rgba(20, 15, 40, 0.85); }
+
+    .feat-icon {
+      font-size: 2rem;
+      margin-bottom: 0.9rem;
+      display: block;
+      filter: drop-shadow(0 0 8px rgba(201,147,58,0.4));
+    }
+
+    .feat-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .feat-desc {
+      font-size: 0.8rem;
+      color: rgba(245,240,232,0.55);
+      line-height: 1.65;
+    }
+
+    /* ── Gold divider line ── */
+    .rule-gold { width: 40px; height: 2px; background: var(--gold); margin-bottom: 1.5rem; }
+
+    /* ── Stats ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+      padding-top: 1.75rem;
+    }
+
+    .stat { padding-right: 1.5rem; }
+    .stat + .stat { border-left: 1px solid var(--border); padding-left: 1.5rem; padding-right: 0; }
+
+    .stat-n {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-l {
+      font-size: 0.65rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.4);
+    }
+
+    /* ── Footer strip ── */
+    .footer-strip {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.3rem 2rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .footer-strip a {
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-strip a:hover { color: var(--gold); }
+
+    /* ── Sacred SVG symbols ── */
+    .symbol { margin-bottom: 1.75rem; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.75rem; }
+      .nav-links { display: none; }
+      .g12 { grid-template-columns: 1fr; padding: 0 1.5rem; }
+      section { padding: 6rem 0 4rem; }
+      .feat-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-brand">
+    <span class="nav-brand-name">THEBHAGYA</span>
+    <span class="nav-brand-sub">भाग्य · DESTINY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#about">Philosophy</a></li>
+    <li><a href="#cta">Pricing</a></li>
+    <li><a href="#cta">Sign In</a></li>
+  </ul>
+</nav>
+
+<!-- ── Section 1: Hero ────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="g12">
+    <div class="glass" style="grid-column:1/8; padding:3rem 3rem 3rem;">
+
+      <!-- Sacred 8-pointed star -->
+      <div class="symbol">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <circle cx="26" cy="26" r="25" stroke="#C9933A" stroke-width="0.5" opacity="0.5"/>
+          <circle cx="26" cy="26" r="17" stroke="#C9933A" stroke-width="0.5" opacity="0.3"/>
+          <path d="M26 3 L28.4 23.6 L49 26 L28.4 28.4 L26 49 L23.6 28.4 L3 26 L23.6 23.6 Z"
+                fill="#C9933A" opacity="0.75"/>
+          <path d="M8.8 8.8 L22 22 M43.2 8.8 L30 22 M43.2 43.2 L30 30 M8.8 43.2 L22 30"
+                stroke="#C9933A" stroke-width="0.6" opacity="0.45"/>
+          <circle cx="26" cy="26" r="3.5" fill="#C9933A"/>
+        </svg>
+      </div>
+
+      <div class="eyebrow">भाग्य · Vedic Astrology · Jyotisha</div>
+
+      <h1 class="d1">
+        Know<br>
+        Your<br>
+        <span class="accent">Destiny</span><br>
+        Before It<br>
+        Finds You
+      </h1>
+
+      <p class="body-text" style="max-width:400px; margin-bottom:2.5rem;">
+        5,000 years of Vedic wisdom meets precise computational astronomy. Kundali analysis, Lal Kitab, Numerology, and Palmistry — your cosmic blueprint revealed instantly.
+      </p>
+
+      <div class="btn-row">
+        <a href="#" class="btn-primary">Get Your Reading →</a>
+        <a href="#features" class="btn-ghost">Explore Features</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── Section 2: Features ─────────────────────────────────────────────────── -->
+<section id="features">
+  <div class="g12">
+
+    <!-- Heading: cols 7-12 (right side — particles fill left) -->
+    <div class="glass" style="grid-column:6/13; padding:2.5rem 2.8rem 2rem; margin-bottom:1px;">
+      <div class="section-num">02 — What We Offer</div>
+      <h2 class="d2">
+        Ancient<br>
+        Wisdom.<br>
+        <span class="accent">Modern</span><br>
+        Clarity.
+      </h2>
+      <p class="body-text" style="max-width:360px;">
+        Each reading is calculated using Swiss Ephemeris — the same engine used by professional Jyotishis worldwide — with Lahiri Ayanamsa sidereal positions.
+      </p>
+    </div>
+
+    <!-- Feature cards: cols 6-12 -->
+    <div style="grid-column:6/13;">
+      <div class="feat-grid">
+        <div class="feat-card">
+          <span class="feat-icon">☽</span>
+          <div class="feat-name">Kundali Reading</div>
+          <p class="feat-desc">Precise birth chart with all 12 houses, 9 grahas, Vimshottari Dasha timeline, and nakshatra analysis.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">✦</span>
+          <div class="feat-name">Destiny Chat</div>
+          <p class="feat-desc">AI Jyotish assistant trained on Vedic principles — answers questions about your chart, periods, and remedies.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">∑</span>
+          <div class="feat-name">Numerology</div>
+          <p class="feat-desc">Chaldean and Pythagorean systems — life path, soul urge, expression, and destiny numbers decoded.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">🖐</span>
+          <div class="feat-name">Palmistry & Lal Kitab</div>
+          <p class="feat-desc">Lines of fate, heart, and head. Plus Lal Kitab remedies — the folk astrology of Punjab decoded.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 3: Philosophy ──────────────────────────────────────────────── -->
+<section id="about">
+  <div class="g12">
+
+    <!-- Text: cols 1-5 (left side — particles fill right) -->
+    <div class="glass" style="grid-column:1/6; padding:2.8rem;">
+      <div class="section-num">03 — Our Philosophy</div>
+      <div class="rule-gold"></div>
+
+      <h3 class="d3">
+        The Cosmic<br>
+        Blueprint<br>
+        Is Written<br>
+        <span class="accent">In You.</span>
+      </h3>
+
+      <p class="body-text" style="margin-bottom:1.2rem;">
+        The ancient rishis mapped the heavens not to predict fate, but to illuminate the tendencies that shape our choices. TheBhagya bridges classical Jyotisha with modern software precision.
+      </p>
+      <p class="body-text">
+        Every chart uses Swiss Ephemeris with Lahiri Ayanamsa for true sidereal planetary positions — not tropical approximations. The difference matters deeply.
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-n">27</span>
+          <span class="stat-l">Nakshatras</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n">12</span>
+          <span class="stat-l">Rashis</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n">120</span>
+          <span class="stat-l">Dasha Years</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 4: CTA ─────────────────────────────────────────────────────── -->
+<section id="cta">
+  <div class="g12">
+    <div class="glass" style="grid-column:3/11; padding:3.5rem; text-align:center;">
+
+      <!-- Mandala symbol -->
+      <div style="margin-bottom:2rem; display:flex; justify-content:center;">
+        <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
+          <circle cx="34" cy="34" r="32" stroke="#C9933A" stroke-width="0.5" opacity="0.35"/>
+          <circle cx="34" cy="34" r="22" stroke="#C9933A" stroke-width="0.5" opacity="0.25"/>
+          <circle cx="34" cy="34" r="12" stroke="#C9933A" stroke-width="0.5" opacity="0.45"/>
+          <!-- 12 rashis tick marks -->
+          <g stroke="#C9933A" stroke-width="0.8" opacity="0.55">
+            <line x1="34" y1="2" x2="34" y2="10"/>
+            <line x1="34" y1="58" x2="34" y2="66"/>
+            <line x1="2" y1="34" x2="10" y2="34"/>
+            <line x1="58" y1="34" x2="66" y2="34"/>
+            <line x1="9.8" y1="9.8" x2="15.5" y2="15.5"/>
+            <line x1="52.5" y1="52.5" x2="58.2" y2="58.2"/>
+            <line x1="58.2" y1="9.8" x2="52.5" y2="15.5"/>
+            <line x1="15.5" y1="52.5" x2="9.8" y2="58.2"/>
+          </g>
+          <!-- Inner star -->
+          <path d="M34 22 L35.8 32.2 L46 34 L35.8 35.8 L34 46 L32.2 35.8 L22 34 L32.2 32.2 Z"
+                fill="#C9933A" opacity="0.7"/>
+          <circle cx="34" cy="34" r="4" fill="#C9933A"/>
+        </svg>
+      </div>
+
+      <div class="eyebrow" style="justify-content:center;">04 — Begin Your Journey</div>
+
+      <h4 class="d4">
+        Your Stars<br>
+        Are<br>
+        <span class="accent">Aligned.</span>
+      </h4>
+
+      <p class="body-text" style="max-width:460px; margin:0 auto 2.5rem;">
+        Join thousands seeking clarity through the ancient science of Jyotisha. Your free Kundali awaits — no credit card, no commitment.
+      </p>
+
+      <div class="btn-row" style="justify-content:center;">
+        <a href="#" class="btn-primary">Create Free Chart →</a>
+        <a href="#" class="btn-ghost">Sign In</a>
+      </div>
+
+      <div class="footer-strip">
+        <a href="#">My Charts</a>
+        <a href="#">Destiny Chat</a>
+        <a href="#">Numerology</a>
+        <a href="#">Pricing</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+
+      <div style="margin-top:1.5rem; font-size:0.6rem; color:rgba(245,240,232,0.2); letter-spacing:3px;">
+        © 2025 THEBHAGYA · ALL RIGHTS RESERVED · भाग्य · DESTINY
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WebGL + GSAP ────────────────────────────────────────────────────────── -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Renderer ──────────────────────────────────────────────────────────────────
+const canvas   = document.getElementById('bg-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x000000, 0);
+
+const scene  = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.z = 6;
+
+const N = 6000;
+
+// ── Formation generators ──────────────────────────────────────────────────────
+
+// F0 — Zodiac wheel: 12 constellation clusters in a circle
+function genZodiac(N) {
+  const pos = new Float32Array(N * 3);
+  const col = new Float32Array(N * 3);
+  const perSign = Math.ceil(N / 12);
+
+  for (let i = 0; i < N; i++) {
+    const sign      = Math.min(Math.floor(i / perSign), 11);
+    const baseAngle = (sign / 12) * Math.PI * 2;
+    const jitter    = (Math.random() - 0.5) * 0.38;
+    const angle     = baseAngle + jitter;
+    const r         = 2.35 + (Math.random() - 0.5) * 0.28;
+
+    pos[i * 3]     = Math.cos(angle) * r;
+    pos[i * 3 + 1] = Math.sin(angle) * r;
+    pos[i * 3 + 2] = (Math.random() - 0.5) * 0.45;
+
+    const t        = Math.random();
+    col[i * 3]     = 0.72 + t * 0.28;  // R — gold
+    col[i * 3 + 1] = 0.48 + t * 0.22;  // G
+    col[i * 3 + 2] = 0.04 + Math.random() * 0.14; // B
+  }
+  return { pos, col };
+}
+
+// F1 — Planetary orbits: 7 concentric tilted ellipses
+function genOrbits(N) {
+  const pos = new Float32Array(N * 3);
+  const col = new Float32Array(N * 3);
+  const ORBITS = 7;
+
+  for (let i = 0; i < N; i++) {
+    const orbit = i % ORBITS;
+    const r     = 0.32 + orbit * 0.44;
+    const incl  = orbit * 0.20 - 0.28;
+    const angle = (i / N) * Math.PI * 2 * 37 + orbit * 1.4;
+    const sp    = 0.035 + orbit * 0.022;
+
+    const cosA = Math.cos(angle);
+    const sinA = Math.sin(angle);
+
+    pos[i * 3]     = cosA * r + (Math.random() - 0.5) * sp;
+    pos[i * 3 + 1] = sinA * r * Math.cos(incl) + (Math.random() - 0.5) * sp;
+    pos[i * 3 + 2] = sinA * r * Math.sin(incl) + (Math.random() - 0.5) * sp;
+
+    const t        = orbit / (ORBITS - 1);
+    col[i * 3]     = 0.32 + t * 0.38;  // R — purple
+    col[i * 3 + 1] = 0.14 + Math.random() * 0.22;
+    col[i * 3 + 2] = 0.68 + Math.random() * 0.32;
+  }
+  return { pos, col };
+}
+
+// F2 — Sri Yantra inspired: nested triangles + outer lotus ring
+function genYantra(N) {
+  const pos = new Float32Array(N * 3);
+  const col = new Float32Array(N * 3);
+
+  for (let i = 0; i < N; i++) {
+    const t     = i / N;
+    const layer = Math.floor(t * 9);
+    let x, y, z;
+
+    if (layer < 5) {
+      // Upward-pointing triangles (Shiva — ascending consciousness)
+      const level = layer + 1;
+      const side  = i % 3;
+      const r     = level * 0.47;
+      const a0    = (side / 3) * Math.PI * 2 - Math.PI / 2;
+      const a1    = ((side + 1) / 3) * Math.PI * 2 - Math.PI / 2;
+      const mix   = Math.random();
+      x = (Math.cos(a0) * (1 - mix) + Math.cos(a1) * mix) * r + (Math.random() - 0.5) * 0.07;
+      y = (Math.sin(a0) * (1 - mix) + Math.sin(a1) * mix) * r + (Math.random() - 0.5) * 0.07;
+      z = (Math.random() - 0.5) * 0.28;
+    } else if (layer < 8) {
+      // Downward-pointing triangles (Shakti — descending energy)
+      const level = layer - 4;
+      const side  = i % 3;
+      const r     = level * 0.51;
+      const a0    = (side / 3) * Math.PI * 2 + Math.PI / 6;
+      const a1    = ((side + 1) / 3) * Math.PI * 2 + Math.PI / 6;
+      const mix   = Math.random();
+      x =  (Math.cos(a0) * (1 - mix) + Math.cos(a1) * mix) * r + (Math.random() - 0.5) * 0.07;
+      y = -(Math.sin(a0) * (1 - mix) + Math.sin(a1) * mix) * r + (Math.random() - 0.5) * 0.07;
+      z = (Math.random() - 0.5) * 0.22;
+    } else {
+      // Outer lotus / bindu circle
+      const angle = Math.random() * Math.PI * 2;
+      const r     = 2.18 + (Math.random() - 0.5) * 0.16;
+      x = Math.cos(angle) * r;
+      y = Math.sin(angle) * r;
+      z = (Math.random() - 0.5) * 0.12;
+    }
+
+    pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z;
+
+    const br       = 0.68 + Math.random() * 0.32;
+    col[i * 3]     = 0.04 + Math.random() * 0.22;  // teal
+    col[i * 3 + 1] = br * 0.78;
+    col[i * 3 + 2] = br * 0.88;
+  }
+  return { pos, col };
+}
+
+// F3 — 27 Nakshatras: star clusters along ecliptic band
+function genNakshatras(N) {
+  const pos = new Float32Array(N * 3);
+  const col = new Float32Array(N * 3);
+  const perNak = Math.ceil(N / 27);
+
+  for (let i = 0; i < N; i++) {
+    const nak       = Math.min(Math.floor(i / perNak), 26);
+    const baseAngle = (nak / 27) * Math.PI * 2;
+    const angle     = baseAngle + (Math.random() - 0.5) * 0.2;
+    const r         = 1.2 + Math.random() * 1.9;
+    const band      = (Math.random() - 0.5) * 0.58;
+
+    pos[i * 3]     = Math.cos(angle) * r;
+    pos[i * 3 + 1] = band;
+    pos[i * 3 + 2] = Math.sin(angle) * r * 0.45 + (Math.random() - 0.5) * 1.6;
+
+    const br       = 0.52 + Math.random() * 0.48;
+    col[i * 3]     = br * 0.62;    // cool blue-white
+    col[i * 3 + 1] = br * 0.72;
+    col[i * 3 + 2] = br;
+  }
+  return { pos, col };
+}
+
+// ── Generate all formations ───────────────────────────────────────────────────
+const formations = [
+  genZodiac(N),
+  genOrbits(N),
+  genYantra(N),
+  genNakshatras(N)
+];
+
+// Offsets: position particles in the EMPTY space opposite the text column
+// S1 Hero      — text left  → particles right (+X)
+// S2 Features  — text right → particles left  (-X)
+// S3 Philosophy— text left  → particles right (+X), slightly back
+// S4 CTA       — text center → particles spread behind (0, pushed -Z)
+const offsets = [
+  new THREE.Vector3( 2.7,  0.1, -1.2),
+  new THREE.Vector3(-2.7, -0.1, -1.2),
+  new THREE.Vector3( 2.4,  0.4, -1.8),
+  new THREE.Vector3( 0.0,  0.8, -2.5),
+];
+
+// ── Build main particle system ────────────────────────────────────────────────
+const geo      = new THREE.BufferGeometry();
+const arrPos   = new Float32Array(N * 3);
+const arrCol   = new Float32Array(N * 3);
+
+const f0 = formations[0];
+for (let i = 0; i < N * 3; i++) {
+  const c = i % 3;
+  const o = c === 0 ? offsets[0].x : c === 1 ? offsets[0].y : offsets[0].z;
+  arrPos[i] = f0.pos[i] + o;
+  arrCol[i] = f0.col[i];
+}
+
+const attrPos = new THREE.BufferAttribute(arrPos, 3);
+const attrCol = new THREE.BufferAttribute(arrCol, 3);
+attrPos.setUsage(THREE.DynamicDrawUsage);
+attrCol.setUsage(THREE.DynamicDrawUsage);
+geo.setAttribute('position', attrPos);
+geo.setAttribute('color',    attrCol);
+
+const mat = new THREE.PointsMaterial({
+  size:          0.040,
+  sizeAttenuation: true,
+  vertexColors:  true,
+  blending:      THREE.AdditiveBlending,
+  transparent:   true,
+  depthWrite:    false,
+  opacity:       0.88,
+});
+
+const pts = new THREE.Points(geo, mat);
+scene.add(pts);
+
+// ── Ambient dust layer ────────────────────────────────────────────────────────
+const DUST    = 1800;
+const dustGeo = new THREE.BufferGeometry();
+const dustPos = new Float32Array(DUST * 3);
+
+for (let i = 0; i < DUST; i++) {
+  const theta = Math.random() * Math.PI * 2;
+  const phi   = Math.acos(2 * Math.random() - 1);
+  const r     = 4.5 + Math.random() * 7;
+  dustPos[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
+  dustPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+  dustPos[i * 3 + 2] = r * Math.cos(phi) - 2;
+}
+
+dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+const dustMat = new THREE.PointsMaterial({
+  size:        0.022,
+  color:       0xffffff,
+  transparent: true,
+  opacity:     0.15,
+  blending:    THREE.AdditiveBlending,
+  depthWrite:  false,
+  sizeAttenuation: true,
+});
+const dustPts = new THREE.Points(dustGeo, dustMat);
+scene.add(dustPts);
+
+// ── Scroll tracking ───────────────────────────────────────────────────────────
+let scrollProg  = 0;
+let prevProg    = 0;
+let scrollVel   = 0;
+
+ScrollTrigger.create({
+  trigger:   document.body,
+  start:     'top top',
+  end:       'bottom bottom',
+  scrub:     true,
+  onUpdate:  (self) => { scrollProg = self.progress; },
+});
+
+// ── Per-particle phase offsets for organic jitter ─────────────────────────────
+const phases = new Float32Array(N);
+for (let i = 0; i < N; i++) phases[i] = Math.random() * Math.PI * 2;
+
+// ── Render loop ───────────────────────────────────────────────────────────────
+let time = 0;
+
+gsap.ticker.add(() => {
+  time += 0.007;
+
+  // Scroll velocity (frame delta of progress, amplified)
+  scrollVel = Math.min(Math.abs(scrollProg - prevProg) * 90, 1.0);
+  prevProg  = scrollProg;
+
+  // Map 0-1 scroll across 3 transition segments
+  //   [0.00, 0.33] → blend F0 → F1
+  //   [0.33, 0.66] → blend F1 → F2
+  //   [0.66, 1.00] → blend F2 → F3
+  let idxA, idxB, blend;
+
+  if (scrollProg < 0.33) {
+    idxA = 0; idxB = 1;
+    blend = scrollProg / 0.33;
+  } else if (scrollProg < 0.66) {
+    idxA = 1; idxB = 2;
+    blend = (scrollProg - 0.33) / 0.33;
+  } else {
+    idxA = 2; idxB = 3;
+    blend = (scrollProg - 0.66) / 0.34;
+  }
+
+  blend = Math.max(0, Math.min(1, blend));
+
+  // Smooth blend with ease-in-out
+  const bSm = blend * blend * (3 - 2 * blend);
+
+  const fA = formations[idxA];
+  const fB = formations[idxB];
+  const oA = offsets[idxA];
+  const oB = offsets[idxB];
+
+  // Interpolated global offset
+  const ox = oA.x + (oB.x - oA.x) * bSm;
+  const oy = oA.y + (oB.y - oA.y) * bSm;
+  const oz = oA.z + (oB.z - oA.z) * bSm;
+
+  // Jitter amplitude — larger while scrolling fast
+  const jAmp = 0.038 + scrollVel * 0.14;
+
+  const pArr = attrPos.array;
+  const cArr = attrCol.array;
+
+  for (let i = 0; i < N; i++) {
+    const i3  = i * 3;
+    const phi = phases[i];
+
+    // Lerp target position between formation A and B
+    const tx = fA.pos[i3]     + (fB.pos[i3]     - fA.pos[i3])     * bSm;
+    const ty = fA.pos[i3 + 1] + (fB.pos[i3 + 1] - fA.pos[i3 + 1]) * bSm;
+    const tz = fA.pos[i3 + 2] + (fB.pos[i3 + 2] - fA.pos[i3 + 2]) * bSm;
+
+    // Continuous organic jitter (sine/cosine per particle phase)
+    const jx = Math.sin(time * 0.85 + phi)        * jAmp;
+    const jy = Math.cos(time * 0.72 + phi * 1.31) * jAmp;
+    const jz = Math.sin(time * 0.53 + phi * 0.79) * jAmp * 0.55;
+
+    pArr[i3]     = tx + ox + jx;
+    pArr[i3 + 1] = ty + oy + jy;
+    pArr[i3 + 2] = tz + oz + jz;
+
+    // Lerp color
+    cArr[i3]     = fA.col[i3]     + (fB.col[i3]     - fA.col[i3])     * bSm;
+    cArr[i3 + 1] = fA.col[i3 + 1] + (fB.col[i3 + 1] - fA.col[i3 + 1]) * bSm;
+    cArr[i3 + 2] = fA.col[i3 + 2] + (fB.col[i3 + 2] - fA.col[i3 + 2]) * bSm;
+  }
+
+  attrPos.needsUpdate = true;
+  attrCol.needsUpdate = true;
+
+  // Slow continuous rotation of the particle system + velocity burst
+  pts.rotation.y += 0.00075 + scrollVel * 0.0035;
+  pts.rotation.x += 0.00025 + scrollVel * 0.0012;
+
+  // Ambient dust slow drift
+  dustPts.rotation.y += 0.00025;
+  dustPts.rotation.x += 0.00008;
+
+  renderer.render(scene, camera);
+});
+
+// ── Resize ────────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  ScrollTrigger.refresh();
+});
+</script>
+
+</body>
+</html>

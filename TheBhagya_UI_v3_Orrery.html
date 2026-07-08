@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TheBhagya — Know Your Destiny</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:    #04040e;
+      --text:  #F5F0E8;
+      --gold:  #C9933A;
+      --gold2: #E8C06A;
+      --glass: rgba(4, 4, 18, 0.82);
+      --bdr:   rgba(201,147,58,0.13);
+      --bdrB:  rgba(201,147,58,0.36);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    #bg-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 3.5rem;
+    }
+    .brand { text-decoration: none; }
+    .brand-name {
+      font-family: 'Cinzel', serif; font-size: 0.92rem; font-weight: 700;
+      letter-spacing: 8px; color: #fff; display: block; line-height: 1;
+    }
+    .brand-sub {
+      font-size: 0.44rem; letter-spacing: 5px; color: rgba(255,255,255,0.35);
+      margin-top: 3px; display: block;
+    }
+    .nav-links { display: flex; gap: 2.8rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.55); text-decoration: none;
+      font-size: 0.66rem; letter-spacing: 2.5px; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── Layout ── */
+    .g12 {
+      display: grid; grid-template-columns: repeat(12,1fr); column-gap: 1.5rem;
+      max-width: 1440px; margin: 0 auto; padding: 0 3.5rem; width: 100%;
+    }
+    section {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      z-index: 10; padding: 8rem 0 5rem;
+    }
+
+    /* ── Glass ── */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(28px) saturate(1.6);
+      -webkit-backdrop-filter: blur(28px) saturate(1.6);
+      border: 1px solid var(--bdr);
+    }
+
+    /* ── Type ── */
+    .eyebrow {
+      font-size: 0.60rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.4rem; font-weight: 600;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .eyebrow::before { content:''; width:18px; height:1px; background:var(--gold); }
+
+    .d1 {
+      font-family:'Cormorant Garamond',serif;
+      font-size: clamp(3.5rem,8vw,8.5rem);
+      font-weight:700; font-style:italic;
+      line-height:0.87; letter-spacing:-2px; margin-bottom:2rem;
+    }
+    .d2 {
+      font-family:'Cormorant Garamond',serif;
+      font-size: clamp(2.4rem,5.5vw,5.8rem);
+      font-weight:700; font-style:italic;
+      line-height:0.9; letter-spacing:-1.5px; margin-bottom:1.8rem;
+    }
+    .d3 {
+      font-family:'Cormorant Garamond',serif;
+      font-size: clamp(2rem,4.5vw,4.6rem);
+      font-weight:600; font-style:italic;
+      line-height:0.92; letter-spacing:-1px; margin-bottom:1.5rem;
+    }
+    .d4 {
+      font-family:'Cormorant Garamond',serif;
+      font-size: clamp(3rem,6.5vw,7rem);
+      font-weight:700; font-style:italic;
+      line-height:0.87; letter-spacing:-2px; margin-bottom:1.5rem;
+    }
+
+    .accent { color: var(--gold); }
+    .body-t { font-size: 0.88rem; color: rgba(245,240,232,0.54); line-height: 1.88; }
+    .rule { width:34px; height:1.5px; background:var(--gold); margin-bottom:1.4rem; }
+    .sec-lb {
+      font-size: 0.56rem; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(245,240,232,0.18); display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 1.8rem;
+    }
+    .sec-lb::after { content:''; flex:1; height:1px; background:var(--bdr); }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-p {
+      background: linear-gradient(135deg,#C9933A,#8B6020);
+      color: #FFF8EC; padding: 0.9rem 2.4rem; border: none; cursor: pointer;
+      font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase;
+      font-weight: 600; text-decoration: none; display: inline-flex;
+      align-items: center; gap: 0.5rem; transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-p:hover { opacity: 0.82; transform: translateY(-2px); }
+    .btn-g {
+      background: transparent; color: var(--text);
+      padding: 0.9rem 2.4rem; border: 1px solid var(--bdrB); cursor: pointer;
+      font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase;
+      text-decoration: none; display: inline-flex; align-items: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-g:hover { border-color: var(--gold); background: rgba(201,147,58,0.06); }
+
+    /* ── Scroll hint ── */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.55rem;
+      opacity: 0.25; font-size: 0.54rem; letter-spacing: 4px; text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      animation: sline 2.4s ease-in-out infinite;
+    }
+    @keyframes sline {
+      0%,100% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      40%      { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      60%      { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+      99%      { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ── Planet legend ── */
+    #planetLegend {
+      position: fixed; right: 2rem; top: 50%; transform: translateY(-50%);
+      z-index: 50; display: flex; flex-direction: column; gap: 0.5rem;
+      transition: opacity 0.7s;
+    }
+    .pl-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.52rem; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,240,232,0.38);
+    }
+    .pl-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Feature cards ── */
+    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--bdr); border: 1px solid var(--bdr); }
+    .feat-card {
+      background: rgba(4,4,18,0.85); backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px); padding: 1.8rem;
+      transition: background 0.25s;
+    }
+    .feat-card:hover { background: rgba(16,8,32,0.92); }
+    .feat-icon { font-size: 1.7rem; margin-bottom: 0.8rem; display: block; }
+    .feat-name {
+      font-family:'Cinzel',serif; font-size:0.70rem; font-weight:600;
+      letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem;
+    }
+    .feat-desc { font-size: 0.78rem; color: rgba(245,240,232,0.48); line-height: 1.7; }
+
+    /* ── Stats ── */
+    .stats {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid var(--bdr); margin-top: 2rem; padding-top: 1.8rem;
+    }
+    .stat { padding-right: 1rem; }
+    .stat + .stat { border-left: 1px solid var(--bdr); padding-left: 1rem; }
+    .stat-n {
+      font-family:'Cormorant Garamond',serif;
+      font-size: 2.5rem; font-weight: 700; color: var(--gold);
+      line-height: 1; display: block; margin-bottom: 0.2rem;
+    }
+    .stat-l { font-size: 0.56rem; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(245,240,232,0.3); }
+
+    /* ── Footer ── */
+    .ftr {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0.2rem 2rem;
+      border-top: 1px solid var(--bdr); padding-top: 2rem; margin-top: 2.5rem;
+    }
+    .ftr a {
+      font-size: 0.60rem; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,240,232,0.22); text-decoration: none; transition: color 0.2s;
+    }
+    .ftr a:hover { color: var(--gold); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .g12 { grid-template-columns:1fr; padding: 0 1.5rem; }
+      section { padding: 7rem 0 4rem; }
+      .feat-grid { grid-template-columns: 1fr; }
+      #planetLegend { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- Planet legend -->
+<div id="planetLegend">
+  <div class="pl-item"><div class="pl-dot" style="background:#FF9922"></div>Surya · ☉</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#BBCCFF"></div>Chandra · ☽</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#44FF88"></div>Budha · ☿</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#FF88CC"></div>Shukra · ♀</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#FF4422"></div>Mangal · ♂</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#FFCC44"></div>Guru · ♃</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#99AABB"></div>Shani · ♄</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#4455BB"></div>Rahu · ☊</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#BB4433"></div>Ketu · ☋</div>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="brand">
+    <span class="brand-name">THEBHAGYA</span>
+    <span class="brand-sub">भाग्य · DESTINY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#about">Philosophy</a></li>
+    <li><a href="#cta">Pricing</a></li>
+    <li><a href="#cta">Sign In</a></li>
+  </ul>
+</nav>
+
+<!-- Section 1 — Hero -->
+<section id="hero">
+  <div class="g12">
+    <div class="glass" style="grid-column:1/7; padding:3rem 3rem 3.5rem;">
+      <div style="margin-bottom:1.8rem;">
+        <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+          <circle cx="19" cy="19" r="18" stroke="#C9933A" stroke-width="0.6" opacity="0.45"/>
+          <circle cx="19" cy="19" r="11" stroke="#C9933A" stroke-width="0.5" opacity="0.28"/>
+          <path d="M19 2 L20.5 17.5 L36 19 L20.5 20.5 L19 36 L17.5 20.5 L2 19 L17.5 17.5 Z"
+                fill="#C9933A" opacity="0.8"/>
+          <circle cx="19" cy="19" r="2.5" fill="#C9933A"/>
+        </svg>
+      </div>
+      <div class="eyebrow">Vedic Astrology · Jyotisha · भाग्य</div>
+      <h1 class="d1">
+        Know<br>
+        Your<br>
+        <span class="accent">Destiny</span><br>
+        Before<br>
+        It Finds<br>
+        You
+      </h1>
+      <p class="body-t" style="max-width:360px; margin-bottom:2.5rem;">
+        Five thousand years of Vedic wisdom, rendered in computational light. Nine grahas. Twelve rashis. Twenty-seven nakshatras. Your cosmic blueprint, decoded.
+      </p>
+      <div class="btn-row">
+        <a href="#" class="btn-p">Get Your Reading →</a>
+        <a href="#features" class="btn-g">Explore Features</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Section 2 — Features -->
+<section id="features">
+  <div class="g12">
+    <div class="glass" style="grid-column:7/13; padding:2.6rem 2.6rem 2rem;">
+      <div class="sec-lb">02 — What We Offer</div>
+      <h2 class="d2">Ancient<br>Wisdom.<br><span class="accent">Modern</span><br>Clarity.</h2>
+      <p class="body-t" style="max-width:320px; margin-bottom:1.8rem;">
+        Swiss Ephemeris, Lahiri Ayanamsa, sidereal positions. Not approximations — the exact sky the rishis mapped, accurate to arc-seconds.
+      </p>
+    </div>
+    <div style="grid-column:7/13; margin-top:1px;">
+      <div class="feat-grid">
+        <div class="feat-card">
+          <span class="feat-icon">☽</span>
+          <div class="feat-name">Kundali Reading</div>
+          <p class="feat-desc">12 houses, 9 grahas, Vimshottari Dasha timeline, nakshatra padas, ashtakavarga — precise Swiss Ephemeris data.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">✦</span>
+          <div class="feat-name">Destiny Chat</div>
+          <p class="feat-desc">AI Jyotish assistant trained on Vedic principles. Ask about your current dasha, transits, and remedies.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">∑</span>
+          <div class="feat-name">Numerology</div>
+          <p class="feat-desc">Chaldean and Pythagorean systems — life path, soul urge, expression, and destiny numbers fully decoded.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">📖</span>
+          <div class="feat-name">Lal Kitab</div>
+          <p class="feat-desc">Folk astrology of Punjab — practical remedies for planetary afflictions, karmic debts, and house imbalances.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3 — Philosophy -->
+<section id="about">
+  <div class="g12">
+    <div class="glass" style="grid-column:1/6; padding:2.8rem;">
+      <div class="sec-lb">03 — Philosophy</div>
+      <div class="rule"></div>
+      <h3 class="d3">
+        The Cosmos<br>
+        Is Mapped<br>
+        <span class="accent">In You.</span>
+      </h3>
+      <p class="body-t" style="margin-bottom:1.2rem;">
+        The ancient rishis understood that the macrocosm and the individual are one. Your birth chart is not a cage — it is a map of your tendencies, gifts, and dharma.
+      </p>
+      <p class="body-t">
+        Every planet in TheBhagya is computed using Swiss Ephemeris with Lahiri Ayanamsa — the same standard used by professional Jyotishis worldwide.
+      </p>
+      <div class="stats">
+        <div class="stat"><span class="stat-n">27</span><span class="stat-l">Nakshatras</span></div>
+        <div class="stat"><span class="stat-n">12</span><span class="stat-l">Rashis</span></div>
+        <div class="stat"><span class="stat-n">9</span><span class="stat-l">Grahas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4 — CTA -->
+<section id="cta">
+  <div class="g12">
+    <div class="glass" style="grid-column:3/11; padding:3.5rem; text-align:center;">
+      <div style="display:flex; justify-content:center; margin-bottom:2rem;">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="27" stroke="#C9933A" stroke-width="0.5" opacity="0.26"/>
+          <circle cx="28" cy="28" r="17" stroke="#C9933A" stroke-width="0.5" opacity="0.18"/>
+          <circle cx="28" cy="28" r="8"  stroke="#C9933A" stroke-width="0.5" opacity="0.38"/>
+          <g stroke="#C9933A" stroke-width="0.75" opacity="0.44">
+            <line x1="28" y1="1"  x2="28" y2="8"/>
+            <line x1="28" y1="48" x2="28" y2="55"/>
+            <line x1="1"  y1="28" x2="8"  y2="28"/>
+            <line x1="48" y1="28" x2="55" y2="28"/>
+          </g>
+          <path d="M28 16 L29.3 26.7 L40 28 L29.3 29.3 L28 40 L26.7 29.3 L16 28 L26.7 26.7 Z"
+                fill="#C9933A" opacity="0.76"/>
+          <circle cx="28" cy="28" r="3" fill="#C9933A"/>
+        </svg>
+      </div>
+      <div class="eyebrow" style="justify-content:center;">04 — Begin Your Journey</div>
+      <h4 class="d4">Your Stars<br><span class="accent">Are Aligned.</span></h4>
+      <p class="body-t" style="max-width:420px; margin:0 auto 2.5rem; text-align:center;">
+        Join thousands seeking clarity through the ancient science of Jyotisha. Your free Kundali awaits — no credit card, no commitment.
+      </p>
+      <div class="btn-row" style="justify-content:center;">
+        <a href="#" class="btn-p">Create Free Chart →</a>
+        <a href="#" class="btn-g">Sign In</a>
+      </div>
+      <div class="ftr">
+        <a href="#">My Charts</a>
+        <a href="#">Destiny Chat</a>
+        <a href="#">Numerology</a>
+        <a href="#">Lal Kitab</a>
+        <a href="#">Pricing</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <div style="margin-top:1.5rem; font-size:0.54rem; color:rgba(245,240,232,0.14); letter-spacing:3px;">
+        © 2025 THEBHAGYA · भाग्य · ALL RIGHTS RESERVED
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const PI2 = Math.PI * 2;
+const MOB = window.innerWidth < 900;
+
+// ── Renderer ──────────────────────────────────────────────────────────────────
+const canvas   = document.getElementById('bg-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.setClearColor(0x000000, 0);
+
+const scene  = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(52, innerWidth / innerHeight, 0.1, 200);
+camera.position.set(0, 3.6, 10);
+camera.lookAt(0, 0, 0);
+
+// ── Glow texture (shared) ─────────────────────────────────────────────────────
+function makeGlowTex(res = 128) {
+  const c   = document.createElement('canvas');
+  c.width   = c.height = res;
+  const ctx = c.getContext('2d');
+  const g   = ctx.createRadialGradient(res/2, res/2, 0, res/2, res/2, res/2);
+  g.addColorStop(0,    'rgba(255,255,255,1)');
+  g.addColorStop(0.12, 'rgba(255,255,255,0.9)');
+  g.addColorStop(0.40, 'rgba(255,255,255,0.20)');
+  g.addColorStop(0.75, 'rgba(255,255,255,0.04)');
+  g.addColorStop(1,    'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, res, res);
+  return new THREE.CanvasTexture(c);
+}
+const GLOW_TEX = makeGlowTex(128);
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function orbitRing(r, color = 0xC9933A, opacity = 0.18, segs = 160) {
+  const pts = [];
+  for (let i = 0; i <= segs; i++) {
+    const a = (i / segs) * PI2;
+    pts.push(new THREE.Vector3(Math.cos(a) * r, 0, Math.sin(a) * r));
+  }
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  const mat = new THREE.LineBasicMaterial({ color, opacity, transparent: true, depthWrite: false });
+  return new THREE.Line(geo, mat);
+}
+
+function makePlanet(sz, hexColor, glowRGB, glowSz) {
+  const group = new THREE.Group();
+
+  // Core sphere — self-illuminated
+  const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(sz, MOB ? 16 : 28, MOB ? 12 : 20),
+    new THREE.MeshBasicMaterial({ color: hexColor })
+  );
+  group.add(sphere);
+
+  // Soft inner halo: slightly larger transparent sphere (additive)
+  const halo = new THREE.Mesh(
+    new THREE.SphereGeometry(sz * 2.2, 16, 12),
+    new THREE.MeshBasicMaterial({
+      color: hexColor,
+      transparent: true, opacity: 0.10,
+      blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.FrontSide,
+    })
+  );
+  group.add(halo);
+
+  // Outer sprite glow
+  const spr = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: GLOW_TEX,
+    color: new THREE.Color(glowRGB[0], glowRGB[1], glowRGB[2]),
+    transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+    opacity: 0.82,
+  }));
+  spr.scale.set(glowSz, glowSz, 1);
+  group.add(spr);
+
+  return { group, sphere, halo, spr };
+}
+
+// ── Graha data ────────────────────────────────────────────────────────────────
+const GRAHAS = [
+  { name:'Surya',   hex:0xFF9922, gl:[1.0,0.60,0.10], r:0.00, spd:0,       sz:0.22, gsz:0.70 },
+  { name:'Chandra', hex:0xBBCCFF, gl:[0.70,0.80,1.0],  r:0.62, spd:0.0135, sz:0.10, gsz:0.30 },
+  { name:'Budha',   hex:0x33EE77, gl:[0.15,0.95,0.45], r:0.95, spd:0.0110, sz:0.09, gsz:0.26 },
+  { name:'Shukra',  hex:0xFF77BB, gl:[1.0,0.45,0.75],  r:1.22, spd:0.0090, sz:0.11, gsz:0.33 },
+  { name:'Mangal',  hex:0xFF3311, gl:[1.0,0.18,0.08],  r:1.60, spd:0.0068, sz:0.13, gsz:0.36 },
+  { name:'Guru',    hex:0xFFCC33, gl:[1.0,0.80,0.18],  r:2.15, spd:0.0044, sz:0.18, gsz:0.52 },
+  { name:'Shani',   hex:0x99AABB, gl:[0.58,0.65,0.74], r:2.80, spd:0.0028, sz:0.16, gsz:0.46 },
+  { name:'Rahu',    hex:0x3344AA, gl:[0.18,0.25,0.72], r:1.88, spd:-0.0022,sz:0.09, gsz:0.24 },
+  { name:'Ketu',    hex:0xAA3322, gl:[0.72,0.18,0.12], r:1.88, spd:-0.0022,sz:0.09, gsz:0.24 },
+];
+
+// ── Root group (whole orrery) ─────────────────────────────────────────────────
+const orrery = new THREE.Group();
+orrery.rotation.x = 0.24; // tilt orbit plane toward viewer
+scene.add(orrery);
+
+// ── Starfield (ambient background, NOT the main event) ───────────────────────
+const STAR_N = MOB ? 4000 : 8000;
+const sPosArr = new Float32Array(STAR_N * 3);
+const sColArr = new Float32Array(STAR_N * 3);
+for (let i = 0; i < STAR_N; i++) {
+  const phi   = Math.acos(2 * Math.random() - 1);
+  const theta = Math.random() * PI2;
+  const r     = 15 + Math.random() * 35;
+  sPosArr[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+  sPosArr[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+  sPosArr[i*3+2] = r * Math.cos(phi);
+  const br = 0.35 + Math.random() * 0.65;
+  // Slight blue-white tint
+  sColArr[i*3]   = br * (0.75 + Math.random() * 0.25);
+  sColArr[i*3+1] = br * (0.82 + Math.random() * 0.18);
+  sColArr[i*3+2] = br;
+}
+const starGeo = new THREE.BufferGeometry();
+starGeo.setAttribute('position', new THREE.BufferAttribute(sPosArr, 3));
+starGeo.setAttribute('color',    new THREE.BufferAttribute(sColArr, 3));
+scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({
+  size: MOB ? 0.065 : 0.045, sizeAttenuation: true,
+  vertexColors: true, blending: THREE.AdditiveBlending,
+  transparent: true, depthWrite: false, opacity: 0.70,
+})));
+
+// ── Earth (geocentric center) ─────────────────────────────────────────────────
+const earth = makePlanet(0.14, 0x3366AA, [0.22, 0.42, 0.82], 0.38);
+earth.group.position.set(0, 0, 0);
+orrery.add(earth.group);
+
+// ── Zodiac ring (outer reference circle) ─────────────────────────────────────
+const zodiacR = 3.55;
+orrery.add(orbitRing(zodiacR, 0xC9933A, 0.22, 256));
+
+// 12 rashi tick marks + subtle arcs
+for (let z = 0; z < 12; z++) {
+  const a0 = (z / 12) * PI2;
+  const a1 = ((z + 0.5) / 12) * PI2;
+
+  // Major tick
+  const tickPts = [
+    new THREE.Vector3(Math.cos(a0) * zodiacR, 0, Math.sin(a0) * zodiacR),
+    new THREE.Vector3(Math.cos(a0) * (zodiacR + 0.22), 0, Math.sin(a0) * (zodiacR + 0.22)),
+  ];
+  orrery.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(tickPts),
+    new THREE.LineBasicMaterial({ color: 0xC9933A, opacity: 0.40, transparent: true })
+  ));
+
+  // Minor tick (mid-point)
+  const minorPts = [
+    new THREE.Vector3(Math.cos(a1) * zodiacR, 0, Math.sin(a1) * zodiacR),
+    new THREE.Vector3(Math.cos(a1) * (zodiacR + 0.10), 0, Math.sin(a1) * (zodiacR + 0.10)),
+  ];
+  orrery.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(minorPts),
+    new THREE.LineBasicMaterial({ color: 0xC9933A, opacity: 0.18, transparent: true })
+  ));
+}
+
+// ── Build each Graha ──────────────────────────────────────────────────────────
+const planetGroups = []; // { orbitGroup, planet, graha }
+
+// Rahu/Ketu share one orbit group at 180° offset
+const rkOrbit = new THREE.Group();
+rkOrbit.rotation.y = Math.random() * PI2;
+rkOrbit.rotation.z = (Math.random() - 0.5) * 0.28;
+orrery.add(rkOrbit);
+orrery.add(orbitRing(GRAHAS[7].r, 0x334466, 0.12));
+
+const rahuP = makePlanet(GRAHAS[7].sz, GRAHAS[7].hex, GRAHAS[7].gl, GRAHAS[7].gsz);
+rahuP.group.position.set(GRAHAS[7].r, 0, 0);
+rkOrbit.add(rahuP.group);
+
+const ketuP = makePlanet(GRAHAS[8].sz, GRAHAS[8].hex, GRAHAS[8].gl, GRAHAS[8].gsz);
+ketuP.group.position.set(-GRAHAS[8].r, 0, 0);
+rkOrbit.add(ketuP.group);
+
+planetGroups.push({ orbitGroup: rkOrbit, planet: rahuP, graha: GRAHAS[7] });
+planetGroups.push({ orbitGroup: rkOrbit, planet: ketuP, graha: GRAHAS[8], noRotate: true });
+
+// Planets 0-6 (Surya at center, rest on orbits)
+for (let i = 0; i < 7; i++) {
+  const g = GRAHAS[i];
+
+  if (g.r > 0) {
+    orrery.add(orbitRing(g.r, new THREE.Color(g.gl[0], g.gl[1], g.gl[2]).getHex(), 0.10));
+  }
+
+  const og = new THREE.Group();
+  og.rotation.y = Math.random() * PI2;
+  og.rotation.z = (Math.random() - 0.5) * (i === 0 ? 0 : 0.22);
+  orrery.add(og);
+
+  const planet = makePlanet(g.sz, g.hex, g.gl, g.gsz);
+  planet.group.position.set(g.r, 0, 0);
+  og.add(planet.group);
+
+  // Saturn ring
+  if (i === 6) {
+    const ringGeo = new THREE.RingGeometry(g.sz * 1.5, g.sz * 2.7, 64);
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0xDDCCAA, side: THREE.DoubleSide,
+      transparent: true, opacity: 0.50, depthWrite: false,
+    });
+    const satRing = new THREE.Mesh(ringGeo, ringMat);
+    satRing.rotation.x = Math.PI / 2.8;
+    planet.group.add(satRing);
+  }
+
+  // Guru (Jupiter) — subtle atmospheric bands hint via two overlapping spheres
+  if (i === 5) {
+    const bandMesh = new THREE.Mesh(
+      new THREE.SphereGeometry(g.sz * 1.02, 24, 8),
+      new THREE.MeshBasicMaterial({
+        color: 0xEEAA22, transparent: true, opacity: 0.22,
+        blending: THREE.AdditiveBlending, depthWrite: false,
+      })
+    );
+    planet.group.add(bandMesh);
+  }
+
+  planetGroups.push({ orbitGroup: og, planet, graha: g });
+}
+
+// ── All planet materials (for opacity fade) ───────────────────────────────────
+const allPlanetMeshes  = [];
+const allPlanetSprites = [];
+planetGroups.forEach(pg => {
+  allPlanetMeshes.push(pg.planet.sphere.material, pg.planet.halo.material);
+  allPlanetSprites.push(pg.planet.spr.material);
+});
+
+// ── Scroll ───────────────────────────────────────────────────────────────────
+let scrollTarget = 0, scrollCurrent = 0;
+ScrollTrigger.create({
+  trigger: document.body, start: 'top top', end: 'bottom bottom',
+  scrub: true, onUpdate: s => { scrollTarget = s.progress; },
+});
+
+// ── Mouse parallax ───────────────────────────────────────────────────────────
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = (e.clientX / innerWidth  - 0.5) * 2;
+  my = (e.clientY / innerHeight - 0.5) * 2;
+});
+
+// ── Base camera state (restored on scroll) ───────────────────────────────────
+const CAM_BASE = { x:0, y:3.6, z:10 };
+
+// ── Tick ──────────────────────────────────────────────────────────────────────
+let time = 0;
+const DAMP = 0.048;
+
+gsap.ticker.add(() => {
+  time += 0.006;
+
+  // Damped scroll
+  scrollCurrent += (scrollTarget - scrollCurrent) * DAMP;
+  const sp = scrollCurrent;
+
+  // Mouse parallax (camera drifts toward cursor)
+  camera.position.x += (mx * 0.40 + CAM_BASE.x - camera.position.x) * 0.020;
+  camera.position.y += (-my * 0.25 + CAM_BASE.y - camera.position.y) * 0.020;
+  camera.position.z += (CAM_BASE.z - camera.position.z) * 0.020;
+  camera.lookAt(0, 0, 0);
+
+  // Orrery slow ambient rotation (whole system)
+  orrery.rotation.y += 0.0008;
+
+  // Planet orbits — each group rotates on its own axis (Y is orbit normal)
+  planetGroups.forEach(pg => {
+    if (!pg.noRotate) pg.orbitGroup.rotation.y += pg.graha.spd;
+  });
+
+  // Fade orrery as user scrolls down (stays visible but dims)
+  // Fully visible sp < 0.15, fades to 0.30 by sp = 0.50
+  const orFade = sp < 0.15 ? 1.0 : Math.max(0.30, 1.0 - (sp - 0.15) / 0.40);
+  orrery.children.forEach(c => {
+    if (c.isLine) c.material.opacity = c.material.opacity * 0 + c.material._base * orFade || c.material.opacity;
+  });
+  allPlanetMeshes.forEach(m  => { m.opacity = Math.min(1, m.opacity + (orFade - m.opacity) * 0.08); });
+  allPlanetSprites.forEach(m => { m.opacity = Math.min(1, m.opacity + (orFade * 0.82 - m.opacity) * 0.08); });
+
+  // Planet legend fades with orrery
+  const leg = document.getElementById('planetLegend');
+  if (leg) leg.style.opacity = Math.max(0, (orFade - 0.30) / 0.70).toFixed(3);
+
+  renderer.render(scene, camera);
+});
+
+// Store base opacity on each line's material once
+orrery.children.forEach(c => {
+  if (c.isLine && c.material) c.material._base = c.material.opacity;
+});
+
+// ── Resize ────────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  ScrollTrigger.refresh();
+});
+</script>
+</body>
+</html>

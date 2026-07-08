@@ -1,3 +1,6 @@
+# ── Sensitive credentials (never push to GitHub) ──────
+CREDENTIALS.md
+
 # ── Python ────────────────────────────────────────────
 __pycache__/
 *.py[cod]

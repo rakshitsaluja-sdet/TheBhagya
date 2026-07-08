@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TheBhagya — Know Your Destiny</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #05050d;
+      --text:    #F5F0E8;
+      --gold:    #C9933A;
+      --gold2:   #E8C06A;
+      --glass:   rgba(5, 5, 18, 0.80);
+      --border:  rgba(201, 147, 58, 0.14);
+      --borderB: rgba(201, 147, 58, 0.38);
+    }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3.5rem;
+      mix-blend-mode: difference;
+    }
+    .brand { text-decoration: none; display: flex; flex-direction: column; }
+    .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 8px;
+      color: #fff;
+      line-height: 1;
+    }
+    .brand-sub {
+      font-size: 0.48rem;
+      letter-spacing: 5px;
+      color: #fff;
+      opacity: 0.45;
+      margin-top: 3px;
+    }
+    .nav-links { display: flex; gap: 2.8rem; list-style: none; }
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      opacity: 0.68;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* 12-col grid */
+    .g12 {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 1.5rem;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 3.5rem;
+      width: 100%;
+    }
+
+    /* Sections */
+    section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      z-index: 10;
+      padding: 8rem 0 5rem;
+    }
+
+    /* Glass panel */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(26px) saturate(1.5);
+      -webkit-backdrop-filter: blur(26px) saturate(1.5);
+      border: 1px solid var(--border);
+    }
+
+    /* Typography — Cormorant Garamond for all display headings */
+    .eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .eyebrow::before { content:''; width:20px; height:1px; background:var(--gold); display:inline-block; }
+
+    .d1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.6rem, 8.5vw, 9rem);
+      font-weight: 600;
+      line-height: 0.88;
+      letter-spacing: -2px;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .d2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 5.8vw, 6rem);
+      font-weight: 600;
+      line-height: 0.9;
+      letter-spacing: -1.5px;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .d3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4.8vw, 4.8rem);
+      font-weight: 600;
+      line-height: 0.92;
+      letter-spacing: -1px;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .d4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 7vw, 7.5rem);
+      font-weight: 700;
+      line-height: 0.86;
+      letter-spacing: -2.5px;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .accent  { color: var(--gold); }
+    .body-t  { font-size: 0.9rem; color: rgba(245,240,232,0.58); line-height: 1.85; }
+
+    .sec-lb {
+      font-size: 0.58rem;
+      letter-spacing: 4px;
+      color: rgba(245,240,232,0.2);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .sec-lb::after { content:''; flex:1; height:1px; background:var(--border); }
+    .rule { width:36px; height:1.5px; background:var(--gold); margin-bottom:1.5rem; }
+
+    /* Buttons */
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-p {
+      background: linear-gradient(135deg, #C9933A 0%, #8B6020 100%);
+      color: #FFF8EC;
+      padding: 0.88rem 2.3rem;
+      border: none; cursor: pointer;
+      font-family: inherit; font-size: 0.74rem; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-p:hover { opacity: 0.8; transform: translateY(-2px); }
+    .btn-g {
+      background: transparent; color: var(--text);
+      padding: 0.88rem 2.3rem;
+      border: 1px solid var(--borderB); cursor: pointer;
+      font-family: inherit; font-size: 0.74rem; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      text-decoration: none; display: inline-flex; align-items: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-g:hover { border-color: var(--gold); background: rgba(201,147,58,0.06); }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      opacity: 0.28; font-size: 0.56rem; letter-spacing: 4px; text-transform: uppercase;
+      z-index: 10;
+    }
+    .scroll-line {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      animation: sline 2.2s ease-in-out infinite;
+    }
+    @keyframes sline {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* Feature cards */
+    .feat-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+    }
+    .feat-card {
+      background: rgba(5,5,18,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 1.8rem; transition: background 0.25s;
+    }
+    .feat-card:hover { background: rgba(18,10,35,0.9); }
+    .feat-icon { font-size: 1.75rem; margin-bottom: 0.85rem; display: block; }
+    .feat-name {
+      font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .feat-desc { font-size: 0.79rem; color: rgba(245,240,232,0.5); line-height: 1.68; }
+
+    /* Stats */
+    .stats {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid var(--border); margin-top: 2rem; padding-top: 1.8rem;
+    }
+    .stat { padding-right: 1rem; }
+    .stat + .stat { border-left: 1px solid var(--border); padding-left: 1rem; }
+    .stat-n {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem; font-weight: 700; color: var(--gold);
+      line-height: 1; display: block; margin-bottom: 0.22rem;
+    }
+    .stat-l { font-size: 0.58rem; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(245,240,232,0.35); }
+
+    /* Footer */
+    .ftr {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0.2rem 2rem;
+      border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 2.5rem;
+    }
+    .ftr a {
+      font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,240,232,0.25); text-decoration: none; transition: color 0.2s;
+    }
+    .ftr a:hover { color: var(--gold); }
+
+    /* Planet legend */
+    #planetLegend {
+      position: fixed; right: 2.2rem; top: 50%; transform: translateY(-50%);
+      z-index: 50; display: flex; flex-direction: column; gap: 0.45rem;
+      transition: opacity 0.6s;
+    }
+    .pl-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,240,232,0.42);
+    }
+    .pl-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .g12 { grid-template-columns: 1fr; padding: 0 1.5rem; }
+      section { padding: 7rem 0 4rem; }
+      .feat-grid { grid-template-columns: 1fr; }
+      #planetLegend { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- Planet legend -->
+<div id="planetLegend">
+  <div class="pl-item"><div class="pl-dot" style="background:#FFA040"></div>Surya</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#CCDDFF"></div>Chandra</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#FF4422"></div>Mangal</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#44FF88"></div>Budha</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#FFCC44"></div>Guru</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#FF88CC"></div>Shukra</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#99AACC"></div>Shani</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#4455AA"></div>Rahu</div>
+  <div class="pl-item"><div class="pl-dot" style="background:#AA4433"></div>Ketu</div>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="brand">
+    <span class="brand-name">THEBHAGYA</span>
+    <span class="brand-sub">भाग्य · DESTINY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#about">Philosophy</a></li>
+    <li><a href="#cta">Pricing</a></li>
+    <li><a href="#cta">Sign In</a></li>
+  </ul>
+</nav>
+
+<!-- Section 1: Hero -->
+<section id="hero">
+  <div class="g12">
+    <div class="glass" style="grid-column:1/7; padding:3rem 3rem 3.5rem;">
+      <div style="margin-bottom:1.6rem;">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+          <circle cx="21" cy="21" r="20" stroke="#C9933A" stroke-width="0.6" opacity="0.5"/>
+          <circle cx="21" cy="21" r="13" stroke="#C9933A" stroke-width="0.5" opacity="0.3"/>
+          <path d="M21 3 L22.7 19.3 L39 21 L22.7 22.7 L21 39 L19.3 22.7 L3 21 L19.3 19.3 Z"
+                fill="#C9933A" opacity="0.82"/>
+          <circle cx="21" cy="21" r="2.8" fill="#C9933A"/>
+        </svg>
+      </div>
+      <div class="eyebrow">Vedic Astrology · Jyotisha · भाग्य</div>
+      <h1 class="d1">
+        Know<br>
+        Your<br>
+        <span class="accent">Destiny</span><br>
+        Before<br>
+        It Finds<br>
+        You
+      </h1>
+      <p class="body-t" style="max-width:370px; margin-bottom:2.5rem;">
+        5,000 years of Vedic wisdom meets precise computational astronomy. Nine planets, twelve houses, twenty-seven nakshatras — your cosmic blueprint revealed.
+      </p>
+      <div class="btn-row">
+        <a href="#" class="btn-p">Get Your Reading →</a>
+        <a href="#features" class="btn-g">Explore Features</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Section 2: Features -->
+<section id="features">
+  <div class="g12">
+    <div class="glass" style="grid-column:7/13; padding:2.6rem 2.6rem 2rem;">
+      <div class="sec-lb">02 — What We Offer</div>
+      <h2 class="d2">Ancient<br>Wisdom.<br><span class="accent">Modern</span><br>Clarity.</h2>
+      <p class="body-t" style="max-width:330px; margin-bottom:1.8rem;">
+        Swiss Ephemeris, Lahiri Ayanamsa, sidereal positions. Not approximations — the real sky, as the rishis mapped it.
+      </p>
+    </div>
+    <div style="grid-column:7/13; margin-top:1px;">
+      <div class="feat-grid">
+        <div class="feat-card">
+          <span class="feat-icon">☽</span>
+          <div class="feat-name">Kundali Reading</div>
+          <p class="feat-desc">All 12 houses, 9 grahas, Vimshottari Dasha timeline, nakshatra padas, ashtakavarga — Swiss Ephemeris precision.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">✦</span>
+          <div class="feat-name">Destiny Chat</div>
+          <p class="feat-desc">AI Jyotish assistant trained on Vedic principles. Ask about your current dasha, upcoming transits, and remedies.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">∑</span>
+          <div class="feat-name">Numerology</div>
+          <p class="feat-desc">Chaldean and Pythagorean systems — life path, soul urge, expression, and destiny numbers decoded in full.</p>
+        </div>
+        <div class="feat-card">
+          <span class="feat-icon">📖</span>
+          <div class="feat-name">Lal Kitab</div>
+          <p class="feat-desc">The folk astrology of Punjab — practical remedies for planetary afflictions, karmic debts, and house imbalances.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Philosophy -->
+<section id="about">
+  <div class="g12">
+    <div class="glass" style="grid-column:1/6; padding:2.8rem;">
+      <div class="sec-lb">03 — Philosophy</div>
+      <div class="rule"></div>
+      <h3 class="d3">
+        The Cosmos<br>
+        Is Mapped<br>
+        <span class="accent">In You.</span>
+      </h3>
+      <p class="body-t" style="margin-bottom:1.2rem;">
+        The ancient rishis understood that the cosmos and the individual are one. Your birth chart is not a cage — it is a map of your tendencies, your gifts, and your dharma.
+      </p>
+      <p class="body-t">
+        Every planet in TheBhagya is computed using Swiss Ephemeris with Lahiri Ayanamsa — the same standard used by professional Jyotishis worldwide. Accuracy to arc-seconds.
+      </p>
+      <div class="stats">
+        <div class="stat"><span class="stat-n">27</span><span class="stat-l">Nakshatras</span></div>
+        <div class="stat"><span class="stat-n">12</span><span class="stat-l">Rashis</span></div>
+        <div class="stat"><span class="stat-n">9</span><span class="stat-l">Grahas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: CTA -->
+<section id="cta">
+  <div class="g12">
+    <div class="glass" style="grid-column:3/11; padding:3.5rem; text-align:center;">
+      <div style="display:flex; justify-content:center; margin-bottom:2rem;">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="29" stroke="#C9933A" stroke-width="0.5" opacity="0.28"/>
+          <circle cx="30" cy="30" r="19" stroke="#C9933A" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="30" cy="30" r="9"  stroke="#C9933A" stroke-width="0.5" opacity="0.4"/>
+          <g stroke="#C9933A" stroke-width="0.8" opacity="0.48">
+            <line x1="30" y1="1"  x2="30" y2="9"/>
+            <line x1="30" y1="51" x2="30" y2="59"/>
+            <line x1="1"  y1="30" x2="9"  y2="30"/>
+            <line x1="51" y1="30" x2="59" y2="30"/>
+            <line x1="8.3"  y1="8.3"  x2="13.7" y2="13.7"/>
+            <line x1="46.3" y1="46.3" x2="51.7" y2="51.7"/>
+            <line x1="51.7" y1="8.3"  x2="46.3" y2="13.7"/>
+            <line x1="13.7" y1="46.3" x2="8.3"  y2="51.7"/>
+          </g>
+          <path d="M30 18 L31.5 28.5 L42 30 L31.5 31.5 L30 42 L28.5 31.5 L18 30 L28.5 28.5 Z"
+                fill="#C9933A" opacity="0.78"/>
+          <circle cx="30" cy="30" r="3.2" fill="#C9933A"/>
+        </svg>
+      </div>
+      <div class="eyebrow" style="justify-content:center;">04 — Begin Your Journey</div>
+      <h4 class="d4">Your Stars<br><span class="accent">Are Aligned.</span></h4>
+      <p class="body-t" style="max-width:430px; margin:0 auto 2.5rem; text-align:center;">
+        Join thousands seeking clarity through the ancient science of Jyotisha. Your free Kundali awaits — no credit card, no commitment.
+      </p>
+      <div class="btn-row" style="justify-content:center;">
+        <a href="#" class="btn-p">Create Free Chart →</a>
+        <a href="#" class="btn-g">Sign In</a>
+      </div>
+      <div class="ftr">
+        <a href="#">My Charts</a>
+        <a href="#">Destiny Chat</a>
+        <a href="#">Numerology</a>
+        <a href="#">Lal Kitab</a>
+        <a href="#">Pricing</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <div style="margin-top:1.5rem; font-size:0.56rem; color:rgba(245,240,232,0.16); letter-spacing:3px;">
+        © 2025 THEBHAGYA · भाग्य · DESTINY · ALL RIGHTS RESERVED
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const PI2     = Math.PI * 2;
+const canvas  = document.getElementById('bg-canvas');
+const isMob   = window.innerWidth < 900;
+
+// ── Renderer ────────────────────────────────────────────────────────────────
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x000000, 0);
+
+const scene  = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(56, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(0, 2.8, 8.0);
+camera.lookAt(0, 0, 0);
+
+// ── Galaxy ───────────────────────────────────────────────────────────────────
+const GNAX = isMob ? 28000 : 88000;
+
+function buildGalaxy(N) {
+  const pos = new Float32Array(N * 3);
+  const col = new Float32Array(N * 3);
+  const CORE_R = 0.72, DISK_R = 5.6, ARMS = 2, TIGHTN = 3.7, ARM_W = 0.56;
+
+  for (let i = 0; i < N; i++) {
+    const u = Math.random();
+    let x, y, z, cr, cg, cb;
+
+    if (u < 0.12) {
+      // Core bulge
+      const r     = Math.pow(Math.random(), 0.4) * CORE_R;
+      const theta = Math.random() * PI2;
+      const phi   = (Math.random() - 0.5) * Math.PI * 0.52;
+      x  = Math.cos(theta) * r * Math.cos(phi);
+      y  = Math.sin(phi) * r * 0.55;
+      z  = Math.sin(theta) * r * Math.cos(phi);
+      cr = 0.96; cg = 0.84 + Math.random() * 0.16; cb = 0.38 + Math.random() * 0.3;
+
+    } else if (u < 0.78) {
+      // Spiral arms (logarithmic)
+      const arm   = Math.floor(Math.random() * ARMS);
+      const r     = CORE_R + Math.pow(Math.random(), 0.55) * (DISK_R - CORE_R);
+      const aBase = (arm / ARMS) * PI2;
+      const aSpi  = aBase + Math.log(r - CORE_R + 1.0) * TIGHTN;
+      const scat  = (Math.random() - 0.5) * ARM_W * (0.55 + r / DISK_R);
+      const angle = aSpi + scat;
+      const thick = 0.11 * (1.0 - r / DISK_R * 0.58);
+      x  = Math.cos(angle) * r;
+      y  = (Math.random() - 0.5) * thick * 2.0;
+      z  = Math.sin(angle) * r;
+      const d = r / DISK_R;
+      cr = 0.78 + (1 - d) * 0.22;
+      cg = 0.60 + (1 - d) * 0.18;
+      cb = 0.30 + d * 0.50;
+
+    } else if (u < 0.92) {
+      // Outer disk scatter
+      const r = DISK_R * 0.35 + Math.random() * DISK_R * 0.75;
+      const a = Math.random() * PI2;
+      x = Math.cos(a) * r; y = (Math.random() - 0.5) * 0.09; z = Math.sin(a) * r;
+      cr = 0.30 + Math.random() * 0.26;
+      cg = 0.30 + Math.random() * 0.26;
+      cb = 0.40 + Math.random() * 0.36;
+
+    } else {
+      // Stellar halo
+      const phi   = Math.acos(2 * Math.random() - 1);
+      const theta = Math.random() * PI2;
+      const r     = DISK_R * (0.55 + Math.random() * 1.1);
+      x = r * Math.sin(phi) * Math.cos(theta);
+      y = r * Math.sin(phi) * Math.sin(theta) * 0.22;
+      z = r * Math.cos(phi);
+      cr = 0.22 + Math.random() * 0.2;
+      cg = 0.22 + Math.random() * 0.2;
+      cb = 0.32 + Math.random() * 0.3;
+    }
+
+    pos[i*3]   = x; pos[i*3+1] = y; pos[i*3+2] = z;
+    // Subtle gold brand tint
+    col[i*3]   = Math.min(1, cr * 1.05);
+    col[i*3+1] = Math.min(1, cg * 0.95);
+    col[i*3+2] = cb;
+  }
+  return { pos, col };
+}
+
+const gd = buildGalaxy(GNAX);
+const gGeo = new THREE.BufferGeometry();
+gGeo.setAttribute('position', new THREE.BufferAttribute(gd.pos, 3));
+gGeo.setAttribute('color',    new THREE.BufferAttribute(gd.col, 3));
+const gMat = new THREE.PointsMaterial({
+  size: isMob ? 0.03 : 0.022, sizeAttenuation: true,
+  vertexColors: true, blending: THREE.AdditiveBlending,
+  transparent: true, depthWrite: false, opacity: 0.70,
+});
+const galaxy = new THREE.Points(gGeo, gMat);
+galaxy.rotation.x = 0.30; // tilt to show arms
+scene.add(galaxy);
+
+// ── Navagraha System (geocentric — Earth at center) ────────────────────────
+const GRAHAS = [
+  { col:[1.00,0.63,0.14], r:0.00, spd:0.000,   n:95,  sp:0.14 }, // Surya
+  { col:[0.75,0.80,1.00], r:0.50, spd:0.0115,  n:52,  sp:0.05 }, // Chandra
+  { col:[1.00,0.24,0.10], r:1.05, spd:0.0064,  n:46,  sp:0.05 }, // Mangal
+  { col:[0.16,1.00,0.46], r:0.77, spd:0.0096,  n:44,  sp:0.04 }, // Budha
+  { col:[1.00,0.78,0.14], r:1.76, spd:0.0042,  n:72,  sp:0.08 }, // Guru
+  { col:[1.00,0.50,0.76], r:0.65, spd:0.0108,  n:50,  sp:0.04 }, // Shukra
+  { col:[0.55,0.63,0.78], r:2.30, spd:0.0027,  n:66,  sp:0.07 }, // Shani
+  { col:[0.16,0.24,0.65], r:1.46, spd:-0.0019, n:28,  sp:0.06 }, // Rahu
+  { col:[0.62,0.16,0.12], r:1.46, spd:-0.0019, n:28,  sp:0.06 }, // Ketu
+];
+
+const navRoot = new THREE.Group();
+navRoot.position.set(1.85, -0.1, 1.8);
+scene.add(navRoot);
+
+const pMat = new THREE.PointsMaterial({
+  size: 0.07, sizeAttenuation: true,
+  vertexColors: true, blending: THREE.AdditiveBlending,
+  transparent: true, depthWrite: false, opacity: 0.95,
+});
+
+const navLineMats = []; // all line materials for opacity control
+
+function navLine(pts, color, baseOp) {
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  const mat = new THREE.LineBasicMaterial({ color, opacity: baseOp, transparent: true });
+  mat._base = baseOp;
+  navLineMats.push(mat);
+  return new THREE.Line(geo, mat);
+}
+
+function ringPoints(r, segs) {
+  const pts = [];
+  for (let j = 0; j <= segs; j++) {
+    const a = (j / segs) * PI2;
+    pts.push(new THREE.Vector3(Math.cos(a) * r, 0, Math.sin(a) * r));
+  }
+  return pts;
+}
+
+function makePlanetGeo(baseCol, count, spread) {
+  const p = new Float32Array(count * 3);
+  const c = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const r     = Math.pow(Math.random(), 0.55) * spread;
+    const theta = Math.random() * PI2;
+    const phi   = Math.acos(2 * Math.random() - 1);
+    p[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+    p[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+    p[i*3+2] = r * Math.cos(phi);
+    c[i*3]   = Math.min(1, baseCol[0] + (Math.random()-0.5)*0.18);
+    c[i*3+1] = Math.min(1, baseCol[1] + (Math.random()-0.5)*0.18);
+    c[i*3+2] = Math.min(1, baseCol[2] + (Math.random()-0.5)*0.18);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(p, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(c, 3));
+  return geo;
+}
+
+// Sun at center
+const sunMesh = new THREE.Points(makePlanetGeo(GRAHAS[0].col, GRAHAS[0].n, GRAHAS[0].sp), pMat);
+navRoot.add(sunMesh);
+
+// Sun glow halo
+navRoot.add(navLine(ringPoints(0.20, 48), 0xFFAA33, 0.30));
+
+// Outer zodiac belt + 12 ticks
+navRoot.add(navLine(ringPoints(2.85, 256), 0xC9933A, 0.14));
+for (let z = 0; z < 12; z++) {
+  const a = (z / 12) * PI2;
+  navRoot.add(navLine([
+    new THREE.Vector3(Math.cos(a)*2.72, 0, Math.sin(a)*2.72),
+    new THREE.Vector3(Math.cos(a)*2.95, 0, Math.sin(a)*2.95),
+  ], 0xC9933A, 0.22));
+}
+
+// Rahu + Ketu — always 180° apart, share one orbit group
+const rkGroup = new THREE.Group();
+rkGroup.rotation.y = Math.random() * PI2;
+navRoot.add(rkGroup);
+const rahuMesh = new THREE.Points(makePlanetGeo(GRAHAS[7].col, GRAHAS[7].n, GRAHAS[7].sp), pMat);
+rahuMesh.position.set(GRAHAS[7].r, 0, 0);
+const ketuMesh = new THREE.Points(makePlanetGeo(GRAHAS[8].col, GRAHAS[8].n, GRAHAS[8].sp), pMat);
+ketuMesh.position.set(-GRAHAS[7].r, 0, 0);
+rkGroup.add(rahuMesh); rkGroup.add(ketuMesh);
+navRoot.add(navLine(ringPoints(GRAHAS[7].r, 128), 0x445599, 0.07));
+
+// Planets 1-6 (Chandra, Mangal, Budha, Guru, Shukra, Shani)
+const orbitGroups = [{ g: rkGroup, spd: GRAHAS[7].spd }];
+
+for (let i = 1; i <= 6; i++) {
+  const gr = GRAHAS[i];
+  // Orbit ring
+  const ringColor = new THREE.Color(gr.col[0], gr.col[1], gr.col[2]);
+  navRoot.add(navLine(ringPoints(gr.r, 128), ringColor, 0.07));
+
+  // Orbit group with random phase + slight inclination
+  const og = new THREE.Group();
+  og.rotation.y = Math.random() * PI2;
+  og.rotation.z = (Math.random() - 0.5) * 0.20;
+  navRoot.add(og);
+
+  const pm = new THREE.Points(makePlanetGeo(gr.col, gr.n, gr.sp), pMat);
+  pm.position.set(gr.r, 0, 0);
+  og.add(pm);
+  orbitGroups.push({ g: og, spd: gr.spd });
+}
+
+// ── Formation particles (Yantra + Nakshatra for sections 3-4) ───────────────
+const FORM_N = isMob ? 3000 : 6000;
+
+function genYantra(N) {
+  const pos = new Float32Array(N * 3);
+  const col = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) {
+    const t = i / N, layer = Math.floor(t * 9);
+    let x, y, z;
+    if (layer < 5) {
+      const lv = layer + 1, sd = i % 3, r = lv * 0.47;
+      const a0 = (sd/3)*PI2 - Math.PI/2, a1 = ((sd+1)/3)*PI2 - Math.PI/2;
+      const mx = Math.random();
+      x = (Math.cos(a0)*(1-mx)+Math.cos(a1)*mx)*r + (Math.random()-.5)*.07;
+      y = (Math.sin(a0)*(1-mx)+Math.sin(a1)*mx)*r + (Math.random()-.5)*.07;
+      z = (Math.random()-.5)*.28;
+    } else if (layer < 8) {
+      const lv = layer-4, sd = i % 3, r = lv * 0.51;
+      const a0 = (sd/3)*PI2+Math.PI/6, a1 = ((sd+1)/3)*PI2+Math.PI/6;
+      const mx = Math.random();
+      x =  (Math.cos(a0)*(1-mx)+Math.cos(a1)*mx)*r + (Math.random()-.5)*.07;
+      y = -(Math.sin(a0)*(1-mx)+Math.sin(a1)*mx)*r + (Math.random()-.5)*.07;
+      z = (Math.random()-.5)*.22;
+    } else {
+      const a = Math.random()*PI2, r = 2.2+(Math.random()-.5)*.16;
+      x = Math.cos(a)*r; y = Math.sin(a)*r; z = (Math.random()-.5)*.12;
+    }
+    pos[i*3]=x; pos[i*3+1]=y; pos[i*3+2]=z;
+    const br = .65+Math.random()*.35;
+    col[i*3]=.04+Math.random()*.22; col[i*3+1]=br*.78; col[i*3+2]=br*.9;
+  }
+  return { pos, col };
+}
+
+function genNakshatras(N) {
+  const pos = new Float32Array(N * 3);
+  const col = new Float32Array(N * 3);
+  const pN  = Math.ceil(N / 27);
+  for (let i = 0; i < N; i++) {
+    const nak = Math.min(Math.floor(i/pN), 26);
+    const a   = (nak/27)*PI2 + (Math.random()-.5)*.2;
+    const r   = 1.2 + Math.random() * 1.9;
+    pos[i*3]   = Math.cos(a)*r;
+    pos[i*3+1] = (Math.random()-.5)*.58;
+    pos[i*3+2] = Math.sin(a)*r*.45 + (Math.random()-.5)*1.6;
+    const br = .5+Math.random()*.5;
+    col[i*3]=br*.62; col[i*3+1]=br*.72; col[i*3+2]=br;
+  }
+  return { pos, col };
+}
+
+const fYantra    = genYantra(FORM_N);
+const fNakshatra = genNakshatras(FORM_N);
+const formations = [fYantra, fNakshatra];
+const fOffsets   = [
+  new THREE.Vector3(-2.4, 0.1, 0),
+  new THREE.Vector3(0, 0, -1.5),
+];
+
+const fGeo = new THREE.BufferGeometry();
+const fPos = new Float32Array(FORM_N * 3);
+const fCol = new Float32Array(FORM_N * 3);
+for (let i = 0; i < FORM_N*3; i++) { fPos[i] = fYantra.pos[i]; fCol[i] = fYantra.col[i]; }
+const fPA  = new THREE.BufferAttribute(fPos, 3);
+const fCA  = new THREE.BufferAttribute(fCol, 3);
+fPA.setUsage(THREE.DynamicDrawUsage);
+fCA.setUsage(THREE.DynamicDrawUsage);
+fGeo.setAttribute('position', fPA);
+fGeo.setAttribute('color',    fCA);
+const fMat  = new THREE.PointsMaterial({
+  size:0.042, sizeAttenuation:true, vertexColors:true,
+  blending:THREE.AdditiveBlending, transparent:true, depthWrite:false, opacity:0,
+});
+const fMesh = new THREE.Points(fGeo, fMat);
+scene.add(fMesh);
+
+const phases = new Float32Array(FORM_N);
+for (let i = 0; i < FORM_N; i++) phases[i] = Math.random() * PI2;
+
+// ── Scroll (damped) ───────────────────────────────────────────────────────────
+let sTarget = 0, sCurrent = 0, sPrev = 0, sVel = 0;
+ScrollTrigger.create({
+  trigger: document.body, start: 'top top', end: 'bottom bottom',
+  scrub: true, onUpdate: (s) => { sTarget = s.progress; },
+});
+
+// ── Mouse parallax ───────────────────────────────────────────────────────────
+let mX = 0, mY = 0;
+document.addEventListener('mousemove', e => {
+  mX = (e.clientX / window.innerWidth  - 0.5) * 2;
+  mY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+// ── Tick ──────────────────────────────────────────────────────────────────────
+let time = 0;
+const DAMP = 0.052; // smoothing factor — lower = more lag = silkier
+
+gsap.ticker.add(() => {
+  time += 0.007;
+
+  // Damped scroll progress — this is the key to smooth transitions
+  sCurrent += (sTarget - sCurrent) * DAMP;
+  const sp = sCurrent;
+
+  sVel = Math.min(Math.abs(sp - sPrev) * 85, 1.4);
+  sPrev = sp;
+
+  // Mouse parallax — subtle camera drift
+  camera.position.x += (mX * 0.35 - camera.position.x) * 0.022;
+  camera.position.y += (-mY * 0.22 + 2.8 - camera.position.y) * 0.022;
+  camera.lookAt(0, 0, 0);
+
+  // ── Galaxy ──
+  galaxy.rotation.y += 0.00015 + sVel * 0.0002;
+  gMat.opacity = Math.max(0.25, 0.70 - sp * 0.30);
+
+  // ── Navagraha orbit ──
+  orbitGroups.forEach(og => { og.g.rotation.y += og.spd; });
+
+  // Navagraha fades: full at sp<0.20, gone by sp=0.40
+  const navA = sp < 0.20 ? 1.0 : Math.max(0, 1.0 - (sp - 0.20) / 0.20);
+  pMat.opacity      = navA * 0.95;
+  navLineMats.forEach(m => { m.opacity = navA * m._base; });
+  navRoot.visible   = navA > 0.005;
+
+  // Planet legend CSS opacity
+  const leg = document.getElementById('planetLegend');
+  if (leg) leg.style.opacity = navA.toFixed(3);
+
+  // ── Formations fade in/out ──
+  // Yantra appears at sp>0.35, transitions to Nakshatra at sp>0.62
+  const fAlpha = sp < 0.35 ? 0 : Math.min(1, (sp - 0.35) / 0.12);
+  fMat.opacity = fAlpha * 0.88;
+
+  let fBlend = 0;
+  if (sp >= 0.62) fBlend = Math.min(1, (sp - 0.62) / 0.25);
+  // Smoothstep
+  const bSm  = fBlend * fBlend * (3 - 2 * fBlend);
+  const jAmp = 0.033 + sVel * 0.11;
+
+  const fa = formations[0], fb = formations[1];
+  const oA = fOffsets[0],   oB = fOffsets[1];
+  const ox = oA.x + (oB.x - oA.x) * bSm;
+  const oy = oA.y + (oB.y - oA.y) * bSm;
+  const oz = oA.z + (oB.z - oA.z) * bSm;
+
+  const pArr = fPA.array, cArr = fCA.array;
+  for (let i = 0; i < FORM_N; i++) {
+    const i3 = i*3, ph = phases[i];
+    const tx = fa.pos[i3]   + (fb.pos[i3]   - fa.pos[i3]  ) * bSm;
+    const ty = fa.pos[i3+1] + (fb.pos[i3+1] - fa.pos[i3+1]) * bSm;
+    const tz = fa.pos[i3+2] + (fb.pos[i3+2] - fa.pos[i3+2]) * bSm;
+    pArr[i3]   = tx + ox + Math.sin(time*.84 + ph)       * jAmp;
+    pArr[i3+1] = ty + oy + Math.cos(time*.70 + ph*1.31)  * jAmp;
+    pArr[i3+2] = tz + oz + Math.sin(time*.52 + ph*.78)   * jAmp * .5;
+    cArr[i3]   = fa.col[i3]   + (fb.col[i3]   - fa.col[i3]  ) * bSm;
+    cArr[i3+1] = fa.col[i3+1] + (fb.col[i3+1] - fa.col[i3+1]) * bSm;
+    cArr[i3+2] = fa.col[i3+2] + (fb.col[i3+2] - fa.col[i3+2]) * bSm;
+  }
+  fPA.needsUpdate = true;
+  fCA.needsUpdate = true;
+  fMesh.rotation.y += 0.0005 + sVel * 0.0018;
+
+  renderer.render(scene, camera);
+});
+
+// ── Resize ────────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  ScrollTrigger.refresh();
+});
+</script>
+</body>
+</html>
