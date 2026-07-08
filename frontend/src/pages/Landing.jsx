@@ -479,6 +479,7 @@ export default function Landing() {
           <li><a href="#about"     style={S.navA}>Philosophy</a></li>
           <li><Link to="/pricing"  style={S.navA}>Pricing</Link></li>
           <li><Link to="/login"    style={{ ...S.navA, color:'rgba(255,255,255,0.80)' }}>Sign In</Link></li>
+          <li><Link to="/chart/new" style={{ ...S.navA, color:'#fff', fontWeight:700, border:'1px solid rgba(255,255,255,0.55)', padding:'0.42rem 1.1rem', letterSpacing:'2px' }}>Get Reading →</Link></li>
         </ul>
       </nav>
 
