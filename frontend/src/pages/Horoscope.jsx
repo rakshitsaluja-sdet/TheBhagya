@@ -197,7 +197,7 @@ export default function Horoscope() {
           Daily Horoscope
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: '0 0 0.5rem' }}>
-          Transit-based · Swiss Ephemeris · Sidereal Lahiri
+          Transit-based · Vedic Rashifal
         </p>
         <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace" }}>{todayStr}</div>
       </div>

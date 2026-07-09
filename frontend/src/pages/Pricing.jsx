@@ -8,88 +8,115 @@ const API = '/v1'
 
 const PLANS = [
   {
-    id: 'starter',
-    name: 'Starter',
-    nameHi: 'स्टार्टर',
+    id: 'free',
+    name: 'Free',
+    nameHi: 'निःशुल्क',
     price: '₹0',
     period: '/month',
-    tag: 'Free forever',
-    tagHi: 'हमेशा मुफ़्त',
+    tagline: 'No login required',
+    taglineHi: 'बिना लॉगिन के',
     color: 'var(--text-muted)',
-    features: [
-      '3 birth charts per month',
-      'Full Vedic + Lal Kitab reading',
-      'Hindi + English toggle',
-      'Dasha timeline',
-      '10 life reading topics',
-    ],
-    featuresHi: [
-      'प्रति माह 3 जन्म कुंडलियाँ',
-      'पूर्ण वैदिक + लाल किताब वाचन',
-      'हिंदी + अंग्रेजी भाषा',
-      'दशा काल',
-      '10 जीवन विषय वाचन',
-    ],
-    cta: 'Get Started Free',
-    ctaHi: 'मुफ़्त शुरू करें',
-    live: true,
+    badge: null,
+    badgeHi: null,
+    badgeStyle: null,
     highlight: false,
-  },
-  {
-    id: 'pro',
-    name: 'Bhagya Pro',
-    nameHi: 'भाग्य प्रो',
-    price: '₹299',
-    period: '/month',
-    tag: 'Most Popular',
-    tagHi: 'सबसे लोकप्रिय',
-    color: 'var(--gold)',
     features: [
-      'Unlimited birth charts',
-      'PDF report download',
-      'Destiny Chat — AI astrology chat',
-      'Numerology readings',
-      'Everything in Starter',
+      'Kundali chart (basic)',
+      'Daily Horoscope',
+      'Panchang',
+      'Dream Meanings (all symbols)',
+      'Biorhythm calculator',
+      'Vastu analyzer',
+      'Gemstone guide',
     ],
     featuresHi: [
-      'असीमित जन्म कुंडलियाँ',
-      'PDF रिपोर्ट डाउनलोड',
-      'भाग्य चैट — AI ज्योतिष',
-      'अंकशास्त्र वाचन',
-      'स्टार्टर की सभी सुविधाएं',
+      'कुंडली चार्ट (बेसिक)',
+      'दैनिक राशिफल',
+      'पंचांग',
+      'स्वप्न अर्थ (सभी प्रतीक)',
+      'बायोरिदम कैलकुलेटर',
+      'वास्तु विश्लेषण',
+      'रत्न गाइड',
     ],
-    cta: 'Start Pro',
-    ctaHi: 'प्रो शुरू करें',
-    live: true,
-    highlight: true,
+    cta: 'Get Started',
+    ctaHi: 'शुरू करें',
+    ctaLink: '/chart/new',
   },
   {
     id: 'jyotish',
-    name: 'Bhagya Jyotish',
-    nameHi: 'भाग्य ज्योतिष',
-    price: '₹799',
+    name: 'Jyotish',
+    nameHi: 'ज्योतिष',
+    price: '₹299',
     period: '/month',
-    tag: 'Full Access',
-    tagHi: 'पूर्ण एक्सेस',
-    color: 'var(--violet)',
+    tagline: 'Full Vedic toolkit',
+    taglineHi: 'पूर्ण वैदिक टूलकिट',
+    color: 'var(--gold)',
+    badge: 'MOST POPULAR',
+    badgeHi: 'सबसे लोकप्रिय',
+    badgeStyle: 'gold',
+    highlight: true,
     features: [
-      'Everything in Pro',
-      'Palmistry reading (when live)',
-      'Compatibility + synastry',
-      'Priority chart queue',
-      'WhatsApp support',
+      'Everything in Free +',
+      'Kundli Matching (Ashtakoot)',
+      'Sade Sati report',
+      'Doshas (Mangal + Kaal Sarp)',
+      'Numerology',
+      'Lal Kitab',
+      'Tarot readings',
+      'Palmistry guide',
     ],
     featuresHi: [
-      'प्रो की सभी सुविधाएं',
-      'हस्तरेखा वाचन (जल्द)',
-      'कुंडली मिलान + सिनेस्ट्री',
-      'प्राथमिकता कुंडली',
-      'WhatsApp सहायता',
+      'निःशुल्क की सभी सुविधाएं +',
+      'कुंडली मिलान (अष्टकूट)',
+      'साढ़े साती रिपोर्ट',
+      'दोष (मंगल + काल सर्प)',
+      'अंकशास्त्र',
+      'लाल किताब',
+      'टैरो रीडिंग',
+      'हस्तरेखा गाइड',
     ],
     cta: 'Start Jyotish',
     ctaHi: 'ज्योतिष शुरू करें',
-    live: true,
+    ctaLink: null,
+  },
+  {
+    id: 'guru',
+    name: 'Guru',
+    nameHi: 'गुरु',
+    price: '₹799',
+    period: '/month',
+    tagline: 'Complete access + all future features',
+    taglineHi: 'पूर्ण एक्सेस + सभी भविष्य की सुविधाएं',
+    color: 'var(--violet)',
+    badge: 'EVERYTHING',
+    badgeHi: 'सब कुछ',
+    badgeStyle: 'violet',
     highlight: false,
+    features: [
+      'Everything in Jyotish +',
+      'Destiny Chat (personal reading)',
+      'Varshphal (Annual Horoscope)',
+      'Gochar / Transit report',
+      'Muhurat finder',
+      'PDF report download',
+      '✦ KP System',
+      '✦ Nadi Astrology',
+      '✦ All future features',
+    ],
+    featuresHi: [
+      'ज्योतिष की सभी सुविधाएं +',
+      'भाग्य चैट (व्यक्तिगत रीडिंग)',
+      'वर्षफल (वार्षिक राशिफल)',
+      'गोचर / ट्रांजिट रिपोर्ट',
+      'मुहूर्त फाइंडर',
+      'PDF रिपोर्ट डाउनलोड',
+      '✦ KP सिस्टम',
+      '✦ नाड़ी ज्योतिष',
+      '✦ सभी भविष्य की सुविधाएं',
+    ],
+    cta: 'Start Guru',
+    ctaHi: 'गुरु शुरू करें',
+    ctaLink: null,
   },
 ]
 
@@ -100,17 +127,79 @@ const FAQ = [
   },
   {
     q: 'What payment methods are accepted?',
-    a: 'UPI, credit/debit cards, net banking, and wallets via Razorpay — India\'s most trusted payment gateway.',
+    a: "UPI, credit/debit cards, net banking, and wallets via Razorpay — India's most trusted payment gateway.",
   },
   {
     q: 'Is my chart data private?',
     a: 'Yes. Your birth data is stored encrypted and never shared. You can delete your charts anytime.',
   },
   {
-    q: 'What if I\'m not happy?',
-    a: 'We offer a 7-day refund for first-time Pro/Jyotish subscribers if you\'re not satisfied.',
+    q: "What if I'm not happy?",
+    a: "We offer a 7-day refund for first-time Jyotish/Guru subscribers if you're not satisfied.",
   },
 ]
+
+function getBadgeStyle(badgeStyle) {
+  if (badgeStyle === 'violet') {
+    return {
+      background: 'linear-gradient(135deg, #B09AFF 0%, #8B6FE8 100%)',
+      color: '#fff',
+      boxShadow: '0 8px 28px rgba(139,111,232,0.28)',
+    }
+  }
+  return {
+    background: 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)',
+    color: '#1C1205',
+    boxShadow: '0 8px 28px rgba(223,168,79,0.28)',
+  }
+}
+
+function getCardStyle(plan) {
+  if (plan.highlight) {
+    return {
+      background: 'linear-gradient(180deg, rgba(223,168,79,0.08) 0%, var(--bg-card) 100%)',
+      border: '1px solid rgba(242,203,132,0.45)',
+      boxShadow: '0 0 44px rgba(223,168,79,0.12)',
+    }
+  }
+  if (plan.badgeStyle === 'violet') {
+    return {
+      background: 'linear-gradient(180deg, rgba(139,111,232,0.08) 0%, var(--bg-card) 100%)',
+      border: '1px solid rgba(139,111,232,0.45)',
+      boxShadow: '0 0 44px rgba(139,111,232,0.12)',
+    }
+  }
+  return {
+    background: 'var(--bg-card)',
+    border: '1px solid var(--border)',
+    boxShadow: 'none',
+  }
+}
+
+function getCtaStyle(plan) {
+  if (plan.highlight) {
+    return {
+      background: 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)',
+      color: '#1C1205',
+      border: 'none',
+      boxShadow: '0 8px 28px rgba(223,168,79,0.28)',
+    }
+  }
+  if (plan.badgeStyle === 'violet') {
+    return {
+      background: 'linear-gradient(135deg, #B09AFF 0%, #8B6FE8 100%)',
+      color: '#fff',
+      border: 'none',
+      boxShadow: '0 8px 28px rgba(139,111,232,0.28)',
+    }
+  }
+  return {
+    background: 'transparent',
+    color: 'var(--gold)',
+    border: '1px solid var(--border-hover)',
+    boxShadow: 'none',
+  }
+}
 
 export default function Pricing() {
   const { lang } = useLanguage()
@@ -129,7 +218,7 @@ export default function Pricing() {
   }, [])
 
   async function handleCheckout(planId) {
-    if (planId === 'starter') return
+    if (planId === 'free') return
     setLoading(planId)
     try {
       const res = await fetch(`${API}/payments/create-order`, {
@@ -217,33 +306,43 @@ export default function Pricing() {
         </div>
 
         {/* Plan cards */}
-        <div className="pricing-grid bh-fade-up-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '3rem' }}>
+        <div className="pricing-grid bh-fade-up-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
           {PLANS.map(plan => {
             const paid = paymentStatus[plan.id] === 'success'
             const features = isHindi ? plan.featuresHi : plan.features
+            const cardStyle = getCardStyle(plan)
+            const ctaStyle = getCtaStyle(plan)
+            const badgeStyleObj = plan.badge ? getBadgeStyle(plan.badgeStyle) : {}
 
             return (
               <div key={plan.id} style={{
-                background: plan.highlight ? 'linear-gradient(180deg, rgba(223,168,79,0.08) 0%, var(--bg-card) 100%)' : 'var(--bg-card)',
+                ...cardStyle,
                 backdropFilter: 'blur(18px) saturate(1.4)',
                 WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
-                border: plan.highlight ? '1px solid rgba(242,203,132,0.45)' : '1px solid var(--border)',
-                boxShadow: plan.highlight ? '0 0 44px rgba(223,168,79,0.12)' : 'none',
                 borderRadius: '20px',
                 padding: '1.75rem',
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
               }}>
-                {plan.highlight && (
-                  <div style={{ position: 'absolute', top: '-13px', left: '50%', transform: 'translateX(-50%)', background: 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)', color: '#1C1205', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', padding: '0.3rem 1rem', borderRadius: '999px', boxShadow: '0 8px 28px rgba(223,168,79,0.28)', whiteSpace: 'nowrap' }}>
-                    {isHindi ? plan.tagHi : plan.tag}
+                {/* Badge — shown for Jyotish (gold) and Guru (violet) */}
+                {plan.badge && (
+                  <div style={{
+                    position: 'absolute', top: '-13px', left: '50%', transform: 'translateX(-50%)',
+                    ...badgeStyleObj,
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.62rem', fontWeight: 600, letterSpacing: '2px',
+                    textTransform: 'uppercase', padding: '0.3rem 1rem',
+                    borderRadius: '999px', whiteSpace: 'nowrap',
+                  }}>
+                    {isHindi ? plan.badgeHi : plan.badge}
                   </div>
                 )}
 
+                {/* Plan header */}
                 <div style={{ marginBottom: '1.25rem' }}>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', color: plan.color, fontWeight: 500, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '0.4rem', minHeight: '1em' }}>
-                    {!plan.highlight && (isHindi ? plan.tagHi : plan.tag)}
+                    {isHindi ? plan.taglineHi : plan.tagline}
                   </div>
                   <div style={{ fontFamily: "'Fraunces', serif", color: 'var(--text-primary)', fontSize: '1.2rem', fontWeight: 600, letterSpacing: '-0.02em' }}>
                     {isHindi ? plan.nameHi : plan.name}
@@ -254,38 +353,49 @@ export default function Pricing() {
                   </div>
                 </div>
 
+                {/* Feature list */}
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.5rem', flex: 1 }}>
-                  {features.map((f, i) => (
-                    <li key={i} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start', padding: '0.35rem 0', color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>
-                      <span style={{ color: 'var(--gold)', flexShrink: 0, marginTop: '2px' }}>✓</span>
-                      {f}
-                    </li>
-                  ))}
+                  {features.map((f, i) => {
+                    const isComingSoon = f.startsWith('✦')
+                    const label = isComingSoon ? f.slice(2) : f
+                    return (
+                      <li key={i} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start', padding: '0.35rem 0', color: isComingSoon ? 'var(--text-dim)' : 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>
+                        <span style={{ color: isComingSoon ? 'var(--violet)' : 'var(--gold)', flexShrink: 0, marginTop: '2px' }}>
+                          {isComingSoon ? '✦' : '✓'}
+                        </span>
+                        {label}
+                      </li>
+                    )
+                  })}
                 </ul>
 
+                {/* CTA */}
                 {paid ? (
                   <div style={{ background: 'rgba(76,175,80,0.1)', border: '1px solid rgba(76,175,80,0.3)', borderRadius: '999px', padding: '0.75rem', textAlign: 'center', color: '#4CAF50', fontWeight: 600, fontSize: '0.9rem' }}>
                     ✓ {isHindi ? 'सक्रिय' : 'Active'}
                   </div>
+                ) : plan.ctaLink ? (
+                  <Link to={plan.ctaLink} style={{
+                    display: 'block', textAlign: 'center', textDecoration: 'none',
+                    ...ctaStyle,
+                    borderRadius: '999px', padding: '0.8rem',
+                    fontWeight: 600, fontSize: '0.9rem', fontFamily: "'Inter', sans-serif",
+                    transition: 'all 0.18s',
+                  }}>
+                    {isHindi ? plan.ctaHi : plan.cta}
+                  </Link>
                 ) : (
                   <button
-                    onClick={() => plan.id === 'starter' ? null : handleCheckout(plan.id)}
+                    onClick={() => handleCheckout(plan.id)}
                     disabled={loading === plan.id}
                     style={{
-                      background: plan.highlight
-                        ? 'linear-gradient(135deg, #F2CB84 0%, #DFA84F 42%, #A8752B 100%)'
-                        : 'transparent',
-                      color: plan.highlight ? '#1C1205' : 'var(--gold)',
-                      border: plan.highlight ? 'none' : '1px solid var(--border-hover)',
-                      borderRadius: '999px',
-                      padding: '0.8rem',
-                      fontWeight: 600,
-                      cursor: plan.id === 'starter' ? 'default' : 'pointer',
-                      fontSize: '0.9rem',
+                      ...ctaStyle,
+                      borderRadius: '999px', padding: '0.8rem',
+                      fontWeight: 600, cursor: 'pointer', fontSize: '0.9rem',
                       fontFamily: "'Inter', sans-serif",
-                      boxShadow: plan.highlight ? '0 8px 28px rgba(223,168,79,0.28)' : 'none',
                       transition: 'all 0.18s',
                       opacity: loading === plan.id ? 0.6 : 1,
+                      width: '100%',
                     }}>
                     {loading === plan.id ? '...' : (isHindi ? plan.ctaHi : plan.cta)}
                   </button>
@@ -293,6 +403,20 @@ export default function Pricing() {
               </div>
             )
           })}
+        </div>
+
+        {/* Coming soon note */}
+        <div className="bh-fade-up-1" style={{ textAlign: 'center', marginBottom: '0.75rem' }}>
+          <p style={{ color: 'var(--text-dim)', fontSize: '0.80rem', margin: 0 }}>
+            Items marked <span style={{ color: 'var(--violet)' }}>✦</span> are coming soon
+          </p>
+        </div>
+
+        {/* Swiss Ephemeris note */}
+        <div className="bh-fade-up-1" style={{ textAlign: 'center', maxWidth: '560px', margin: '0 auto 2.5rem' }}>
+          <p style={{ color: 'var(--text-dim)', fontSize: '0.80rem', lineHeight: 1.7, margin: 0 }}>
+            All plans include Swiss Ephemeris precision at the calculation layer. No astrologers — pure computational Vedic astrology.
+          </p>
         </div>
 
         {/* Backend-not-configured notice */}
@@ -322,4 +446,3 @@ export default function Pricing() {
     </div>
   )
 }
-

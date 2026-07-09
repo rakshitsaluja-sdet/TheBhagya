@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { createChart } from '../hooks/useApi'
+import CitySearch from '../components/CitySearch'
 
 const TIMEZONES = [
   'Asia/Kolkata', 'Asia/Karachi', 'Asia/Dhaka', 'Asia/Kathmandu',
@@ -8,22 +9,6 @@ const TIMEZONES = [
   'Europe/London', 'Europe/Berlin', 'Asia/Dubai', 'Asia/Singapore',
   'Australia/Sydney', 'Pacific/Auckland',
 ]
-
-function guessTimezone(countryCode, lon) {
-  const map = {
-    IN:'Asia/Kolkata', PK:'Asia/Karachi', BD:'Asia/Dhaka',
-    NP:'Asia/Kathmandu', CA:'America/Toronto', GB:'Europe/London',
-    DE:'Europe/Berlin', AE:'Asia/Dubai', SG:'Asia/Singapore',
-    AU:'Australia/Sydney', NZ:'Pacific/Auckland',
-  }
-  if (map[countryCode]) return map[countryCode]
-  if (countryCode === 'US') {
-    if (lon > -80) return 'America/New_York'
-    if (lon > -100) return 'America/Chicago'
-    return 'America/Los_Angeles'
-  }
-  return 'Asia/Kolkata'
-}
 
 const s = {
   wrap: { maxWidth: '620px', margin: '3rem auto', padding: '0 1.5rem' },
@@ -58,7 +43,6 @@ const s = {
   },
   row: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' },
   error: { color: '#E05050', fontSize: '0.85rem', marginTop: '1rem', padding: '0.75rem', background: 'rgba(224,80,80,0.08)', borderRadius: '10px', border: '1px solid rgba(224,80,80,0.2)' },
-  geoStatus: { fontSize: '0.78rem', marginTop: '0.3rem' },
   btnRow: { display: 'flex', gap: '1rem', marginTop: '2rem' },
   hint: { fontSize: '0.78rem', color: 'var(--text-dim)', marginTop: '0.3rem' },
 }
@@ -76,43 +60,24 @@ export default function ChartForm() {
     label: '', dob: '', tob: '', timezone: 'Asia/Kolkata',
     lat: '', lon: '', place_name: '',
   })
-  const [loading,   setLoading]   = useState(false)
-  const [geoStatus, setGeoStatus] = useState('')
-  const [geoMsg,    setGeoMsg]    = useState('')
-  const [error,     setError]     = useState('')
-  const debounceRef = useRef(null)
+  const [loading, setLoading] = useState(false)
+  const [error,   setError]   = useState('')
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
 
-  const handlePlaceChange = (e) => {
-    const val = e.target.value
-    set('place_name', val)
-    setGeoStatus(''); setGeoMsg('')
-    if (debounceRef.current) clearTimeout(debounceRef.current)
-    if (val.trim().length < 3) return
-    debounceRef.current = setTimeout(() => geocode(val.trim()), 600)
-  }
-
-  const geocode = async (query) => {
-    setGeoStatus('fetching'); setGeoMsg('Looking up coordinates...')
-    try {
-      const res  = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`, { headers: { 'Accept-Language': 'en' } })
-      const data = await res.json()
-      if (!data.length) { setGeoStatus('err'); setGeoMsg('Place not found — try a more specific name'); return }
-      const { lat, lon } = data[0]
-      const cc = data[0].address?.country_code?.toUpperCase() || ''
-      const tz = guessTimezone(cc, parseFloat(lon))
-      setForm(f => ({ ...f, lat: parseFloat(lat).toFixed(4), lon: parseFloat(lon).toFixed(4), timezone: tz }))
-      setGeoStatus('ok')
-      setGeoMsg(`✓ ${parseFloat(lat).toFixed(4)}°N, ${parseFloat(lon).toFixed(4)}°E  ·  ${tz}`)
-    } catch {
-      setGeoStatus('err'); setGeoMsg('Could not reach geocoding service. Enter coordinates manually.')
-    }
+  const handleCitySelect = (lat, lon, tz, name) => {
+    setForm(f => ({
+      ...f,
+      lat: lat.toFixed(4),
+      lon: lon.toFixed(4),
+      timezone: tz,
+      place_name: name,
+    }))
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!form.lat || !form.lon) { setError('Please enter a place of birth so we can find its coordinates.'); return }
+    if (!form.lat || !form.lon) { setError('Please select a place of birth from the suggestions.'); return }
     setError(''); setLoading(true)
     try {
       const chart = await createChart({ ...form, lat: parseFloat(form.lat), lon: parseFloat(form.lon), dasha_levels: 2 })
@@ -122,7 +87,7 @@ export default function ChartForm() {
     } finally { setLoading(false) }
   }
 
-  const coordsLocked = geoStatus === 'ok'
+  const coordsLocked = !!(form.lat && form.lon)
 
   return (
     <div style={s.wrap}>
@@ -182,22 +147,17 @@ export default function ChartForm() {
           </div>
         </div>
 
-        {/* PLACE — auto-geocodes */}
+        {/* PLACE — CitySearch autofill */}
         <div style={s.group}>
           <div style={s.labelRow}>
             <span style={s.label}>PLACE OF BIRTH</span>
             <span style={s.req}>* required</span>
           </div>
-          <input style={s.input}
+          <CitySearch
+            onSelect={handleCitySelect}
             placeholder="e.g. New Delhi, India"
-            value={form.place_name}
-            onChange={handlePlaceChange}
-            onFocus={onFocus} onBlur={onBlur}/>
-          {geoMsg && (
-            <p style={{ ...s.geoStatus, color: geoStatus==='ok' ? '#50B87A' : geoStatus==='err' ? '#E05050' : 'var(--text-muted)' }}>
-              {geoStatus==='fetching' ? '⟳ ' : ''}{geoMsg}
-            </p>
-          )}
+            inputStyle={{ fontSize: '0.95rem' }}
+          />
         </div>
 
         {/* LAT / LON */}
@@ -231,7 +191,7 @@ export default function ChartForm() {
           <p style={{ ...s.hint, marginTop: '-0.75rem', marginBottom: '1rem' }}>
             Coordinates set automatically.{' '}
             <span style={{ color: 'var(--gold)', cursor: 'pointer' }}
-              onClick={() => { setGeoStatus(''); setGeoMsg(''); setForm(f => ({ ...f, lat: '', lon: '' })) }}>
+              onClick={() => setForm(f => ({ ...f, lat: '', lon: '', place_name: '' }))}>
               Edit manually
             </span>
           </p>

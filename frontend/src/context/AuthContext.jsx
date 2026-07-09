@@ -1,10 +1,46 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 
 // Plan feature matrix — mirrors backend PLAN_LIMITS
+// free    = no login required (₹0)
+// jyotish = ₹299/month
+// guru    = ₹799/month
 const PLAN_FEATURES = {
-  starter:  { maxCharts: 3,   pdf: false, chat: false, numerology: false, label: 'Starter',       badge: '✦ FREE' },
-  pro:      { maxCharts: 999, pdf: true,  chat: true,  numerology: true,  label: 'Bhagya Pro',    badge: '⭐ PRO' },
-  jyotish:  { maxCharts: 999, pdf: true,  chat: true,  numerology: true,  label: 'Bhagya Jyotish',badge: '🔮 JYOTISH' },
+  free: {
+    // Free tier — no login required
+    chart: true, horoscope: true, panchang: true,
+    dreams: true, biorhythm: true, vastu: true, gemstones: true,
+    // Jyotish tier (₹299) — not included
+    kundli: false, 'sade-sati': false, doshas: false, numerology: false,
+    'lal-kitab': false, tarot: false, palmistry: false,
+    // Guru tier (₹799) — not included
+    chat: false, varshphal: false, transit: false, muhurat: false, pdf: false,
+    // Meta
+    maxCharts: 3, label: 'Free', badge: '✦ FREE',
+  },
+  jyotish: {
+    // Free tier — included
+    chart: true, horoscope: true, panchang: true,
+    dreams: true, biorhythm: true, vastu: true, gemstones: true,
+    // Jyotish tier (₹299) — included
+    kundli: true, 'sade-sati': true, doshas: true, numerology: true,
+    'lal-kitab': true, tarot: true, palmistry: true,
+    // Guru tier (₹799) — not included
+    chat: false, varshphal: false, transit: false, muhurat: false, pdf: false,
+    // Meta
+    maxCharts: 999, label: 'Jyotish', badge: '⭐ JYOTISH',
+  },
+  guru: {
+    // Free tier — included
+    chart: true, horoscope: true, panchang: true,
+    dreams: true, biorhythm: true, vastu: true, gemstones: true,
+    // Jyotish tier (₹299) — included
+    kundli: true, 'sade-sati': true, doshas: true, numerology: true,
+    'lal-kitab': true, tarot: true, palmistry: true,
+    // Guru tier (₹799) — included
+    chat: true, varshphal: true, transit: true, muhurat: true, pdf: true,
+    // Meta
+    maxCharts: 999, label: 'Guru', badge: '🔮 GURU',
+  },
 }
 
 const AuthContext = createContext(null)
@@ -47,8 +83,8 @@ export function AuthProvider({ children }) {
     setUser(null)
   }, [])
 
-  const plan       = user?.plan || 'starter'
-  const features   = PLAN_FEATURES[plan] || PLAN_FEATURES.starter
+  const plan       = user?.plan || 'free'
+  const features   = PLAN_FEATURES[plan] || PLAN_FEATURES.free
   const isLoggedIn = !!token
 
   // canUse('chat') → true/false based on current plan
@@ -56,7 +92,7 @@ export function AuthProvider({ children }) {
 
   // Check if user has hit chart limit
   const chartLimitReached = () =>
-    plan === 'starter' && (user?.chart_count ?? 0) >= features.maxCharts
+    plan === 'free' && (user?.chart_count ?? 0) >= features.maxCharts
 
   // Increment local chart count after creating a chart
   const incrementChartCount = () => {

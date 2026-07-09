@@ -94,8 +94,8 @@ export default function Footer() {
             <span style={s.brandName}>BHAGYA</span>
           </Link>
           <p style={s.tagline}>
-            Five thousand years of Jyotisha, computed to the arc-second.
-            Swiss Ephemeris precision — no human astrologers, pure math + AI.
+            Five thousand years of Jyotisha, computed with ancient precision.
+            Vedic traditions upheld by Jyotishis worldwide.
           </p>
           <div style={s.badges}>
             {['Swiss Ephemeris', 'Lahiri Ayanamsa', 'AI-Native'].map(b => (

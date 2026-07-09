@@ -138,7 +138,7 @@ function ResultPanel({ result, onReset }) {
           {displayDate}
         </div>
         <div style={{ fontSize: '0.76rem', color: 'var(--text-dim)', marginTop: '0.25rem' }}>
-          Sunrise {sunrise} &middot; Sunset {sunset} &middot; Sidereal / Lahiri
+          Sunrise {sunrise} &middot; Sunset {sunset} &middot; Vedic calendar
         </div>
       </div>
 
@@ -257,7 +257,7 @@ function ResultPanel({ result, onReset }) {
         backdropFilter: 'blur(18px) saturate(1.4)', WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
       }}>
         <div style={{ fontSize: '0.62rem', color: 'var(--text-dim)', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-          Planetary Context (Sidereal &middot; Lahiri)
+          Planetary Context (Vedic positions)
         </div>
         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
           <div style={{ fontSize: '0.8rem' }}>
@@ -282,7 +282,7 @@ function ResultPanel({ result, onReset }) {
         <div>
           <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.66rem', color: GOLD, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Want your full birth chart?</div>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.83rem', margin: 0 }}>
-            Get personalised Vimshottari Dasha, Lal Kitab remedies, and AI interpretation.
+            Get personalised Vimshottari Dasha, Lal Kitab remedies, and celestial guidance.
           </p>
         </div>
         <Link to='/chart/new' style={{
@@ -359,7 +359,7 @@ export default function Panchang() {
           Panchang
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.7, maxWidth: '520px', margin: '0 auto' }}>
-          The five limbs of the Vedic almanac &mdash; Tithi, Nakshatra, Vara, Yoga &amp; Karana &mdash; plus auspicious timings, computed with Swiss Ephemeris precision.
+          The five limbs of the Vedic almanac &mdash; Tithi, Nakshatra, Vara, Yoga &amp; Karana &mdash; plus auspicious timings, computed with the precision of classical Vedic astronomy.
         </p>
       </div>
 

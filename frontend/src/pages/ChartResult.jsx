@@ -696,7 +696,7 @@ export default function ChartResult() {
           <h1 style={s.name}>{chart.label || 'Your Chart'}</h1>
           <p style={s.meta}>
             {chart.dob} · {chart.tob} · {chart.place_name || chart.timezone}
-            {ayanamsa && ` · Ayanamsa: ${ayanamsa.toFixed(4)}° (Lahiri)`}
+            {ayanamsa && ` · Lahiri ${ayanamsa.toFixed(4)}°`}
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.6rem', flexShrink: 0 }}>

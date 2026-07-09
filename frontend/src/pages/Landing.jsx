@@ -383,10 +383,10 @@ function useReveal() {
 /* ── Data ──────────────────────────────────────────────────────────────── */
 const FEATURES = [
   { icon: '☽', name: 'Kundali Engine', big: true,
-    desc: 'Swiss Ephemeris precision. Natal chart, Vimshottari dasha, ashtakavarga — every graha computed to the arc-second, exactly as the rishis mapped the sky.',
+    desc: 'Natal chart, Vimshottari dasha, ashtakavarga — every graha computed with ancient precision, exactly as the rishis mapped the sky.',
     tag: 'FLAGSHIP', to: '/chart/new' },
   { icon: '✦', name: 'Destiny Chat', big: true,
-    desc: 'An AI Jyotish that answers from your specific placements — dashas, transits, yogas. Not generic horoscopes; readings cited from your own chart.',
+    desc: 'Your personal Jyotish guide that answers from your specific placements — dashas, transits, yogas. Not generic horoscopes; readings cited from your own chart.',
     tag: 'AI-NATIVE', to: '/destiny-chat' },
   { icon: '📅', name: 'Panchang', desc: 'Tithi, Nakshatra, Vara, Yoga & Karana — the five Vedic almanac limbs with Rahu Kaal and Abhijit Muhurat.', to: '/panchang' },
   { icon: '💎', name: 'Gemstones', desc: 'Personalised Ratna Shastra — primary stone for your Lagna lord and dasha stone for your current Mahadasha.', to: '/gemstones' },
@@ -415,16 +415,10 @@ const TESTIMONIALS = [
   { quote: 'The nakshatra-level breakdown is something no other free tool offers. My Ardra placement finally makes sense.', name: 'Mehul D.', nak: 'Ardra Moon', init: 'MD' },
 ]
 
-const STEPS = [
-  { n: '01', title: 'Enter birth details', desc: 'Date, time and place of birth. That’s all the engine needs — no sign-up required for your first chart.' },
-  { n: '02', title: 'Swiss Ephemeris computes', desc: 'Sidereal positions with Lahiri ayanamsa for all nine grahas, lagna, nakshatras and the full Vimshottari dasha tree.' },
-  { n: '03', title: 'AI reads your chart', desc: 'Destiny Chat interprets yogas, dashas and transits from your actual placements — ask it anything, anytime.' },
-]
-
 const PLANS = [
   { name: 'Starter', price: '₹0',   per: '/month', desc: '3 charts a month, horoscope, doshas & matching', popular: false },
   { name: 'Pro',     price: '₹299', per: '/month', desc: 'Unlimited charts, Destiny Chat, numerology, PDF reports', popular: true },
-  { name: 'Jyotish', price: '₹799', per: '/month', desc: 'Everything in Pro plus priority AI and deep-dive readings', popular: false },
+  { name: 'Jyotish', price: '₹799', per: '/month', desc: 'Everything in Pro plus priority readings and deep-dive analysis', popular: false },
 ]
 
 /* ── Styles ────────────────────────────────────────────────────────────── */
@@ -543,7 +537,7 @@ export default function Landing() {
             <p className="bh-fade-up-2" style={S.body}>
               Five thousand years of Vedic wisdom, encoded in computational light.
               Nine grahas, twelve rashis, twenty-seven nakshatras — your cosmic
-              blueprint decoded by Swiss Ephemeris precision and AI.
+              blueprint decoded with timeless precision.
             </p>
 
             <div className="bh-fade-up-3 bh-hero-cta" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2.4rem' }}>
@@ -562,9 +556,9 @@ export default function Landing() {
               fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem',
               letterSpacing: '2px', textTransform: 'uppercase', color: DIM, flexWrap: 'wrap',
             }}>
-              <span>Swiss Ephemeris</span>
+              <span>Vedic tradition</span>
               <span style={{ width: 1, height: 12, background: LINE }} />
-              <span>Lahiri Ayanamsa</span>
+              <span>Classical method</span>
               <span style={{ width: 1, height: 12, background: LINE }} />
               <span>0.001° precision</span>
             </div>
@@ -588,7 +582,7 @@ export default function Landing() {
               { id: 'sp-charts',  label: 'Charts computed',      pre: '12,847+',   live: true  },
               { id: 'sp-planets', label: 'Planets calculated',   pre: '1,15,623+', live: false },
               { id: 'sp-naks',    label: 'Nakshatras mapped',    pre: '27',        live: false },
-              { id: 'sp-acc',     label: 'Arc-second precision', pre: '0.001°',    live: false },
+              { id: 'sp-acc',     label: 'Ancient precision',    pre: '0.001°',    live: false },
             ].map((st, i) => (
               <div key={st.id} style={{ textAlign: 'center', padding: '0 1.5rem', ...(i > 0 && { borderLeft: `1px solid ${LINE2}` }) }}>
                 <span id={st.id} style={{
@@ -613,7 +607,7 @@ export default function Landing() {
             <h2 style={S.h2}>Ancient wisdom. <span style={S.gradText}>Modern clarity.</span></h2>
             <p style={{ ...S.body, margin: '0 auto', textAlign: 'center' }}>
               Not approximations — the exact sky the rishis mapped, computed in
-              real time and interpreted by AI trained on classical Jyotisha.
+              real time and revealed through classical Jyotisha.
             </p>
           </div>
 
@@ -681,36 +675,6 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* ══ HOW IT WORKS ══ */}
-        <section style={{ ...S.container, padding: '4rem 5vw 6rem' }}>
-          <div className="reveal" style={{ marginBottom: '3rem' }}>
-            <div style={S.eyebrow}><span style={S.rule} />How it works</div>
-            <h2 style={S.h2}>Three steps to <span style={S.gradText}>your sky.</span></h2>
-          </div>
-          <div className="bh-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem' }}>
-            {STEPS.map((st, i) => (
-              <div key={st.n} className="reveal" style={{
-                ...S.glass, borderRadius: 20, padding: '1.9rem',
-                position: 'relative', transitionDelay: `${i * 0.08}s`,
-              }}>
-                <div style={{
-                  fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', letterSpacing: '3px',
-                  color: GOLD, marginBottom: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.8rem',
-                }}>
-                  <span style={{
-                    width: 34, height: 34, borderRadius: '50%', border: `1px solid ${LINE}`,
-                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                    background: 'rgba(223,168,79,0.07)',
-                  }}>{st.n}</span>
-                  {i < 2 && <span style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${LINE}, transparent)` }} />}
-                </div>
-                <div style={{ fontFamily: "'Fraunces', serif", fontSize: '1.2rem', fontWeight: 600, color: FG, marginBottom: '0.5rem' }}>{st.title}</div>
-                <p style={{ fontSize: '0.86rem', color: MUT, lineHeight: 1.75, margin: 0 }}>{st.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* ══ TESTIMONIALS MARQUEE ══ */}
         <section style={{ borderTop: `1px solid ${LINE2}`, borderBottom: `1px solid ${LINE2}`, background: 'rgba(223,168,79,0.015)', padding: '3.5rem 0 3rem', overflow: 'hidden' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: '2.2rem' }}>
@@ -772,8 +736,8 @@ export default function Landing() {
                 Your birth chart is a map of your tendencies, gifts and dharma — not a cage.
               </p>
               <p style={S.body}>
-                Every planet in Bhagya is computed with Swiss Ephemeris and Lahiri Ayanamsa —
-                the professional standard used by Jyotishis worldwide. No approximations, no shortcuts.
+                Every planet in Bhagya is computed to the highest professional standard
+                used by Jyotishis worldwide. No approximations, no shortcuts.
               </p>
               <div style={{ display: 'flex', gap: '0.6rem', marginTop: '2rem', flexWrap: 'wrap' }}>
                 {['Kundali', 'Dasha', 'Destiny Chat', 'Numerology', 'Lal Kitab'].map(t => (
