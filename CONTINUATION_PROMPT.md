@@ -1,5 +1,5 @@
 # TheBhagya — Continuation Prompt
-# Last updated: July 2026
+# Last updated: July 9, 2026
 
 Paste everything below this line into a new Claude Cowork session to resume exactly where we left off.
 
@@ -7,183 +7,180 @@ Paste everything below this line into a new Claude Cowork session to resume exac
 
 ## PROJECT IDENTITY
 
-**TheBhagya** — AI-native Vedic astrology platform (similar to AstroTalk).
+**TheBhagya** (brand name: **Bhagya**) — AI-native Vedic astrology platform, similar to AstroTalk/AstroSage.
 Built by Rakshit Saluja. Claude is the co-developer.
 
 **CRITICAL RULE:** The AlgoMind codebase at `C:\Users\Admin\OneDrive\Documents\ABC\TT` is READ ONLY. Never modify it without explicit instruction from Rakshit.
+
+**NO personal details** in testimonials or sample data — use random fictional names only.
 
 ---
 
 ## CODEBASE LOCATION
 
 Local: `C:\Users\Admin\OneDrive\Documents\Bhagya_AstroTalk\Bhagya-- Similar to AstroTalk\BhagyaAI`
-GitHub: `https://github.com/rakshitsaluja-sdet/TheBhagya` (public)
+GitHub: `https://github.com/rakshitsaluja-sdet/TheBhagya` (public, branch: `master`)
 
 ---
 
-## LIVE DEPLOYMENT STATUS
+## LIVE DEPLOYMENT
 
-| Layer | URL | Status |
-|---|---|---|
-| Backend (FastAPI) | `https://thebhagya-backend-production.up.railway.app` | ✅ LIVE on Railway |
-| Database | Supabase PostgreSQL — `db.hngsrnuhfafbqqxgnule.supabase.co` | ✅ LIVE |
-| Frontend (React) | Vercel — **PENDING** (next task) | ⏳ Not deployed yet |
+| Layer     | URL                                                         | Status      |
+|-----------|-------------------------------------------------------------|-------------|
+| Frontend  | `https://the-bhagya.vercel.app`                             | ✅ Vercel   |
+| Backend   | `https://thebhagya-backend-production.up.railway.app`       | ✅ Railway  |
+| Database  | Supabase PostgreSQL — `db.hngsrnuhfafbqqxgnule.supabase.co` | ✅ Live     |
 
 ---
 
 ## TECH STACK
 
-- **Frontend:** React 18 + Vite + React Router v6, inline styles, CSS variables for theming
+- **Frontend:** React 18 + Vite + React Router v6, inline styles, CSS variables (Celestial Aurum v2 design system)
 - **Backend:** FastAPI (async) + SQLAlchemy 2.0 + asyncpg
-- **Database:** PostgreSQL via Supabase (prod) / SQLite via aiosqlite (local fallback)
-- **Auth:** JWT tokens — `bhagya_token` (users) + `bhagya_admin_token` (admin)
+- **Database:** PostgreSQL via Supabase (prod) / SQLite aiosqlite (local fallback)
+- **Auth:** JWT — `bhagya_token` (users) + `bhagya_admin_token` (admin)
 - **Astrology engine:** pyswisseph (Swiss Ephemeris), sidereal/Lahiri ayanamsa
-- **bcrypt:** Used directly (`import bcrypt as _bcrypt`) — passlib removed (Python 3.12 conflict)
-- **Start command (local):** `.\start.ps1` from BhagyaAI folder
-- **Vite proxy (local):** `/v1` → `localhost:8000`
-- **Production API base:** `VITE_API_BASE_URL=https://thebhagya-backend-production.up.railway.app`
+
+### Design System — Celestial Aurum v2
+```
+--gold: #DFA84F  --gold-light: #F2CB84  --violet: #8B6FE8
+--bg-deep: #07060F  --bg-card: rgba(19,15,36,0.72)  --bg-elevated: #1B1533
+```
+Fonts: Fraunces (headings), Inter (body), JetBrains Mono (labels/mono)
 
 ---
 
-## ENVIRONMENT VARIABLES
+## COMPLETED FEATURES (as of July 9, 2026)
 
-### Backend (.env in BhagyaAI/ — also set in Railway Variables)
+| Feature | Backend | Frontend | Live |
+|---|---|---|---|
+| Free Kundali (natal chart) | ✅ | ✅ | ✅ |
+| Vimshottari Dasha timeline | ✅ | ✅ | ✅ |
+| Ashtakavarga | ✅ | ✅ | ✅ |
+| Daily Horoscope (12 signs, transit) | ✅ | ✅ | ✅ |
+| Sade Sati Report | ✅ | ✅ | ✅ |
+| Mangal Dosha + Kaal Sarp Dosha | ✅ | ✅ | ✅ |
+| Kundli Matching (36-guna Ashtakoot) | ✅ | ✅ | ✅ |
+| Lal Kitab (Pucca Ghar + remedies) | ✅ | ✅ | ✅ |
+| Numerology (Pythagorean + Chaldean) | ✅ | ✅ | ✅ |
+| Destiny Chat (AI, Anthropic) | ✅ | ✅ | ⚠️ BROKEN (missing ANTHROPIC_API_KEY on Railway) |
+| PDF Report export | ✅ | ✅ | ⚠️ unverified |
+| Panchang & Muhurat (5 limbs + Rahu Kaal + Abhijit) | ✅ | ✅ | ✅ |
+| Gemstones Recommendation | — (pure frontend) | ✅ | ✅ |
+| Varshphal (Annual Horoscope / Solar Return) | ✅ | ✅ | ⏳ deploying |
+| Admin Dashboard | ✅ | ✅ | ✅ |
+| Login / JWT auth + OTP | ✅ | ✅ | ✅ |
+| Razorpay billing (3 plans) | ✅ | ✅ | ⚠️ plan activation not wired |
+| Palmistry (placeholder page) | — | ✅ | ✅ |
+
+---
+
+## KEY FILE LOCATIONS
+
+### Backend
 ```
-DATABASE_URL=postgresql+asyncpg://postgres.hngsrnuhfafbqqxgnule:Merak%4013042022@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres
-APP_ENV=production
-SECRET_KEY=thebhagya-prod-secret-change-this-before-launch-xyz987abc
-ADMIN_EMAIL=admin@thebhagya.com
-ADMIN_PASSWORD=TheBhagya@Admin2025!
+backend/app/main.py                          — FastAPI app, all router includes
+backend/app/core/jyotish/engine.py           — Swiss Ephemeris wrapper
+backend/app/core/jyotish/nakshatra.py        — Nakshatra + dasha computations
+backend/app/core/jyotish/panchang.py         — Panchang engine (5 limbs + muhurats)
+backend/app/core/jyotish/varshphal.py        — Varshphal solar return engine
+backend/app/api/v1/panchang.py               — POST /v1/panchang/compute
+backend/app/api/v1/varshphal.py              — POST /v1/varshphal/compute
 ```
 
-### Frontend (frontend/.env.production — NOT committed to git)
+### Frontend
 ```
-VITE_API_BASE_URL=https://thebhagya-backend-production.up.railway.app
+frontend/src/App.jsx                         — Routes for all pages
+frontend/src/components/Navbar.jsx           — TOOL_LINKS + T object (must update both when adding features)
+frontend/src/components/Footer.jsx           — COLS Tools column
+frontend/src/pages/Landing.jsx               — FEATURES array (bento grid cards)
+frontend/src/hooks/useApi.js                 — All API fetch functions (BASE URL auto-detects dev/prod)
+frontend/src/pages/Panchang.jsx              — Panchang page
+frontend/src/pages/Gemstones.jsx             — Gemstones recommendation (pure frontend)
+frontend/src/pages/Varshphal.jsx             — Varshphal annual horoscope page
+```
+
+### Key docs
+```
+COMPETITIVE_GAP_ANALYSIS.md                 — Feature gap vs AstroTalk/AstroSage
+CREDENTIALS.md                               — All credentials (Supabase, Railway, Vercel, Razorpay)
+CONTINUATION_PROMPT.md                       — This file
 ```
 
 ---
 
-## WHAT IS FULLY BUILT
+## WIRING CHECKLIST (when adding any new feature page)
 
-### Backend (`backend/app/`)
-| File | Purpose |
-|---|---|
-| `main.py` | FastAPI app, startup seed, all routers, /health endpoint |
-| `api/v1/auth.py` | Register, login, /me — plan always forced to "starter" on register |
-| `api/v1/charts.py` | Chart creation (pyswisseph), GET/LIST/DELETE (returns 200), PDF export |
-| `api/v1/chat.py` | Destiny Chat — Claude AI interprets user's chart |
-| `api/v1/numerology.py` | Pythagorean + Chaldean numerology |
-| `api/v1/payments.py` | Razorpay billing, plan management |
-| `api/v1/admin.py` | Admin login, page view tracking, business stats dashboard |
-| `core/security.py` | JWT, bcrypt direct (no passlib), PLAN_LIMITS |
-| `core/jyotish/engine.py` | pyswisseph wrapper + FLG_SPEED for retrograde |
-| `core/jyotish/nakshatra.py` | Nakshatra + pada calculation |
-| `core/jyotish/dasha.py` | Vimshottari dasha tree + null guard |
-| `core/lal_kitab.py` | Lal Kitab house analysis + remedies |
-| `core/pdf_report.py` | PDF report — uses .get("end") not .get("end_date") |
-| `db/models.py` | User, BirthChart, ChatSession, PageView ORM models |
-| `db/database.py` | Async engine, absolute path for SQLite data dir |
+1. `backend/app/core/jyotish/<feature>.py` — computation engine
+2. `backend/app/api/v1/<feature>.py` — FastAPI router
+3. `backend/app/main.py` — import router + `app.include_router(...)`
+4. `frontend/src/pages/<Feature>.jsx` — React page
+5. `frontend/src/hooks/useApi.js` — `export async function compute<Feature>(data)`
+6. `frontend/src/App.jsx` — import + `<Route path="/<feature>" element={<Feature />} />`
+7. `frontend/src/components/Navbar.jsx` — add to T object + TOOL_LINKS + mobile drawer
+8. `frontend/src/pages/Landing.jsx` — add to FEATURES array
+9. `frontend/src/components/Footer.jsx` — add to Tools column in COLS
 
-### Frontend (`frontend/src/`)
-| File | Purpose |
-|---|---|
-| `App.jsx` | Router, PlanGate, PageTracker — auth gating ENABLED |
-| `context/AuthContext.jsx` | isLoggedIn, user, plan, canUse(), PLAN_FEATURES export |
-| `context/ThemeContext.jsx` | Dark/light toggle, CSS vars |
-| `context/LanguageContext.jsx` | English/Hindi toggle |
-| `hooks/useApi.js` | All API calls — BASE uses VITE_API_BASE_URL env var |
-| `pages/Landing.jsx` | Home, pillar cards navigate directly (PlanGate handles redirect) |
-| `pages/ChartForm.jsx` | Birth details form — anonymous access, date max = today |
-| `pages/ChartResult.jsx` | 6 tabs — gated: Story/Life/Dasha/LalKitab/Learn require login; Chart Details free. PDF+Chat buttons locked for starter plan |
-| `pages/Login.jsx` | Sign in / register |
-| `pages/MyCharts.jsx` | Saved charts (requires login) |
-| `pages/DestinyChat.jsx` | AI chat — PlanGate(chat) protected |
-| `pages/Numerology.jsx` | Numerology calculator — PlanGate(numerology) protected |
-| `pages/Palmistry.jsx` | Coming soon placeholder |
-| `pages/Pricing.jsx` | 3-tier pricing: Starter free / Pro ₹299 / Jyotish ₹799 |
-| `pages/AdminLogin.jsx` | `/admin` — creds hint only in DEV mode |
-| `pages/AdminDashboard.jsx` | `/admin/dashboard` — stats, auto-refresh 60s |
-| `components/Navbar.jsx` | UserAvatar component (gold circle, first letter of email, dropdown with My Charts / Upgrade / Sign Out) |
-| `components/Glossary.jsx` | Astrology terms |
-| `components/LogoMark.jsx` | SVG logo |
-| `utils/lifeReadings.js` | Life reading text generation |
-
-### Deployment & Config files
-| File | Purpose |
-|---|---|
-| `railway.toml` | Railway deploy config — start command, health check |
-| `render.yaml` | Render.com alternative deploy config |
-| `requirements.txt` | Python deps — passlib removed, bcrypt==4.1.3 |
-| `setup_postgres.py` | One-time Supabase setup — creates tables + seeds test users |
-| `alembic/` | Async Alembic migrations |
-| `push_to_github.ps1` | Push script for Windows |
-| `start.ps1` | Local dev launcher — polls Vite before opening browser |
-| `frontend/.env.production` | Points VITE_API_BASE_URL to Railway (gitignored) |
+**OneDrive sync lag:** After Write/Edit tool writes a file, wait ~10s before running git add or the file may not appear on disk yet. Always `git add <specific-files>` rather than `git add -A` for new pages.
 
 ---
 
-## AUTH & PLAN GATING (FULLY ENABLED)
+## TECH DEBT (must fix before public launch)
 
-| Route | Gate |
-|---|---|
-| `/chart/new` | Open — no login required |
-| `/chart/:id` → Chart Details tab | Open — no login required |
-| `/chart/:id` → Story/Life/Dasha/LalKitab/Learn tabs | Login required → SignInPrompt shown |
-| `/chart/:id` → PDF button | Login + pro/jyotish plan |
-| `/chart/:id` → Ask Bhagya button | Login + chat plan |
-| `/destiny-chat` | PlanGate(chat) → starter redirected to /pricing |
-| `/numerology` | PlanGate(numerology) → starter redirected to /pricing |
-| `/my-charts` | Login required |
-
----
-
-## USER ACCOUNTS
-
-### Test accounts (seeded in Supabase via setup_postgres.py)
-| Email | Password | Plan |
+| Issue | Priority | Where to fix |
 |---|---|---|
-| `free@thebhagya.com` | `Test@free1` | Starter |
-| `pro@thebhagya.com` | `Test@pro1` | Pro |
-| `jyotish@thebhagya.com` | `Test@jyotish1` | Jyotish |
-
-### Admin
-| Field | Value |
-|---|---|
-| Login URL | `/admin` |
-| Email | `admin@thebhagya.com` |
-| Password | `TheBhagya@Admin2025!` |
+| `ANTHROPIC_API_KEY` missing on Railway → Destiny Chat broken | 🔴 HIGH | Railway → Environment Variables |
+| `SECRET_KEY = "replace-me-before-launch"` | 🔴 HIGH | Railway env var |
+| Razorpay plan activation not wired after payment | 🟡 MED | payments.py + frontend |
+| Razorpay live keys (currently test) | 🟡 MED | Railway env vars |
+| `ALLOWED_ORIGINS` on Railway (add vercel domain) | 🟡 MED | Railway env var |
+| Shared `get_current_user` FastAPI dependency (auth inconsistency) | 🟢 LOW | auth.py |
 
 ---
 
-## PENDING TASKS (pick up from here)
+## PENDING FEATURES (next priority order)
 
-1. **Deploy frontend to Vercel** — `npm run build` done locally. Next: vercel.com → import GitHub repo → set `VITE_API_BASE_URL` env var → deploy `frontend/` subfolder
-2. **Update ALLOWED_ORIGINS in Railway** — add Vercel URL once known (set as `ALLOWED_ORIGINS` env var in Railway)
-3. **Fix payment plan activation** — after Razorpay payment, plan never updates in DB (BE-01)
-4. **Replace SECRET_KEY** — current key is known, must change before public launch
-5. **Add shared `get_current_user` FastAPI dependency** — root cause of auth bypass on multiple endpoints
-6. **Anthropic API key** — add `ANTHROPIC_API_KEY` to Railway env vars for Destiny Chat to work in production
-7. **Razorpay live keys** — replace test keys before launch
-8. **Domain decision** — thebhagya.com (task #11, pending)
-9. **Push latest changes to GitHub** — railway.toml, render.yaml, requirements.txt fix, charts.py DELETE fix, CONTINUATION_PROMPT update
+1. **Transit / Gochar Report** — current transits on natal chart (both datasets already exist)
+2. **Tarot** — pure frontend, card draw + meaning lookup
+3. **Vastu Shastra** — basic tool
+4. **Blog / Content CMS** — Markdown-based, SEO entry points
+5. **Human Astrologer Marketplace** — Phase 2, highest build cost
 
 ---
 
-## SUPABASE CONNECTION
+## VIMSHOTTARI DASHA TIMELINE (Rakshit Saluja — for reference)
 
-- Project ID: `hngsrnuhfafbqqxgnule`
-- Region: `ap-northeast-1` (Tokyo)
-- Pooler host (session mode): `aws-0-ap-northeast-1.pooler.supabase.com:5432`
-- Direct host (IPv6 only — does NOT work from Railway): `db.hngsrnuhfafbqqxgnule.supabase.co:5432`
-- Password: `Merak@13042022` (URL-encoded as `Merak%4013042022`)
+- Rahu Mahadasha: 2025–2043
+- Rahu/Rahu: Jan 2025 – Sept 2027
+- Rahu/Jupiter: Sept 2027 – Feb 2030
+- Rahu/Saturn: Feb 2030 – Dec 2032
+- Rahu/Mercury: Dec 2032 – Jul 2035
+- Rahu/Ketu: Jul 2035 – Jul 2036 (cautious stretch)
+- Rahu/Venus: Jul 2036 – Jul 2039
 
 ---
 
-## RAKSHIT'S ASTROLOGY DETAILS
+## GIT WORKFLOW
 
-- **DOB:** 20 May 1992, 5:13 PM IST, Kanpur, UP, India
-- **Ascendant:** Libra 15.65° (Swati nakshatra, pada 3)
-- **Moon:** Sagittarius 20.25° (Purva Ashadha, pada 3)
-- **Current Mahadasha:** Rahu 2025–2043 (Rahu/Rahu antardasha: Jan 2025 – Sept 2027)
-- **Canada visa:** valid Dec 2025 – Nov 2027
-- **Goal:** ₹70 LPA + move abroad by end 2026
+```powershell
+cd "C:\Users\Admin\OneDrive\Documents\Bhagya_AstroTalk\Bhagya-- Similar to AstroTalk\BhagyaAI"
+
+# Always work on master directly for now
+git add <specific files>
+git commit -m "feat: ..."
+git push
+# Vercel auto-deploys from master; Railway auto-deploys backend
+```
+
+**Never use `git add -A`** — OneDrive sometimes shows stale files that git will pick up incorrectly. Always stage specific files.
+
+---
+
+## TEST ACCOUNTS
+
+| Plan | Email | Password |
+|---|---|---|
+| Starter (free) | free@thebhagya.com | Test@free1 |
+| Pro | pro@thebhagya.com | Test@pro1 |
+| Jyotish | jyotish@thebhagya.com | Test@jyotish1 |
+| Admin | admin@thebhagya.com | TheBhagya@Admin2024 |

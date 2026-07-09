@@ -16,6 +16,7 @@ const COLS = [
     links: [
       { label: 'Panchang',   to: '/panchang' },
       { label: 'Gemstones',  to: '/gemstones' },
+      { label: 'Varshphal',  to: '/varshphal' },
       { label: 'Sade Sati',  to: '/sade-sati' },
       { label: 'Doshas',     to: '/doshas' },
       { label: 'Lal Kitab',  to: '/lal-kitab' },

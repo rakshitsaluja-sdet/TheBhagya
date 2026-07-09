@@ -28,6 +28,8 @@ from backend.app.api.v1.sade_sati       import router as sade_sati_router
 from backend.app.api.v1.doshas          import router as doshas_router
 from backend.app.api.v1.kundli_matching import router as kundli_matching_router
 from backend.app.api.v1.lal_kitab      import router as lal_kitab_router
+from backend.app.api.v1.panchang       import router as panchang_router
+from backend.app.api.v1.varshphal      import router as varshphal_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -113,6 +115,8 @@ app.include_router(sade_sati_router,       prefix=API_PREFIX)
 app.include_router(doshas_router,          prefix=API_PREFIX)
 app.include_router(kundli_matching_router, prefix=API_PREFIX)
 app.include_router(lal_kitab_router,       prefix=API_PREFIX)
+app.include_router(panchang_router,        prefix=API_PREFIX)
+app.include_router(varshphal_router,       prefix=API_PREFIX)
 
 
 @app.get("/health", tags=["System"])
