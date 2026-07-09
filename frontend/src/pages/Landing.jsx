@@ -392,6 +392,7 @@ const FEATURES = [
   { icon: '💎', name: 'Gemstones', desc: 'Personalised Ratna Shastra — primary stone for your Lagna lord and dasha stone for your current Mahadasha.', to: '/gemstones' },
   { icon: '☉', name: 'Varshphal', desc: 'Annual Horoscope — solar return chart with Varsha Lagna, Muntha, Varsha Pati and full planetary positions for the year.', to: '/varshphal' },
   { icon: '🪐', name: 'Gochar Report', desc: 'Live planetary transits on your natal chart — house analysis, Vedic aspects, tight conjunctions, Sade Sati &amp; Jupiter Peyarchi flags.', to: '/transit' },
+  { icon: '🃏', name: 'Tarot Reading', desc: 'Full 78-card deck — Major &amp; Minor Arcana. Single card, 3-card, Celtic Cross, Love, Career &amp; Yes/No spreads with upright and reversed meanings.', to: '/tarot' },
   { icon: '♈', name: 'Daily Horoscope', desc: 'Transit-based Rashifal with love, career and money ratings for all 12 rashis.', to: '/horoscope' },
   { icon: '♄', name: 'Sade Sati', desc: 'Saturn’s 7.5-year transit over your Moon — past cycles, current phase, remedies.', to: '/sade-sati' },
   { icon: '♂', name: 'Dosha Check', desc: 'Mangal & Kaal Sarp dosha with severity, cancellations and remedies.', to: '/doshas' },
