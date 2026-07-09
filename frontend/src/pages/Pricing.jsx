@@ -13,8 +13,8 @@ const PLANS = [
     nameHi: 'निःशुल्क',
     price: '₹0',
     period: '/month',
-    tagline: 'No login required',
-    taglineHi: 'बिना लॉगिन के',
+    tagline: 'Start exploring',
+    taglineHi: 'अन्वेषण शुरू करें',
     color: 'var(--text-muted)',
     badge: null,
     badgeHi: null,
@@ -63,7 +63,7 @@ const PLANS = [
       'Numerology',
       'Lal Kitab',
       'Tarot readings',
-      'Palmistry guide',
+      '✦ Palmistry',
     ],
     featuresHi: [
       'निःशुल्क की सभी सुविधाएं +',
@@ -73,7 +73,7 @@ const PLANS = [
       'अंकशास्त्र',
       'लाल किताब',
       'टैरो रीडिंग',
-      'हस्तरेखा गाइड',
+      '✦ हस्तरेखा',
     ],
     cta: 'Start Jyotish',
     ctaHi: 'ज्योतिष शुरू करें',
@@ -412,12 +412,6 @@ export default function Pricing() {
           </p>
         </div>
 
-        {/* Swiss Ephemeris note */}
-        <div className="bh-fade-up-1" style={{ textAlign: 'center', maxWidth: '560px', margin: '0 auto 2.5rem' }}>
-          <p style={{ color: 'var(--text-dim)', fontSize: '0.80rem', lineHeight: 1.7, margin: 0 }}>
-            All plans include Swiss Ephemeris precision at the calculation layer. No astrologers — pure computational Vedic astrology.
-          </p>
-        </div>
 
         {/* Backend-not-configured notice */}
         <div className="bh-fade-up-2" style={{ background: 'rgba(223,168,79,0.06)', borderRadius: '10px', border: '1px solid rgba(223,168,79,0.15)', padding: '1rem 1.25rem', marginBottom: '2.5rem', fontSize: '0.82rem', color: 'var(--text-dim)', lineHeight: 1.6 }}>

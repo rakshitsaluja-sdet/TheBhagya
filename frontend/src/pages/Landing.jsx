@@ -416,9 +416,9 @@ const TESTIMONIALS = [
 ]
 
 const PLANS = [
-  { name: 'Starter', price: '₹0',   per: '/month', desc: '3 charts a month, horoscope, doshas & matching', popular: false },
-  { name: 'Pro',     price: '₹299', per: '/month', desc: 'Unlimited charts, Destiny Chat, numerology, PDF reports', popular: true },
-  { name: 'Jyotish', price: '₹799', per: '/month', desc: 'Everything in Pro plus priority readings and deep-dive analysis', popular: false },
+  { name: 'Free',    price: '₹0',   per: '/month', desc: 'Kundali, horoscope, panchang, dream meanings, biorhythm, vastu', popular: false },
+  { name: 'Jyotish', price: '₹299', per: '/month', desc: 'Everything free + kundli matching, sade sati, doshas, lal kitab, tarot', popular: true },
+  { name: 'Guru',    price: '₹799', per: '/month', desc: 'Everything in Jyotish + destiny chat, varshphal, transit, muhurat, PDF', popular: false },
 ]
 
 /* ── Styles ────────────────────────────────────────────────────────────── */

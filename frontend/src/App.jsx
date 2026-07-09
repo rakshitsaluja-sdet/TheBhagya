@@ -34,7 +34,17 @@ import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import { trackPageView } from './hooks/useApi'
 
-// ── Plan gate — redirects to /pricing if feature not in plan ─────────────────
+// ── Login gate — requires sign-in only, no plan check ────────────────────────
+function LoginGate({ children }) {
+  const { isLoggedIn } = useAuth()
+  const location = useLocation()
+  if (!isLoggedIn) {
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />
+  }
+  return children
+}
+
+// ── Plan gate — requires sign-in + correct plan ───────────────────────────────
 function PlanGate({ feature, children }) {
   const { isLoggedIn, canUse } = useAuth()
   const location = useLocation()
@@ -84,26 +94,29 @@ function AppShell() {
             <Navbar />
             <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>
               <Routes>
-                <Route path="/palmistry"  element={<Palmistry />} />
-                <Route path="/horoscope" element={<Horoscope />} />
-                <Route path="/sade-sati" element={<SadeSati />} />
-                <Route path="/doshas"           element={<Doshas />} />
-                <Route path="/kundli-matching" element={<KundliMatching />} />
-                <Route path="/lal-kitab"      element={<LalKitab />} />
-                <Route path="/panchang"       element={<Panchang />} />
-                <Route path="/gemstones"      element={<Gemstones />} />
-                <Route path="/varshphal"           element={<Varshphal />} />
-                <Route path="/dream-interpretation" element={<DreamInterpretation />} />
-                <Route path="/biorhythm"      element={<Biorhythm />} />
-                <Route path="/transit"        element={<Transit />} />
-                <Route path="/muhurat"        element={<Muhurat />} />
-                <Route path="/tarot"          element={<Tarot />} />
-                <Route path="/vastu"          element={<Vastu />} />
-                <Route path="/chart/new" element={<ChartForm />} />
-                <Route path="/chart/:id" element={<ChartResult />} />
-                <Route path="/my-charts" element={<MyCharts />} />
+                {/* ── Free plan — login required ── */}
+                <Route path="/horoscope"            element={<LoginGate><Horoscope /></LoginGate>} />
+                <Route path="/panchang"             element={<LoginGate><Panchang /></LoginGate>} />
+                <Route path="/gemstones"            element={<LoginGate><Gemstones /></LoginGate>} />
+                <Route path="/dream-interpretation" element={<LoginGate><DreamInterpretation /></LoginGate>} />
+                <Route path="/biorhythm"            element={<LoginGate><Biorhythm /></LoginGate>} />
+                <Route path="/vastu"                element={<LoginGate><Vastu /></LoginGate>} />
+                <Route path="/chart/new"            element={<LoginGate><ChartForm /></LoginGate>} />
+                <Route path="/chart/:id"            element={<LoginGate><ChartResult /></LoginGate>} />
+                <Route path="/my-charts"            element={<LoginGate><MyCharts /></LoginGate>} />
+                {/* ── Jyotish plan ── */}
+                <Route path="/kundli-matching" element={<PlanGate feature="kundli"><KundliMatching /></PlanGate>} />
+                <Route path="/sade-sati"       element={<PlanGate feature="sade-sati"><SadeSati /></PlanGate>} />
+                <Route path="/doshas"          element={<PlanGate feature="doshas"><Doshas /></PlanGate>} />
+                <Route path="/lal-kitab"       element={<PlanGate feature="lal-kitab"><LalKitab /></PlanGate>} />
+                <Route path="/tarot"           element={<PlanGate feature="tarot"><Tarot /></PlanGate>} />
+                <Route path="/numerology"      element={<PlanGate feature="numerology"><Numerology /></PlanGate>} />
+                <Route path="/palmistry"       element={<PlanGate feature="palmistry"><Palmistry /></PlanGate>} />
+                {/* ── Guru plan ── */}
                 <Route path="/destiny-chat" element={<PlanGate feature="chat"><DestinyChat /></PlanGate>} />
-                <Route path="/numerology"   element={<PlanGate feature="numerology"><Numerology /></PlanGate>} />
+                <Route path="/varshphal"    element={<PlanGate feature="varshphal"><Varshphal /></PlanGate>} />
+                <Route path="/transit"      element={<PlanGate feature="transit"><Transit /></PlanGate>} />
+                <Route path="/muhurat"      element={<PlanGate feature="muhurat"><Muhurat /></PlanGate>} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
