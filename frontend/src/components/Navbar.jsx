@@ -99,7 +99,8 @@ const s = {
     background: 'var(--bg-elevated)', border: '1px solid var(--border)',
     borderRadius: 14, minWidth: 230, zIndex: 200,
     boxShadow: 'var(--shadow)',
-    overflow: 'hidden', padding: 6,
+    overflowY: 'auto', overflowX: 'hidden',
+    maxHeight: 'calc(100vh - 120px)', padding: 6,
     animation: 'bh-fade-up 0.22s cubic-bezier(0.22,1,0.36,1) both',
   },
   dropItem: {
