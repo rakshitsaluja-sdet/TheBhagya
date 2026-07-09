@@ -400,6 +400,8 @@ const FEATURES = [
   { icon: '♄', name: 'Sade Sati', desc: 'Saturn’s 7.5-year transit over your Moon — past cycles, current phase, remedies.', to: '/sade-sati' },
   { icon: '♂', name: 'Dosha Check', desc: 'Mangal & Kaal Sarp dosha with severity, cancellations and remedies.', to: '/doshas' },
   { icon: '♥', name: 'Kundli Match', desc: 'Ashtakoot 36-guna compatibility with full koota breakdown and dosha detection.', to: '/kundli-matching' },
+  { icon: '⊕', name: 'KP System', desc: 'Krishnamurti Paddhati — sub-lord analysis for all 12 cusps, significators and ruling planets for precise event timing.', to: '/kp-system' },
+  { icon: '∞', name: 'Nadi Astrology', desc: 'Ancient Nadi reading — Nadi amsa (1/150th division), planetary karakas, Nadi yogas and classical life-theme predictions.', to: '/nadi-astrology' },
   { icon: '∑', name: 'Numerology', desc: 'Pythagorean & Chaldean — life path, destiny, soul urge, personal year.', to: '/numerology' },
   { icon: '📕', name: 'Lal Kitab', desc: 'Pucca Ghar planets, house map, and a personalised karmic remedy plan.', to: '/lal-kitab' },
   { icon: '💤', name: 'Dream Meanings', desc: 'Decode your dreams — 46 symbols with Vedic, spiritual & psychological meanings. Animals, nature, emotions, actions & more.', to: '/dream-interpretation' },

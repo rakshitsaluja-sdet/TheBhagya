@@ -14,6 +14,7 @@ const PLAN_FEATURES = {
     'lal-kitab': false, tarot: false, palmistry: false,
     // Guru tier (₹799) — not included
     chat: false, varshphal: false, transit: false, muhurat: false, pdf: false,
+    kp: false, nadi: false,
     // Meta
     maxCharts: 3, label: 'Free', badge: '✦ FREE',
   },
@@ -26,6 +27,7 @@ const PLAN_FEATURES = {
     'lal-kitab': true, tarot: true, palmistry: true,
     // Guru tier (₹799) — not included
     chat: false, varshphal: false, transit: false, muhurat: false, pdf: false,
+    kp: false, nadi: false,
     // Meta
     maxCharts: 999, label: 'Jyotish', badge: '⭐ JYOTISH',
   },
@@ -38,6 +40,7 @@ const PLAN_FEATURES = {
     'lal-kitab': true, tarot: true, palmistry: true,
     // Guru tier (₹799) — included
     chat: true, varshphal: true, transit: true, muhurat: true, pdf: true,
+    kp: true, nadi: true,
     // Meta
     maxCharts: 999, label: 'Guru', badge: '🔮 GURU',
   },

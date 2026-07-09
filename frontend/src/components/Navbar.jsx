@@ -137,6 +137,8 @@ const T = {
   tarot:     { en: 'Tarot',         hi: 'टैरो' },
   vastu:     { en: 'Vastu',         hi: 'वास्तु' },
   dreams:    { en: 'Dream Meanings', hi: 'स्वप्न फल' },
+  kpSystem:  { en: 'KP System',     hi: 'KP पद्धति' },
+  nadi:      { en: 'Nadi Astrology', hi: 'नाड़ी ज्योतिष' },
   pricing:   { en: 'Pricing',       hi: 'मूल्य' },
   features:  { en: 'Features',      hi: 'विशेषताएं' },
   tools:     { en: 'Tools',         hi: 'साधन' },
@@ -158,7 +160,9 @@ const TOOL_LINKS = [
   { icon: '♄', key: 'sadeSati',  to: '/sade-sati'      },
   { icon: '♂', key: 'doshas',    to: '/doshas'         },
   { icon: '📕', key: 'lalKitab', to: '/lal-kitab'      },
-  { icon: '∑', key: 'numeral',   to: '/numerology'     },
+  { icon: '∑', key: 'numeral',   to: '/numerology'      },
+  { icon: '⊕', key: 'kpSystem', to: '/kp-system'       },
+  { icon: '∞', key: 'nadi',     to: '/nadi-astrology'  },
 ]
 
 // ── Tools dropdown ────────────────────────────────────────────────────────────
@@ -427,6 +431,8 @@ export default function Navbar() {
         <Link to="/destiny-chat"    className={mobileActiveCls('/destiny-chat')}>✨ {T.chat[lang]}</Link>
         <Link to="/numerology"          className={mobileActiveCls('/numerology')}>∑ {T.numeral[lang]}</Link>
         <Link to="/dream-interpretation" className={mobileActiveCls('/dream-interpretation')}>💤 {T.dreams[lang]}</Link>
+        <Link to="/kp-system"       className={mobileActiveCls('/kp-system')}>⊕ {T.kpSystem[lang]}</Link>
+        <Link to="/nadi-astrology"  className={mobileActiveCls('/nadi-astrology')}>∞ {T.nadi[lang]}</Link>
         <Link to="/pricing"         className={mobileActiveCls('/pricing')}>💎 {T.pricing[lang]}</Link>
 
         <div className="nav-mobile-actions">

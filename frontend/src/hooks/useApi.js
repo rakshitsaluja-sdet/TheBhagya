@@ -333,3 +333,33 @@ export async function adminGetStats() {
   if (!res.ok) throw new Error('Failed to load stats')
   return res.json()
 }
+
+// ── KP System ─────────────────────────────────────────────────────────────
+
+export async function computeKP(data) {
+  const res = await fetch(`${BASE}/kp/compute`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Error ${res.status}`)
+  }
+  return res.json()
+}
+
+// ── Nadi Astrology ────────────────────────────────────────────────────────
+
+export async function computeNadi(data) {
+  const res = await fetch(`${BASE}/nadi/compute`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Error ${res.status}`)
+  }
+  return res.json()
+}

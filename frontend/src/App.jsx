@@ -29,6 +29,8 @@ import Transit from './pages/Transit'
 import Muhurat from './pages/Muhurat'
 import Tarot from './pages/Tarot'
 import Vastu from './pages/Vastu'
+import KPSystem from './pages/KPSystem'
+import NadiAstrology from './pages/NadiAstrology'
 import Pricing from './pages/Pricing'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
@@ -113,10 +115,12 @@ function AppShell() {
                 <Route path="/numerology"      element={<PlanGate feature="numerology"><Numerology /></PlanGate>} />
                 <Route path="/palmistry"       element={<PlanGate feature="palmistry"><Palmistry /></PlanGate>} />
                 {/* ── Guru plan ── */}
-                <Route path="/destiny-chat" element={<PlanGate feature="chat"><DestinyChat /></PlanGate>} />
-                <Route path="/varshphal"    element={<PlanGate feature="varshphal"><Varshphal /></PlanGate>} />
-                <Route path="/transit"      element={<PlanGate feature="transit"><Transit /></PlanGate>} />
-                <Route path="/muhurat"      element={<PlanGate feature="muhurat"><Muhurat /></PlanGate>} />
+                <Route path="/destiny-chat"   element={<PlanGate feature="chat"><DestinyChat /></PlanGate>} />
+                <Route path="/varshphal"      element={<PlanGate feature="varshphal"><Varshphal /></PlanGate>} />
+                <Route path="/transit"        element={<PlanGate feature="transit"><Transit /></PlanGate>} />
+                <Route path="/muhurat"        element={<PlanGate feature="muhurat"><Muhurat /></PlanGate>} />
+                <Route path="/kp-system"      element={<PlanGate feature="kp"><KPSystem /></PlanGate>} />
+                <Route path="/nadi-astrology" element={<PlanGate feature="nadi"><NadiAstrology /></PlanGate>} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

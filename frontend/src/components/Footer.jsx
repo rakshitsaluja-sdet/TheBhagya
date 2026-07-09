@@ -27,6 +27,8 @@ const COLS = [
       { label: 'Lal Kitab',  to: '/lal-kitab' },
       { label: 'Numerology',    to: '/numerology' },
       { label: 'Dream Meanings', to: '/dream-interpretation' },
+      { label: 'KP System',     to: '/kp-system' },
+      { label: 'Nadi Astrology', to: '/nadi-astrology' },
     ],
   },
   {
