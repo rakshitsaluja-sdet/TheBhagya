@@ -14,6 +14,7 @@ const COLS = [
   {
     title: 'Tools',
     links: [
+      { label: 'Panchang',   to: '/panchang' },
       { label: 'Sade Sati',  to: '/sade-sati' },
       { label: 'Doshas',     to: '/doshas' },
       { label: 'Lal Kitab',  to: '/lal-kitab' },
