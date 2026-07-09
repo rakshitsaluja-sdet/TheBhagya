@@ -19,6 +19,7 @@ const COLS = [
       { label: 'Varshphal',  to: '/varshphal' },
       { label: 'Gochar',     to: '/transit' },
       { label: 'Tarot',      to: '/tarot' },
+      { label: 'Vastu',      to: '/vastu' },
       { label: 'Sade Sati',  to: '/sade-sati' },
       { label: 'Doshas',     to: '/doshas' },
       { label: 'Lal Kitab',  to: '/lal-kitab' },

@@ -133,6 +133,7 @@ const T = {
   varshphal: { en: 'Varshphal',     hi: 'वार्षफल' },
   transit:   { en: 'Gochar',        hi: 'गोचर' },
   tarot:     { en: 'Tarot',         hi: 'टैरो' },
+  vastu:     { en: 'Vastu',         hi: 'वास्तु' },
   pricing:   { en: 'Pricing',       hi: 'मूल्य' },
   features:  { en: 'Features',      hi: 'विशेषताएं' },
   tools:     { en: 'Tools',         hi: 'साधन' },
@@ -147,6 +148,7 @@ const TOOL_LINKS = [
   { icon: '☉', key: 'varshphal', to: '/varshphal'      },
   { icon: '🪐', key: 'transit',   to: '/transit'         },
   { icon: '🃏', key: 'tarot',     to: '/tarot'           },
+  { icon: '🏠', key: 'vastu',     to: '/vastu'           },
   { icon: '♄', key: 'sadeSati',  to: '/sade-sati'      },
   { icon: '♂', key: 'doshas',    to: '/doshas'         },
   { icon: '📕', key: 'lalKitab', to: '/lal-kitab'      },
@@ -413,6 +415,7 @@ export default function Navbar() {
         <Link to="/varshphal"       className={mobileActiveCls('/varshphal')}>&#9737; {T.varshphal[lang]}</Link>
         <Link to="/transit"         className={mobileActiveCls('/transit')}>🪐 {T.transit[lang]}</Link>
         <Link to="/tarot"           className={mobileActiveCls('/tarot')}>🃏 {T.tarot[lang]}</Link>
+        <Link to="/vastu"           className={mobileActiveCls('/vastu')}>🏠 {T.vastu[lang]}</Link>
         <Link to="/destiny-chat"    className={mobileActiveCls('/destiny-chat')}>✨ {T.chat[lang]}</Link>
         <Link to="/numerology"      className={mobileActiveCls('/numerology')}>∑ {T.numeral[lang]}</Link>
         <Link to="/pricing"         className={mobileActiveCls('/pricing')}>💎 {T.pricing[lang]}</Link>
