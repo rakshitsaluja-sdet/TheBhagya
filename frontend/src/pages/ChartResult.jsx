@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { getChart } from '../hooks/useApi'
+import { getChart, downloadReport } from '../hooks/useApi'
 import { generateAllReadings } from '../utils/lifeReadings'
 import Glossary from '../components/Glossary'
 import { useLanguage } from '../context/LanguageContext'
@@ -631,9 +631,11 @@ export default function ChartResult() {
   const [searchParams] = useSearchParams()
   const { lang, isHindi } = useLanguage()
   const { isLoggedIn, canUse } = useAuth()
-  const [chart, setChart]   = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error,   setError]   = useState('')
+  const [chart, setChart]       = useState(null)
+  const [loading, setLoading]   = useState(true)
+  const [error,   setError]     = useState('')
+  const [pdfBusy, setPdfBusy]   = useState(false)
+  const [pdfError, setPdfError] = useState('')
   const focus = searchParams.get('focus') || 'vedic'
   const [tab, setTab] = useState(focus === 'lalkitab' ? 'lalkitab' : 'story')
 
@@ -700,26 +702,48 @@ export default function ChartResult() {
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.6rem', flexShrink: 0 }}>
-          {/* PDF — requires login + pro/jyotish plan */}
+          {/* PDF — requires login + guru plan */}
           {isLoggedIn && canUse('pdf') ? (
-            <a
-              href={`/v1/charts/${id}/pdf`}
-              download
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '999px', padding: '0.5rem 1rem', color: 'var(--gold-light)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', transition: 'border-color 0.18s' }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--gold)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
-              title={isHindi ? 'PDF रिपोर्ट डाउनलोड करें' : 'Download PDF Report'}
-            >
-              ↓ {isHindi ? 'PDF' : 'PDF Report'}
-            </a>
+            <div>
+              <button
+                disabled={pdfBusy}
+                onClick={async () => {
+                  setPdfBusy(true)
+                  setPdfError('')
+                  try { await downloadReport(id) }
+                  catch (e) { setPdfError('PDF failed — try again') }
+                  finally { setPdfBusy(false) }
+                }}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                  background: pdfBusy
+                    ? 'var(--bg-elevated)'
+                    : 'linear-gradient(135deg,#F2CB84 0%,#DFA84F 42%,#A8752B 100%)',
+                  border: 'none', borderRadius: '999px',
+                  padding: '0.5rem 1.1rem',
+                  color: pdfBusy ? 'var(--text-muted)' : '#1C1205',
+                  fontSize: '0.82rem', fontWeight: 600, cursor: pdfBusy ? 'default' : 'pointer',
+                  boxShadow: pdfBusy ? 'none' : '0 6px 20px rgba(223,168,79,0.28)',
+                  transition: 'all 0.2s',
+                }}
+                title={isHindi ? 'बृहत् कुंडली PDF डाउनलोड करें' : 'Download Brihat Kundali PDF'}
+              >
+                {pdfBusy ? '◌ Generating…' : `↓ ${isHindi ? 'बृहत् कुंडली' : 'Brihat Kundali'}`}
+              </button>
+              {pdfError && (
+                <div style={{ color: '#E05050', fontSize: '0.75rem', marginTop: '0.25rem', textAlign: 'right' }}>
+                  {pdfError}
+                </div>
+              )}
+            </div>
           ) : (
             <Link
               to={isLoggedIn ? '/pricing' : '/login'}
               state={isLoggedIn ? { upgradeFor: 'pdf' } : { from: `/chart/${id}` }}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: '999px', padding: '0.5rem 1rem', color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', opacity: 0.65 }}
-              title={isLoggedIn ? 'Upgrade to download PDF' : 'Sign in to download PDF'}
+              title={isLoggedIn ? 'Upgrade to Guru plan to download' : 'Sign in to download Brihat Kundali'}
             >
-              ↓ {isHindi ? 'PDF' : 'PDF Report'} 🔒
+              ↓ {isHindi ? 'बृहत् कुंडली' : 'Brihat Kundali'} ◉ {isLoggedIn ? 'Guru Plan' : 'Sign In'}
             </Link>
           )}
           {/* Ask Bhagya — requires login + chat plan */}
