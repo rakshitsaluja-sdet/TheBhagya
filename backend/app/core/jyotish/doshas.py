@@ -60,6 +60,21 @@ CANCELLATION_CHECKS = [
         "desc": "Jupiter is in the same sign as Mars. The great benefic cools Mars's fire and reduces the dosha substantially.",
     },
     {
+        "id": "mars_in_jupiter_sign",
+        "label": "Mars in Jupiter's Sign",
+        "desc": "Mars is in Sagittarius or Pisces — the signs of benefic Jupiter. Jupiter's energy softens Mars's martial aggression in relationships.",
+    },
+    {
+        "id": "lagna_aries_scorpio_aquarius",
+        "label": "Lagna is Aries, Scorpio, or Aquarius",
+        "desc": "When Lagna is Aries, Scorpio, or Aquarius, Mangal Dosha is traditionally cancelled — Mars rules Aries and Scorpio, and Aquarius receives natural benefit.",
+    },
+    {
+        "id": "mars_12h_taurus_gemini",
+        "label": "Mars in 12th House in Taurus or Gemini",
+        "desc": "Mars in the 12th house while placed in Taurus or Gemini — a specific traditional cancellation recognised in classical texts.",
+    },
+    {
         "id": "partner_dosha",
         "label": "Partner Also Has Mangal Dosha",
         "desc": "When both partners carry Mangal Dosha, the doshas cancel each other in marriage compatibility analysis.",
@@ -208,9 +223,12 @@ def compute_mangal_dosha(positions: dict) -> dict:
         severity = "low"
 
     # Cancellations
-    mars_own     = mars_sign in {0, 7}           # Aries, Scorpio
-    mars_exalted = mars_sign == 9                 # Capricorn
-    jup_conjunct = jup_sign == mars_sign
+    mars_own              = mars_sign in {0, 7}           # Aries, Scorpio
+    mars_exalted          = mars_sign == 9                 # Capricorn
+    mars_in_jup_sign      = mars_sign in {8, 11}           # Sagittarius, Pisces
+    lagna_natural_cancel  = lagna_sign in {0, 7, 10}       # Aries, Scorpio, Aquarius
+    mars_12h_taurus_gem   = from_lagna == 12 and mars_sign in {1, 2}  # Taurus=1, Gemini=2
+    jup_conjunct          = jup_sign == mars_sign
     # Jupiter aspects Mars via 5th, 7th, 9th (diff in sign index 0-based)
     jup_mars_diff = (mars_sign - jup_sign) % 12
     jup_aspects   = jup_mars_diff in {4, 6, 8}   # 5th=4, 7th=6, 9th=8 (0-indexed)
@@ -221,6 +239,15 @@ def compute_mangal_dosha(positions: dict) -> dict:
         cancellations.append(c)
     if mars_exalted:
         c = next(x for x in CANCELLATION_CHECKS if x["id"] == "exaltation")
+        cancellations.append(c)
+    if mars_in_jup_sign:
+        c = next(x for x in CANCELLATION_CHECKS if x["id"] == "mars_in_jupiter_sign")
+        cancellations.append(c)
+    if lagna_natural_cancel:
+        c = next(x for x in CANCELLATION_CHECKS if x["id"] == "lagna_aries_scorpio_aquarius")
+        cancellations.append(c)
+    if mars_12h_taurus_gem:
+        c = next(x for x in CANCELLATION_CHECKS if x["id"] == "mars_12h_taurus_gemini")
         cancellations.append(c)
     if jup_conjunct:
         c = next(x for x in CANCELLATION_CHECKS if x["id"] == "jupiter_conjunct")
@@ -303,8 +330,18 @@ def compute_kaal_sarp(positions: dict) -> dict:
         status_label = "No Kaal Sarp Dosha"
 
     # Determine type by Rahu's house from Lagna
-    rahu_house = _house_from(rahu_sign, lagna_sign)
-    ks_type    = KAAL_SARP_TYPES.get(rahu_house, KAAL_SARP_TYPES[1])
+    rahu_house  = _house_from(rahu_sign, lagna_sign)
+    ketu_sign   = positions["Ketu"]["sign_index"]
+    ketu_house  = _house_from(ketu_sign, lagna_sign)
+    ks_type     = KAAL_SARP_TYPES.get(rahu_house, KAAL_SARP_TYPES[1])
+
+    # KSD severity by Rahu's house
+    if rahu_house in {1, 7, 8, 12}:
+        ksd_severity = "severe"
+    elif rahu_house in {5, 9}:
+        ksd_severity = "moderate"
+    else:
+        ksd_severity = "mild"
 
     # Kaal Amrit description
     kaal_amrit_desc = (
@@ -323,6 +360,8 @@ def compute_kaal_sarp(positions: dict) -> dict:
         "planets_hemmed":    rahu_side if direction == "kaal_sarp" else ketu_side,
         "planets_outside":   ketu_side if direction == "kaal_sarp" else rahu_side,
         "rahu_house":        rahu_house,
+        "ketu_house":        ketu_house,
+        "severity":          ksd_severity if is_present else "none",
         "type":              ks_type if is_present or (status == "full" and direction == "kaal_amrit") else None,
         "kaal_amrit_desc":   kaal_amrit_desc if direction == "kaal_amrit" else None,
         "rahu_position":     {"sign": positions["Rahu"]["sign"], "degree": positions["Rahu"]["degree_in_sign"]},
