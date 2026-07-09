@@ -23,6 +23,7 @@ import LalKitab from './pages/LalKitab'
 import Panchang from './pages/Panchang'
 import Gemstones from './pages/Gemstones'
 import Varshphal from './pages/Varshphal'
+import Transit from './pages/Transit'
 import Pricing from './pages/Pricing'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
@@ -87,6 +88,7 @@ function AppShell() {
                 <Route path="/panchang"       element={<Panchang />} />
                 <Route path="/gemstones"      element={<Gemstones />} />
                 <Route path="/varshphal"      element={<Varshphal />} />
+                <Route path="/transit"        element={<Transit />} />
                 <Route path="/chart/new" element={<ChartForm />} />
                 <Route path="/chart/:id" element={<ChartResult />} />
                 <Route path="/my-charts" element={<MyCharts />} />

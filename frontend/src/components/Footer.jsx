@@ -17,6 +17,7 @@ const COLS = [
       { label: 'Panchang',   to: '/panchang' },
       { label: 'Gemstones',  to: '/gemstones' },
       { label: 'Varshphal',  to: '/varshphal' },
+      { label: 'Gochar',     to: '/transit' },
       { label: 'Sade Sati',  to: '/sade-sati' },
       { label: 'Doshas',     to: '/doshas' },
       { label: 'Lal Kitab',  to: '/lal-kitab' },

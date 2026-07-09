@@ -234,6 +234,19 @@ export async function computeVarshphal(data) {
   return res.json()
 }
 
+export async function computeTransit(data) {
+  const res = await fetch(`${BASE}/transit/compute`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Error ${res.status}`)
+  }
+  return res.json()
+}
+
 // ── Panchang ─────────────────────────────────────────────────────────────
 
 export async function computePanchang(data) {
