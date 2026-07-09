@@ -219,6 +219,21 @@ export async function computeLalKitab(data) {
   return res.json()
 }
 
+// ── Panchang ─────────────────────────────────────────────────────────────
+
+export async function computePanchang(data) {
+  const res = await fetch(`${BASE}/panchang/compute`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Error ${res.status}`)
+  }
+  return res.json()
+}
+
 // ── Kundli Matching ───────────────────────────────────────────────────────
 
 export async function computeKundliMatch(data) {
