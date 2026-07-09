@@ -1,33 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { computePanchang } from '../hooks/useApi'
+import CitySearch from '../components/CitySearch'
 
 const GOLD   = '#DFA84F'
 const GOLD_L = '#F2CB84'
-
-// ── City presets ───────────────────────────────────────────────────────────────
-const CITIES = [
-  { name: 'Mumbai',      lat: 19.076,  lon: 72.878,  tz: 'Asia/Kolkata' },
-  { name: 'Delhi',       lat: 28.614,  lon: 77.209,  tz: 'Asia/Kolkata' },
-  { name: 'Bangalore',   lat: 12.972,  lon: 77.595,  tz: 'Asia/Kolkata' },
-  { name: 'Chennai',     lat: 13.083,  lon: 80.271,  tz: 'Asia/Kolkata' },
-  { name: 'Kolkata',     lat: 22.573,  lon: 88.364,  tz: 'Asia/Kolkata' },
-  { name: 'Hyderabad',   lat: 17.385,  lon: 78.487,  tz: 'Asia/Kolkata' },
-  { name: 'Pune',        lat: 18.520,  lon: 73.857,  tz: 'Asia/Kolkata' },
-  { name: 'Ahmedabad',   lat: 23.023,  lon: 72.571,  tz: 'Asia/Kolkata' },
-  { name: 'Jaipur',      lat: 26.912,  lon: 75.787,  tz: 'Asia/Kolkata' },
-  { name: 'Lucknow',     lat: 26.847,  lon: 80.946,  tz: 'Asia/Kolkata' },
-  { name: 'Kanpur',      lat: 26.450,  lon: 80.332,  tz: 'Asia/Kolkata' },
-  { name: 'Chandigarh',  lat: 30.733,  lon: 76.779,  tz: 'Asia/Kolkata' },
-  { name: 'Bhopal',      lat: 23.259,  lon: 77.413,  tz: 'Asia/Kolkata' },
-  { name: 'Patna',       lat: 25.594,  lon: 85.138,  tz: 'Asia/Kolkata' },
-  { name: 'Dubai',       lat: 25.205,  lon: 55.271,  tz: 'Asia/Dubai' },
-  { name: 'Singapore',   lat: 1.352,   lon: 103.820, tz: 'Asia/Singapore' },
-  { name: 'London',      lat: 51.507,  lon: -0.128,  tz: 'Europe/London' },
-  { name: 'New York',    lat: 40.713,  lon: -74.006, tz: 'America/New_York' },
-  { name: 'Toronto',     lat: 43.653,  lon: -79.383, tz: 'America/Toronto' },
-  { name: 'Sydney',      lat: -33.869, lon: 151.209, tz: 'Australia/Sydney' },
-]
 
 // Today's date in YYYY-MM-DD (local)
 const todayStr = () => {
@@ -348,11 +325,8 @@ export default function Panchang() {
 
   function upd(k, v) { setForm(f => ({ ...f, [k]: v })) }
 
-  function applyCity(e) {
-    const city = CITIES.find(c => c.name === e.target.value)
-    if (city) {
-      setForm(f => ({ ...f, city: city.name, lat: city.lat, lon: city.lon, timezone: city.tz }))
-    }
+  function applyCity(lat, lon, tz, name) {
+    setForm(f => ({ ...f, city: name, lat, lon, timezone: tz }))
   }
 
   async function compute() {
@@ -402,11 +376,12 @@ export default function Panchang() {
             </div>
 
             <div style={{ marginBottom: '1rem' }}>
-              <label style={lbl}>City (auto-fill location)</label>
-              <select value={form.city} onChange={applyCity} style={{ ...inp, cursor: 'pointer' }}>
-                <option value=''>&#8212; Select a city or enter lat/lon manually &#8212;</option>
-                {CITIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
-              </select>
+              <CitySearch
+                onSelect={applyCity}
+                label="City (auto-fills location &amp; timezone)"
+                placeholder="Search any city worldwide…"
+                labelStyle={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.5px', marginBottom: '0.35rem' }}
+              />
             </div>
 
             <div style={{ marginBottom: '1rem' }}>

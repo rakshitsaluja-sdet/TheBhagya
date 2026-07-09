@@ -1,35 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { computeKundliMatch } from '../hooks/useApi'
-
-/* ── City presets (timezone only needed, not lat/lon) ─────────────────── */
-const CITY_PRESETS = [
-  { label: 'Select city…',      tz: '' },
-  { label: 'Mumbai',            tz: 'Asia/Kolkata' },
-  { label: 'Delhi',             tz: 'Asia/Kolkata' },
-  { label: 'Bangalore',         tz: 'Asia/Kolkata' },
-  { label: 'Chennai',           tz: 'Asia/Kolkata' },
-  { label: 'Kolkata',           tz: 'Asia/Kolkata' },
-  { label: 'Hyderabad',         tz: 'Asia/Kolkata' },
-  { label: 'Ahmedabad',         tz: 'Asia/Kolkata' },
-  { label: 'Pune',              tz: 'Asia/Kolkata' },
-  { label: 'Jaipur',            tz: 'Asia/Kolkata' },
-  { label: 'Kanpur',            tz: 'Asia/Kolkata' },
-  { label: 'Lucknow',          tz: 'Asia/Kolkata' },
-  { label: 'Kathmandu',         tz: 'Asia/Kathmandu' },
-  { label: 'Dhaka',             tz: 'Asia/Dhaka' },
-  { label: 'Colombo',           tz: 'Asia/Colombo' },
-  { label: 'Dubai',             tz: 'Asia/Dubai' },
-  { label: 'Muscat',            tz: 'Asia/Muscat' },
-  { label: 'Singapore',         tz: 'Asia/Singapore' },
-  { label: 'Kuala Lumpur',      tz: 'Asia/Kuala_Lumpur' },
-  { label: 'London',            tz: 'Europe/London' },
-  { label: 'Toronto',           tz: 'America/Toronto' },
-  { label: 'New York',          tz: 'America/New_York' },
-  { label: 'Los Angeles',       tz: 'America/Los_Angeles' },
-  { label: 'Sydney',            tz: 'Australia/Sydney' },
-  { label: 'Melbourne',         tz: 'Australia/Melbourne' },
-]
+import CitySearch from '../components/CitySearch'
 
 const KOOT_COLORS = {
   5: '#2ecc71', 4: '#27ae60', 3: '#f39c12',
@@ -67,12 +39,9 @@ const s = {
 function PersonForm({ label, icon, data, onChange }) {
   const set = (k, v) => onChange({ ...data, [k]: v })
 
-  const handleCity = (e) => {
-    const preset = CITY_PRESETS.find(c => c.label === e.target.value)
-    if (preset && preset.tz) {
-      set('timezone', preset.tz)
-    }
-    set('city', e.target.value)
+  const handleCity = (_lat, _lon, tz, name) => {
+    set('city', name)
+    if (tz) set('timezone', tz)
   }
 
   return (
@@ -101,10 +70,12 @@ function PersonForm({ label, icon, data, onChange }) {
       </div>
 
       <div style={s.row}>
-        <label style={s.label}>City (auto-fills timezone)</label>
-        <select style={s.select} value={data.city || ''} onChange={handleCity}>
-          {CITY_PRESETS.map(c => <option key={c.label} value={c.label}>{c.label}</option>)}
-        </select>
+        <CitySearch
+          onSelect={handleCity}
+          label="City (auto-fills timezone)"
+          placeholder="Search any city worldwide…"
+          labelStyle={s.label}
+        />
       </div>
 
       <div style={s.row}>

@@ -1,34 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { computeLalKitab } from '../hooks/useApi'
-
-/* ── City presets ──────────────────────────────────────────────────────── */
-const CITIES = [
-  { label: 'Select city…',   lat: '',       lon: '',       tz: '' },
-  { label: 'Mumbai',         lat: 19.0760,  lon: 72.8777,  tz: 'Asia/Kolkata' },
-  { label: 'Delhi',          lat: 28.6139,  lon: 77.2090,  tz: 'Asia/Kolkata' },
-  { label: 'Bangalore',      lat: 12.9716,  lon: 77.5946,  tz: 'Asia/Kolkata' },
-  { label: 'Chennai',        lat: 13.0827,  lon: 80.2707,  tz: 'Asia/Kolkata' },
-  { label: 'Kolkata',        lat: 22.5726,  lon: 88.3639,  tz: 'Asia/Kolkata' },
-  { label: 'Hyderabad',      lat: 17.3850,  lon: 78.4867,  tz: 'Asia/Kolkata' },
-  { label: 'Ahmedabad',      lat: 23.0225,  lon: 72.5714,  tz: 'Asia/Kolkata' },
-  { label: 'Pune',           lat: 18.5204,  lon: 73.8567,  tz: 'Asia/Kolkata' },
-  { label: 'Jaipur',         lat: 26.9124,  lon: 75.7873,  tz: 'Asia/Kolkata' },
-  { label: 'Kanpur',         lat: 26.4499,  lon: 80.3319,  tz: 'Asia/Kolkata' },
-  { label: 'Lucknow',        lat: 26.8467,  lon: 80.9462,  tz: 'Asia/Kolkata' },
-  { label: 'Surat',          lat: 21.1702,  lon: 72.8311,  tz: 'Asia/Kolkata' },
-  { label: 'Amritsar',       lat: 31.6340,  lon: 74.8723,  tz: 'Asia/Kolkata' },
-  { label: 'Kathmandu',      lat: 27.7172,  lon: 85.3240,  tz: 'Asia/Kathmandu' },
-  { label: 'Dhaka',          lat: 23.8103,  lon: 90.4125,  tz: 'Asia/Dhaka' },
-  { label: 'Colombo',        lat: 6.9271,   lon: 79.8612,  tz: 'Asia/Colombo' },
-  { label: 'Dubai',          lat: 25.2048,  lon: 55.2708,  tz: 'Asia/Dubai' },
-  { label: 'Singapore',      lat: 1.3521,   lon: 103.8198, tz: 'Asia/Singapore' },
-  { label: 'London',         lat: 51.5074,  lon: -0.1278,  tz: 'Europe/London' },
-  { label: 'Toronto',        lat: 43.6532,  lon: -79.3832, tz: 'America/Toronto' },
-  { label: 'New York',       lat: 40.7128,  lon: -74.0060, tz: 'America/New_York' },
-  { label: 'Los Angeles',    lat: 34.0522,  lon: -118.2437,tz: 'America/Los_Angeles' },
-  { label: 'Sydney',         lat: -33.8688, lon: 151.2093, tz: 'Australia/Sydney' },
-]
+import CitySearch from '../components/CitySearch'
 
 /* ── Planet display data ───────────────────────────────────────────────── */
 const P_SYMBOL = { Sun:'☉', Moon:'☽', Mercury:'☿', Venus:'♀', Mars:'♂', Jupiter:'♃', Saturn:'♄', Rahu:'☊', Ketu:'☋' }
@@ -431,13 +404,8 @@ export default function LalKitab() {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
 
-  const handleCity = (e) => {
-    const city = CITIES.find(c => c.label === e.target.value)
-    if (city && city.lat !== '') {
-      setForm(f => ({ ...f, city: city.label, lat: city.lat, lon: city.lon, timezone: city.tz }))
-    } else {
-      set('city', e.target.value)
-    }
+  const handleCity = (lat, lon, tz, name) => {
+    setForm(f => ({ ...f, city: name, lat, lon, timezone: tz }))
   }
 
   const valid = form.dob && form.tob && form.lat !== '' && form.lon !== '' && form.timezone
@@ -495,10 +463,12 @@ export default function LalKitab() {
         </div>
 
         <div style={s.row}>
-          <label style={s.label}>City (auto-fills coordinates)</label>
-          <select style={s.select} value={form.city} onChange={handleCity}>
-            {CITIES.map(c => <option key={c.label} value={c.label}>{c.label}</option>)}
-          </select>
+          <CitySearch
+            onSelect={handleCity}
+            label="City (auto-fills coordinates &amp; timezone)"
+            placeholder="Search any city worldwide…"
+            labelStyle={s.label}
+          />
         </div>
 
         <div className="lk-grid2" style={s.grid2}>

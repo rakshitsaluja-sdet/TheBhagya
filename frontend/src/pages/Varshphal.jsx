@@ -1,33 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { computeVarshphal } from '../hooks/useApi'
+import CitySearch from '../components/CitySearch'
 
 const GOLD   = '#DFA84F'
 const GOLD_L = '#F2CB84'
 const VIO    = '#8B6FE8'
 
 // ── Static data ────────────────────────────────────────────────────────────────
-
-const CITIES = [
-  { name: 'New Delhi',   lat: 28.6139, lon: 77.2090, tz: 'Asia/Kolkata' },
-  { name: 'Mumbai',      lat: 19.0760, lon: 72.8777, tz: 'Asia/Kolkata' },
-  { name: 'Bengaluru',   lat: 12.9716, lon: 77.5946, tz: 'Asia/Kolkata' },
-  { name: 'Kolkata',     lat: 22.5726, lon: 88.3639, tz: 'Asia/Kolkata' },
-  { name: 'Chennai',     lat: 13.0827, lon: 80.2707, tz: 'Asia/Kolkata' },
-  { name: 'Hyderabad',   lat: 17.3850, lon: 78.4867, tz: 'Asia/Kolkata' },
-  { name: 'Pune',        lat: 18.5204, lon: 73.8567, tz: 'Asia/Kolkata' },
-  { name: 'Ahmedabad',   lat: 23.0225, lon: 72.5714, tz: 'Asia/Kolkata' },
-  { name: 'Jaipur',      lat: 26.9124, lon: 75.7873, tz: 'Asia/Kolkata' },
-  { name: 'Kanpur',      lat: 26.4499, lon: 80.3319, tz: 'Asia/Kolkata' },
-  { name: 'Lucknow',     lat: 26.8467, lon: 80.9462, tz: 'Asia/Kolkata' },
-  { name: 'Chandigarh',  lat: 30.7333, lon: 76.7794, tz: 'Asia/Kolkata' },
-  { name: 'Dubai',       lat: 25.2048, lon: 55.2708, tz: 'Asia/Dubai' },
-  { name: 'Singapore',   lat: 1.3521,  lon: 103.8198, tz: 'Asia/Singapore' },
-  { name: 'London',      lat: 51.5074, lon: -0.1278,  tz: 'Europe/London' },
-  { name: 'Toronto',     lat: 43.6532, lon: -79.3832, tz: 'America/Toronto' },
-  { name: 'New York',    lat: 40.7128, lon: -74.0060, tz: 'America/New_York' },
-  { name: 'Sydney',      lat: -33.8688, lon: 151.2093, tz: 'Australia/Sydney' },
-]
 
 const SIGN_LORDS = {
   Aries: 'Mars', Taurus: 'Venus', Gemini: 'Mercury', Cancer: 'Moon',
@@ -287,23 +267,19 @@ export default function Varshphal() {
   const [error,      setError]      = useState('')
   const [result,     setResult]     = useState(null)
 
-  function pickBirthCity(name) {
-    const c = CITIES.find(x => x.name === name)
-    if (!c) return
+  function pickBirthCity(lat, lon, tz, name) {
     setBirthCity(name)
-    setBirthLat(String(c.lat))
-    setBirthLon(String(c.lon))
-    setBirthTz(c.tz)
-    if (sameAsBirth) { setQueryLat(String(c.lat)); setQueryLon(String(c.lon)); setQueryTz(c.tz) }
+    setBirthLat(String(lat))
+    setBirthLon(String(lon))
+    setBirthTz(tz)
+    if (sameAsBirth) { setQueryLat(String(lat)); setQueryLon(String(lon)); setQueryTz(tz) }
   }
 
-  function pickQueryCity(name) {
-    const c = CITIES.find(x => x.name === name)
-    if (!c) return
+  function pickQueryCity(lat, lon, tz, name) {
     setQueryCity(name)
-    setQueryLat(String(c.lat))
-    setQueryLon(String(c.lon))
-    setQueryTz(c.tz)
+    setQueryLat(String(lat))
+    setQueryLon(String(lon))
+    setQueryTz(tz)
   }
 
   async function compute() {
@@ -369,11 +345,12 @@ export default function Varshphal() {
         </div>
 
         <div style={{ marginBottom: '1rem' }}>
-          <label style={lbl}>Birth City</label>
-          <select value={birthCity} onChange={e => pickBirthCity(e.target.value)} style={{ ...inp, cursor: 'pointer' }}>
-            <option value=''>&#8212; Select city or enter manually &#8212;</option>
-            {CITIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
-          </select>
+          <CitySearch
+            onSelect={pickBirthCity}
+            label="Birth City (auto-fills lat/lon/timezone)"
+            placeholder="Search any city worldwide…"
+            labelStyle={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.5px', marginBottom: '0.35rem' }}
+          />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
@@ -431,11 +408,12 @@ export default function Varshphal() {
         {!sameAsBirth && (
           <div>
             <div style={{ marginBottom: '0.75rem' }}>
-              <label style={lbl}>Current City</label>
-              <select value={queryCity} onChange={e => pickQueryCity(e.target.value)} style={{ ...inp, cursor: 'pointer' }}>
-                <option value=''>&#8212; Select city or enter manually &#8212;</option>
-                {CITIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
-              </select>
+              <CitySearch
+                onSelect={pickQueryCity}
+                label="Current City (auto-fills lat/lon/timezone)"
+                placeholder="Search any city worldwide…"
+                labelStyle={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.5px', marginBottom: '0.35rem' }}
+              />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
               <div>
