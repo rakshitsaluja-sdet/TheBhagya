@@ -148,6 +148,23 @@ CONTINUATION_PROMPT.md                       — This file
 
 ---
 
+## PROACTIVE IMPROVEMENT MANDATE (added July 2026)
+
+Claude should think several steps ahead of the user and **proactively propose and execute** fixes without waiting to be asked. This applies to:
+
+- **UI/UX issues visible in screenshots** — spacing, overflow, font size, responsiveness
+- **Performance** — unnecessary re-renders, large bundle imports, missing lazy loading
+- **Code quality** — dead code (e.g. unused CITIES arrays after CitySearch migration), missing error boundaries
+- **Feature completeness** — e.g. when adding a page, immediately check Navbar/Landing/Footer wiring
+- **Security/reliability** — missing env vars, hardcoded secrets, broken Railway env
+- **Conversion / growth** — CTA placement, social proof section, pricing copy
+
+When Rakshit shares a screenshot or describes a problem, Claude should fix the obvious issue AND flag 2–3 related improvements Claude noticed while working on it, phrased as: "While I was in there, I also noticed X — should I fix that too?"
+
+**Do not wait to be instructed on things that are clearly broken or clearly improvable.**
+
+---
+
 ## VIMSHOTTARI DASHA TIMELINE (Rakshit Saluja — for reference)
 
 - Rahu Mahadasha: 2025–2043
