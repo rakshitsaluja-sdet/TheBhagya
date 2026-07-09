@@ -391,7 +391,9 @@ const FEATURES = [
   { icon: '📅', name: 'Panchang', desc: 'Tithi, Nakshatra, Vara, Yoga & Karana — the five Vedic almanac limbs with Rahu Kaal and Abhijit Muhurat.', to: '/panchang' },
   { icon: '💎', name: 'Gemstones', desc: 'Personalised Ratna Shastra — primary stone for your Lagna lord and dasha stone for your current Mahadasha.', to: '/gemstones' },
   { icon: '☉', name: 'Varshphal', desc: 'Annual Horoscope — solar return chart with Varsha Lagna, Muntha, Varsha Pati and full planetary positions for the year.', to: '/varshphal' },
+  { icon: '〜', name: 'Biorhythm', desc: 'Track your Physical, Emotional &amp; Intellectual cycles with a 30-day chart and critical day alerts.', to: '/biorhythm' },
   { icon: '🪐', name: 'Gochar Report', desc: 'Live planetary transits on your natal chart — house analysis, Vedic aspects, tight conjunctions, Sade Sati &amp; Jupiter Peyarchi flags.', to: '/transit' },
+  { icon: '🕰️', name: 'Muhurat Finder', desc: 'Find auspicious dates for marriage, griha pravesh, vehicle, business, travel &amp; more — scored by Panchang rules.', to: '/muhurat' },
   { icon: '🃏', name: 'Tarot Reading', desc: 'Full 78-card deck — Major &amp; Minor Arcana. Single card, 3-card, Celtic Cross, Love, Career &amp; Yes/No spreads with upright and reversed meanings.', to: '/tarot' },
   { icon: '🏠', name: 'Vastu Shastra', desc: 'Interactive Vastu Purusha Mandala — assign rooms to all 9 zones, get direction scores, dosha detection with remedies, and colour recommendations.', to: '/vastu' },
   { icon: '♈', name: 'Daily Horoscope', desc: 'Transit-based Rashifal with love, career and money ratings for all 12 rashis.', to: '/horoscope' },
@@ -400,6 +402,7 @@ const FEATURES = [
   { icon: '♥', name: 'Kundli Match', desc: 'Ashtakoot 36-guna compatibility with full koota breakdown and dosha detection.', to: '/kundli-matching' },
   { icon: '∑', name: 'Numerology', desc: 'Pythagorean & Chaldean — life path, destiny, soul urge, personal year.', to: '/numerology' },
   { icon: '📕', name: 'Lal Kitab', desc: 'Pucca Ghar planets, house map, and a personalised karmic remedy plan.', to: '/lal-kitab' },
+  { icon: '💤', name: 'Dream Meanings', desc: 'Decode your dreams — 46 symbols with Vedic, spiritual & psychological meanings. Animals, nature, emotions, actions & more.', to: '/dream-interpretation' },
 ]
 
 const TESTIMONIALS = [

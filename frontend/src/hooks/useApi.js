@@ -247,6 +247,21 @@ export async function computeTransit(data) {
   return res.json()
 }
 
+// ── Muhurat ───────────────────────────────────────────────────────────────
+
+export async function findMuhurat(data) {
+  const res = await fetch(`${BASE}/muhurat/find`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.detail || `Error ${res.status}`)
+  }
+  return res.json()
+}
+
 // ── Panchang ─────────────────────────────────────────────────────────────
 
 export async function computePanchang(data) {

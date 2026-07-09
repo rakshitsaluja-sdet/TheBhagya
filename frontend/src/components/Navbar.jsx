@@ -130,10 +130,13 @@ const T = {
   lalKitab:  { en: 'Lal Kitab',     hi: 'लाल किताब' },
   panchang:  { en: 'Panchang',      hi: 'पंचांग' },
   gemstones: { en: 'Gemstones',     hi: 'रत्न' },
-  varshphal: { en: 'Varshphal',     hi: 'वार्षफल' },
-  transit:   { en: 'Gochar',        hi: 'गोचर' },
+  varshphal:  { en: 'Varshphal',     hi: 'वार्षफल' },
+  biorhythm:  { en: 'Biorhythm',    hi: 'बायोरिदम' },
+  transit:    { en: 'Gochar',       hi: 'गोचर' },
+  muhurat:    { en: 'Muhurat',      hi: 'मुहूर्त' },
   tarot:     { en: 'Tarot',         hi: 'टैरो' },
   vastu:     { en: 'Vastu',         hi: 'वास्तु' },
+  dreams:    { en: 'Dream Meanings', hi: 'स्वप्न फल' },
   pricing:   { en: 'Pricing',       hi: 'मूल्य' },
   features:  { en: 'Features',      hi: 'विशेषताएं' },
   tools:     { en: 'Tools',         hi: 'साधन' },
@@ -146,9 +149,12 @@ const TOOL_LINKS = [
   { icon: '📅', key: 'panchang',  to: '/panchang'       },
   { icon: '💎', key: 'gemstones', to: '/gemstones'      },
   { icon: '☉', key: 'varshphal', to: '/varshphal'      },
+  { icon: '〜', key: 'biorhythm', to: '/biorhythm'      },
   { icon: '🪐', key: 'transit',   to: '/transit'         },
+  { icon: '🕰️', key: 'muhurat',  to: '/muhurat'         },
   { icon: '🃏', key: 'tarot',     to: '/tarot'           },
   { icon: '🏠', key: 'vastu',     to: '/vastu'           },
+  { icon: '💤', key: 'dreams',   to: '/dream-interpretation' },
   { icon: '♄', key: 'sadeSati',  to: '/sade-sati'      },
   { icon: '♂', key: 'doshas',    to: '/doshas'         },
   { icon: '📕', key: 'lalKitab', to: '/lal-kitab'      },
@@ -413,11 +419,14 @@ export default function Navbar() {
         <Link to="/panchang"        className={mobileActiveCls('/panchang')}>📅 {T.panchang[lang]}</Link>
         <Link to="/gemstones"       className={mobileActiveCls('/gemstones')}>💎 {T.gemstones[lang]}</Link>
         <Link to="/varshphal"       className={mobileActiveCls('/varshphal')}>&#9737; {T.varshphal[lang]}</Link>
+        <Link to="/biorhythm"       className={mobileActiveCls('/biorhythm')}>〜 {T.biorhythm[lang]}</Link>
         <Link to="/transit"         className={mobileActiveCls('/transit')}>🪐 {T.transit[lang]}</Link>
+        <Link to="/muhurat"         className={mobileActiveCls('/muhurat')}>🕰️ {T.muhurat[lang]}</Link>
         <Link to="/tarot"           className={mobileActiveCls('/tarot')}>🃏 {T.tarot[lang]}</Link>
         <Link to="/vastu"           className={mobileActiveCls('/vastu')}>🏠 {T.vastu[lang]}</Link>
         <Link to="/destiny-chat"    className={mobileActiveCls('/destiny-chat')}>✨ {T.chat[lang]}</Link>
-        <Link to="/numerology"      className={mobileActiveCls('/numerology')}>∑ {T.numeral[lang]}</Link>
+        <Link to="/numerology"          className={mobileActiveCls('/numerology')}>∑ {T.numeral[lang]}</Link>
+        <Link to="/dream-interpretation" className={mobileActiveCls('/dream-interpretation')}>💤 {T.dreams[lang]}</Link>
         <Link to="/pricing"         className={mobileActiveCls('/pricing')}>💎 {T.pricing[lang]}</Link>
 
         <div className="nav-mobile-actions">
