@@ -43,6 +43,21 @@ export async function deleteChart(id) {
   if (!res.ok) throw new Error(`Delete failed: ${res.status}`)
 }
 
+export async function downloadReport(chartId) {
+  const token = localStorage.getItem('bhagya_token')
+  const res = await fetch(`${BASE}/charts/${chartId}/pdf`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  })
+  if (!res.ok) throw new Error('PDF generation failed')
+  const blob = await res.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `bhagya-kundali-${chartId}.pdf`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
 // ── Numerology ────────────────────────────────────────────────────────────
 
 export async function computeNumerology(data) {
