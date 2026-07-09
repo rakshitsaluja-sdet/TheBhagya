@@ -128,6 +128,8 @@ const T = {
   doshas:    { en: 'Doshas',        hi: 'दोष' },
   kundli:    { en: 'Kundli Match',  hi: 'कुंडली मिलान' },
   lalKitab:  { en: 'Lal Kitab',     hi: 'लाल किताब' },
+  panchang:  { en: 'Panchang',      hi: 'पंचांग' },
+  gemstones: { en: 'Gemstones',     hi: 'रत्न' },
   pricing:   { en: 'Pricing',       hi: 'मूल्य' },
   features:  { en: 'Features',      hi: 'विशेषताएं' },
   tools:     { en: 'Tools',         hi: 'साधन' },
@@ -137,10 +139,12 @@ const T = {
 }
 
 const TOOL_LINKS = [
-  { icon: '♄', key: 'sadeSati', to: '/sade-sati'       },
-  { icon: '♂', key: 'doshas',   to: '/doshas'          },
-  { icon: '📕', key: 'lalKitab', to: '/lal-kitab'       },
-  { icon: '∑', key: 'numeral',  to: '/numerology'      },
+  { icon: '📅', key: 'panchang',  to: '/panchang'       },
+  { icon: '💎', key: 'gemstones', to: '/gemstones'      },
+  { icon: '♄', key: 'sadeSati',  to: '/sade-sati'      },
+  { icon: '♂', key: 'doshas',    to: '/doshas'         },
+  { icon: '📕', key: 'lalKitab', to: '/lal-kitab'      },
+  { icon: '∑', key: 'numeral',   to: '/numerology'     },
 ]
 
 // ── Tools dropdown ────────────────────────────────────────────────────────────
@@ -398,6 +402,8 @@ export default function Navbar() {
         <Link to="/doshas"          className={mobileActiveCls('/doshas')}>♂ {T.doshas[lang]}</Link>
         <Link to="/kundli-matching" className={mobileActiveCls('/kundli-matching')}>♥ {T.kundli[lang]}</Link>
         <Link to="/lal-kitab"       className={mobileActiveCls('/lal-kitab')}>📕 {T.lalKitab[lang]}</Link>
+        <Link to="/panchang"        className={mobileActiveCls('/panchang')}>📅 {T.panchang[lang]}</Link>
+        <Link to="/gemstones"       className={mobileActiveCls('/gemstones')}>💎 {T.gemstones[lang]}</Link>
         <Link to="/destiny-chat"    className={mobileActiveCls('/destiny-chat')}>✨ {T.chat[lang]}</Link>
         <Link to="/numerology"      className={mobileActiveCls('/numerology')}>∑ {T.numeral[lang]}</Link>
         <Link to="/pricing"         className={mobileActiveCls('/pricing')}>💎 {T.pricing[lang]}</Link>

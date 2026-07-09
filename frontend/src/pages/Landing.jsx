@@ -388,6 +388,8 @@ const FEATURES = [
   { icon: '✦', name: 'Destiny Chat', big: true,
     desc: 'An AI Jyotish that answers from your specific placements — dashas, transits, yogas. Not generic horoscopes; readings cited from your own chart.',
     tag: 'AI-NATIVE', to: '/destiny-chat' },
+  { icon: '📅', name: 'Panchang', desc: 'Tithi, Nakshatra, Vara, Yoga & Karana — the five Vedic almanac limbs with Rahu Kaal and Abhijit Muhurat.', to: '/panchang' },
+  { icon: '💎', name: 'Gemstones', desc: 'Personalised Ratna Shastra — primary stone for your Lagna lord and dasha stone for your current Mahadasha.', to: '/gemstones' },
   { icon: '♈', name: 'Daily Horoscope', desc: 'Transit-based Rashifal with love, career and money ratings for all 12 rashis.', to: '/horoscope' },
   { icon: '♄', name: 'Sade Sati', desc: 'Saturn’s 7.5-year transit over your Moon — past cycles, current phase, remedies.', to: '/sade-sati' },
   { icon: '♂', name: 'Dosha Check', desc: 'Mangal & Kaal Sarp dosha with severity, cancellations and remedies.', to: '/doshas' },
