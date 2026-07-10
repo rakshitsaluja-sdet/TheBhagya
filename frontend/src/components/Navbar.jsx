@@ -6,9 +6,9 @@ import { useAuth, PLAN_FEATURES } from '../context/AuthContext'
 import LogoMark from './LogoMark'
 
 const PLAN_COLORS = {
-  starter:  '#ADA28B',
-  pro:      '#DFA84F',
-  jyotish:  '#8B6FE8',
+  free:     '#ADA28B',
+  jyotish:  '#DFA84F',
+  guru:     '#8B6FE8',
 }
 
 const s = {

@@ -100,7 +100,7 @@ export default function Footer() {
             Vedic traditions upheld by Jyotishis worldwide.
           </p>
           <div style={s.badges}>
-            {['Swiss Ephemeris', 'Lahiri Ayanamsa', 'AI-Native'].map(b => (
+            {['Ancient Precision', 'Vedic Tradition', 'Classical Method'].map(b => (
               <span key={b} style={s.badge}>{b}</span>
             ))}
           </div>
