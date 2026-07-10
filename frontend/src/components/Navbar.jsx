@@ -148,27 +148,59 @@ const T = {
   logout:    { en: 'Sign Out',      hi: 'लॉगआउट' },
 }
 
-const TOOL_LINKS = [
-  { icon: '📅', key: 'panchang',  to: '/panchang'       },
-  { icon: '💎', key: 'gemstones', to: '/gemstones'      },
-  { icon: '☉', key: 'varshphal', to: '/varshphal'      },
-  { icon: '〜', key: 'biorhythm', to: '/biorhythm'      },
-  { icon: '🪐', key: 'transit',   to: '/transit'         },
-  { icon: '🕰️', key: 'muhurat',  to: '/muhurat'         },
-  { icon: '🃏', key: 'tarot',     to: '/tarot'           },
-  { icon: '🏠', key: 'vastu',     to: '/vastu'           },
-  { icon: '💤', key: 'dreams',   to: '/dream-interpretation' },
-  { icon: '♄', key: 'sadeSati',  to: '/sade-sati'      },
-  { icon: '♂', key: 'doshas',    to: '/doshas'         },
-  { icon: '📕', key: 'lalKitab', to: '/lal-kitab'      },
-  { icon: '∑', key: 'numeral',   to: '/numerology'      },
-  { icon: '⊕', key: 'kpSystem', to: '/kp-system'       },
-  { icon: '∞', key: 'nadi',     to: '/nadi-astrology'  },
+const TOOL_GROUPS = [
+  {
+    name: 'Kundli', icon: '☽',
+    items: [
+      { icon: '🔮', label: 'Free Kundali',    to: '/chart/new'           },
+      { icon: '📂', label: 'My Charts',       to: '/my-charts'           },
+      { icon: '☉',  label: 'Varshphal',       to: '/varshphal'           },
+      { icon: '♥',  label: 'Kundli Matching', to: '/kundli-matching'     },
+      { icon: '⊕',  label: 'KP System',       to: '/kp-system'           },
+      { icon: '∞',  label: 'Nadi Astrology',  to: '/nadi-astrology'      },
+    ],
+  },
+  {
+    name: 'Horoscope', icon: '♈',
+    items: [
+      { icon: '♈', label: 'Daily Horoscope', to: '/horoscope'   },
+      { icon: '♄', label: 'Sade Sati',       to: '/sade-sati'   },
+      { icon: '🪐', label: 'Gochar / Transit', to: '/transit'    },
+      { icon: '♂', label: 'Doshas',          to: '/doshas'      },
+    ],
+  },
+  {
+    name: 'Panchang', icon: '📅',
+    items: [
+      { icon: '📅', label: 'Panchang', to: '/panchang' },
+      { icon: '🕰️', label: 'Muhurat',  to: '/muhurat'  },
+    ],
+  },
+  {
+    name: 'Occult', icon: '🃏',
+    items: [
+      { icon: '🃏', label: 'Tarot',         to: '/tarot'                  },
+      { icon: '∑',  label: 'Numerology',    to: '/numerology'             },
+      { icon: '📕', label: 'Lal Kitab',     to: '/lal-kitab'              },
+      { icon: '🤚', label: 'Palmistry',     to: '/palmistry'              },
+      { icon: '💤', label: 'Dream Meanings',to: '/dream-interpretation'   },
+    ],
+  },
+  {
+    name: 'Tools', icon: '⚙',
+    items: [
+      { icon: '💎', label: 'Gemstones',    to: '/gemstones'    },
+      { icon: '🏠', label: 'Vastu',        to: '/vastu'        },
+      { icon: '〜', label: 'Biorhythm',    to: '/biorhythm'    },
+      { icon: '✦',  label: 'Destiny Chat', to: '/destiny-chat' },
+    ],
+  },
 ]
 
-// ── Tools dropdown ────────────────────────────────────────────────────────────
+// ── Tools mega-menu ───────────────────────────────────────────────────────────
 function ToolsMenu({ lang, pathname }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen]               = useState(false)
+  const [activeGroup, setActiveGroup] = useState(0)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -179,7 +211,7 @@ function ToolsMenu({ lang, pathname }) {
 
   useEffect(() => { setOpen(false) }, [pathname])
 
-  const isToolActive = TOOL_LINKS.some(t => t.to === pathname)
+  const isToolActive = TOOL_GROUPS.some(g => g.items.some(i => i.to === pathname))
 
   return (
     <div ref={ref} style={{ position: 'relative' }}>
@@ -193,20 +225,65 @@ function ToolsMenu({ lang, pathname }) {
           transform: open ? 'rotate(180deg)' : 'none', display: 'inline-block',
         }}>▼</span>
       </button>
+
       {open && (
-        <div style={s.dropdown}>
-          {TOOL_LINKS.map(t => (
-            <Link key={t.to} to={t.to} style={{
-              ...s.dropItem,
-              ...(pathname === t.to ? { background: 'var(--gold-pale)' } : {}),
-            }}
-              onMouseEnter={e => e.currentTarget.style.background = 'var(--gold-pale)'}
-              onMouseLeave={e => e.currentTarget.style.background = pathname === t.to ? 'var(--gold-pale)' : 'none'}
-            >
-              <span style={s.dropIcon}>{t.icon}</span>
-              {T[t.key][lang]}
-            </Link>
-          ))}
+        <div style={{
+          position: 'absolute', top: 'calc(100% + 10px)', left: '50%',
+          transform: 'translateX(-50%)',
+          background: 'var(--bg-elevated)', border: '1px solid var(--border)',
+          borderRadius: 14, zIndex: 200, boxShadow: 'var(--shadow)',
+          display: 'flex', width: 420, overflow: 'hidden',
+          animation: 'bh-fade-up 0.22s cubic-bezier(0.22,1,0.36,1) both',
+        }}>
+          {/* Left: group tabs */}
+          <div style={{
+            width: 128, borderRight: '1px solid var(--border)',
+            padding: '6px 0', background: 'rgba(0,0,0,0.18)', flexShrink: 0,
+          }}>
+            {TOOL_GROUPS.map((group, i) => (
+              <button
+                key={group.name}
+                onMouseEnter={() => setActiveGroup(i)}
+                onClick={() => setActiveGroup(i)}
+                style={{
+                  width: '100%', textAlign: 'left', border: 'none',
+                  borderLeft: activeGroup === i ? '2px solid var(--gold)' : '2px solid transparent',
+                  background: activeGroup === i ? 'var(--gold-pale)' : 'none',
+                  padding: '9px 12px', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  transition: 'background 0.15s', fontFamily: 'inherit',
+                }}
+              >
+                <span style={{ fontSize: '0.9rem', flexShrink: 0 }}>{group.icon}</span>
+                <span style={{
+                  fontSize: '0.8rem',
+                  fontWeight: activeGroup === i ? 600 : 400,
+                  color: activeGroup === i ? 'var(--gold)' : 'var(--text-muted)',
+                  transition: 'color 0.15s',
+                }}>{group.name}</span>
+                <span style={{ marginLeft: 'auto', fontSize: '0.55rem', color: 'var(--text-dim)' }}>›</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Right: child links */}
+          <div style={{ flex: 1, padding: 6, overflowY: 'auto' }}>
+            {TOOL_GROUPS[activeGroup].items.map(item => (
+              <Link
+                key={item.to}
+                to={item.to}
+                style={{
+                  ...s.dropItem,
+                  ...(pathname === item.to ? { background: 'var(--gold-pale)' } : {}),
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--gold-pale)'}
+                onMouseLeave={e => e.currentTarget.style.background = pathname === item.to ? 'var(--gold-pale)' : 'none'}
+              >
+                <span style={s.dropIcon}>{item.icon}</span>
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -315,6 +392,47 @@ function UserAvatar({ user, plan, planBadge, planColor, onLogout, lang }) {
   )
 }
 
+// ── Mobile collapsible group ──────────────────────────────────────────────────
+function MobileGroup({ group, pathname }) {
+  const [open, setOpen] = useState(false)
+  const hasActive = group.items.some(i => i.to === pathname)
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: '100%', textAlign: 'left', background: 'none',
+          border: 'none', borderBottom: '1px solid var(--border)',
+          padding: '0.75rem 1.25rem', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', gap: '0.6rem',
+          color: hasActive ? 'var(--gold)' : 'var(--text-muted)',
+          fontSize: '0.9rem', fontWeight: hasActive ? 600 : 500,
+          fontFamily: 'inherit',
+        }}
+      >
+        <span>{group.icon}</span>
+        <span>{group.name}</span>
+        <span style={{
+          marginLeft: 'auto', fontSize: '0.6rem',
+          transition: 'transform 0.2s',
+          transform: open ? 'rotate(90deg)' : 'none',
+          color: 'var(--text-dim)',
+        }}>›</span>
+      </button>
+      {open && group.items.map(item => (
+        <Link
+          key={item.to}
+          to={item.to}
+          className={`nav-mobile-link${pathname === item.to ? ' active' : ''}`}
+          style={{ paddingLeft: '2.8rem', fontSize: '0.85rem' }}
+        >
+          <span style={{ marginRight: '0.4rem' }}>{item.icon}</span>{item.label}
+        </Link>
+      ))}
+    </div>
+  )
+}
+
 // ── Main Navbar ───────────────────────────────────────────────────────────────
 export default function Navbar() {
   const { pathname } = useLocation()
@@ -413,28 +531,12 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       <div className={`nav-mobile-drawer${mobileOpen ? ' open' : ''}`}>
-        <Link to="/"                className={mobileActiveCls('/')}>🏠 {T.home[lang]}</Link>
-        <Link to="/chart/new"       className="nav-mobile-link">🔮 {T.cta[lang]}</Link>
-        <Link to="/my-charts"       className={mobileActiveCls('/my-charts')}>☽ {T.charts[lang]}</Link>
-        <Link to="/horoscope"       className={mobileActiveCls('/horoscope')}>♈ {T.horoscope[lang]}</Link>
-        <Link to="/sade-sati"       className={mobileActiveCls('/sade-sati')}>♄ {T.sadeSati[lang]}</Link>
-        <Link to="/doshas"          className={mobileActiveCls('/doshas')}>♂ {T.doshas[lang]}</Link>
-        <Link to="/kundli-matching" className={mobileActiveCls('/kundli-matching')}>♥ {T.kundli[lang]}</Link>
-        <Link to="/lal-kitab"       className={mobileActiveCls('/lal-kitab')}>📕 {T.lalKitab[lang]}</Link>
-        <Link to="/panchang"        className={mobileActiveCls('/panchang')}>📅 {T.panchang[lang]}</Link>
-        <Link to="/gemstones"       className={mobileActiveCls('/gemstones')}>💎 {T.gemstones[lang]}</Link>
-        <Link to="/varshphal"       className={mobileActiveCls('/varshphal')}>&#9737; {T.varshphal[lang]}</Link>
-        <Link to="/biorhythm"       className={mobileActiveCls('/biorhythm')}>〜 {T.biorhythm[lang]}</Link>
-        <Link to="/transit"         className={mobileActiveCls('/transit')}>🪐 {T.transit[lang]}</Link>
-        <Link to="/muhurat"         className={mobileActiveCls('/muhurat')}>🕰️ {T.muhurat[lang]}</Link>
-        <Link to="/tarot"           className={mobileActiveCls('/tarot')}>🃏 {T.tarot[lang]}</Link>
-        <Link to="/vastu"           className={mobileActiveCls('/vastu')}>🏠 {T.vastu[lang]}</Link>
-        <Link to="/destiny-chat"    className={mobileActiveCls('/destiny-chat')}>✨ {T.chat[lang]}</Link>
-        <Link to="/numerology"          className={mobileActiveCls('/numerology')}>∑ {T.numeral[lang]}</Link>
-        <Link to="/dream-interpretation" className={mobileActiveCls('/dream-interpretation')}>💤 {T.dreams[lang]}</Link>
-        <Link to="/kp-system"       className={mobileActiveCls('/kp-system')}>⊕ {T.kpSystem[lang]}</Link>
-        <Link to="/nadi-astrology"  className={mobileActiveCls('/nadi-astrology')}>∞ {T.nadi[lang]}</Link>
-        <Link to="/pricing"         className={mobileActiveCls('/pricing')}>💎 {T.pricing[lang]}</Link>
+        <Link to="/"          className={mobileActiveCls('/')}>🏠 {T.home[lang]}</Link>
+        <Link to="/chart/new" className="nav-mobile-link">🔮 {T.cta[lang]}</Link>
+        {TOOL_GROUPS.map(group => (
+          <MobileGroup key={group.name} group={group} pathname={pathname} />
+        ))}
+        <Link to="/pricing"   className={mobileActiveCls('/pricing')}>💎 {T.pricing[lang]}</Link>
 
         <div className="nav-mobile-actions">
           <button style={{ ...s.langBtn, height: 40 }} onClick={toggleLang}>

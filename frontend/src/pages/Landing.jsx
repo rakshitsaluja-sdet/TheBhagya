@@ -382,12 +382,12 @@ function useReveal() {
 
 /* ── Data ──────────────────────────────────────────────────────────────── */
 const FEATURES = [
-  { icon: '☽', name: 'Kundali Engine', big: true,
-    desc: 'Natal chart, Vimshottari dasha, ashtakavarga — every graha computed with ancient precision, exactly as the rishis mapped the sky.',
-    tag: 'FLAGSHIP', to: '/chart/new' },
-  { icon: '✦', name: 'Destiny Chat', big: true,
-    desc: 'Your personal Jyotish guide that answers from your specific placements — dashas, transits, yogas. Not generic horoscopes; readings cited from your own chart.',
-    tag: 'AI-NATIVE', to: '/destiny-chat' },
+  { icon: '☽', name: 'Kundali',
+    desc: 'Natal chart, Vimshottari dasha, ashtakavarga — every graha charted with ancient precision, exactly as the rishis mapped the sky.',
+    to: '/chart/new' },
+  { icon: '✦', name: 'Destiny Chat',
+    desc: 'Your personal Jyotish guide that answers from your specific placements — dashas, transits, yogas. Not generic horoscopes; readings drawn from your own chart.',
+    to: '/destiny-chat' },
   { icon: '📅', name: 'Panchang', desc: 'Tithi, Nakshatra, Vara, Yoga & Karana — the five Vedic almanac limbs with Rahu Kaal and Abhijit Muhurat.', to: '/panchang' },
   { icon: '💎', name: 'Gemstones', desc: 'Personalised Ratna Shastra — primary stone for your Lagna lord and dasha stone for your current Mahadasha.', to: '/gemstones' },
   { icon: '☉', name: 'Varshphal', desc: 'Annual Horoscope — solar return chart with Varsha Lagna, Muntha, Varsha Pati and full planetary positions for the year.', to: '/varshphal' },
