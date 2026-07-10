@@ -31,6 +31,8 @@ import Tarot from './pages/Tarot'
 import Vastu from './pages/Vastu'
 import KPSystem from './pages/KPSystem'
 import NadiAstrology from './pages/NadiAstrology'
+import Blog from './pages/Blog'
+import BlogPost from './pages/BlogPost'
 import Pricing from './pages/Pricing'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
@@ -121,6 +123,9 @@ function AppShell() {
                 <Route path="/muhurat"        element={<PlanGate feature="muhurat"><Muhurat /></PlanGate>} />
                 <Route path="/kp-system"      element={<PlanGate feature="kp"><KPSystem /></PlanGate>} />
                 <Route path="/nadi-astrology" element={<PlanGate feature="nadi"><NadiAstrology /></PlanGate>} />
+                {/* ── Blog / Content CMS — fully public ── */}
+                <Route path="/blog"           element={<Blog />} />
+                <Route path="/blog/:slug"     element={<BlogPost />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

@@ -35,6 +35,7 @@ const COLS = [
     title: 'Account',
     links: [
       { label: 'My Charts', to: '/my-charts' },
+      { label: 'Journal',   to: '/blog' },
       { label: 'Pricing',   to: '/pricing' },
       { label: 'Sign In',   to: '/login' },
     ],

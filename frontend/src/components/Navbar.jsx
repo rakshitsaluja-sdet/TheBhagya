@@ -143,6 +143,7 @@ const T = {
   pricing:   { en: 'Pricing',       hi: 'मूल्य' },
   features:  { en: 'Features',      hi: 'विशेषताएं' },
   tools:     { en: 'Tools',         hi: 'साधन' },
+  journal:   { en: 'Journal',       hi: 'लेख' },
   cta:       { en: 'Free Kundali',  hi: 'मुफ़्त कुंडली' },
   login:     { en: 'Sign In',       hi: 'लॉगिन' },
   logout:    { en: 'Sign Out',      hi: 'लॉगआउट' },
@@ -489,6 +490,10 @@ export default function Navbar() {
           <Link to="/kundli-matching" style={isActive('/kundli-matching')}>{T.kundli[lang]}</Link>
           <Link to="/destiny-chat"    style={isActive('/destiny-chat')}>{T.chat[lang]}</Link>
           <ToolsMenu lang={lang} pathname={pathname} />
+          <Link to="/blog" style={{
+            ...s.link,
+            ...(pathname === '/blog' || pathname.startsWith('/blog/') ? s.linkActive : {}),
+          }}>{T.journal[lang]}</Link>
           <Link to="/pricing"         style={isActive('/pricing')}>{T.pricing[lang]}</Link>
         </div>
 
@@ -536,6 +541,7 @@ export default function Navbar() {
         {TOOL_GROUPS.map(group => (
           <MobileGroup key={group.name} group={group} pathname={pathname} />
         ))}
+        <Link to="/blog"      className={mobileActiveCls('/blog')}>📖 {T.journal[lang]}</Link>
         <Link to="/pricing"   className={mobileActiveCls('/pricing')}>💎 {T.pricing[lang]}</Link>
 
         <div className="nav-mobile-actions">

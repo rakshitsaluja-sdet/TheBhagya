@@ -808,6 +808,62 @@ export default function Landing() {
           </div>
         </section>
 
+        {/* ══ JYOTISH JOURNAL TEASER ══ */}
+        <section style={{ ...S.container, padding: '0 5vw 7rem' }}>
+          <div className="reveal" style={{ textAlign: 'center', marginBottom: '2.6rem' }}>
+            <div style={{ ...S.eyebrow, justifyContent: 'center' }}>
+              <span style={S.rule} />Jyotish Journal<span style={{ ...S.rule, transform: 'scaleX(-1)' }} />
+            </div>
+            <h2 style={S.h2}>Ancient wisdom, <span style={S.gradText}>clearly explained.</span></h2>
+            <p style={{ ...S.body, textAlign: 'center', margin: '0.75rem auto 0', maxWidth: 520 }}>
+              Understand the science behind your chart — from Sade Sati to Nadi amsa.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.2rem', maxWidth: 1020, margin: '0 auto' }} className="bh-blog-grid">
+            {[
+              { cat: 'Timing', catColor: '#5C6BC0', title: 'Muhurat: The Art of Choosing Auspicious Moments', excerpt: 'Every moment carries a different cosmic quality. Muhurat is the Vedic science of selecting that precise window when celestial energies align.', slug: 'choosing-muhurat-auspicious-timing', date: 'Jul 8', read: '6 min' },
+              { cat: 'Ancient Systems', catColor: '#F9A825', title: 'Nadi Astrology: Ancient Secrets of Palm-Leaf Manuscripts', excerpt: 'Hidden in dusty Tamil Nadu libraries lie thousands of palm-leaf manuscripts written by ancient sages who claimed to foresee individual fates.', slug: 'nadi-astrology-ancient-secrets', date: 'Jul 5', read: '8 min' },
+              { cat: 'Beginners', catColor: '#43A047', title: 'How to Read Your Kundali: A Beginner's Guide', excerpt: 'Your Kundali is a map of the sky at the exact moment you were born — twelve houses, nine planets, and twelve signs. Here is how to begin.', slug: 'how-to-read-your-kundali', date: 'Jul 2', read: '9 min' },
+            ].map((post, i) => (
+              <Link key={post.slug} to={`/blog/${post.slug}`} className="reveal"
+                style={{
+                  ...S.glass, borderRadius: 16, padding: '1.5rem',
+                  textDecoration: 'none', display: 'flex', flexDirection: 'column',
+                  transitionDelay: `${i * 0.08}s`, transition: 'border-color 0.22s, transform 0.22s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = `rgba(223,168,79,0.45)`; e.currentTarget.style.transform = 'translateY(-3px)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.transform = 'none' }}
+              >
+                <span style={{
+                  fontFamily: "'JetBrains Mono', monospace", fontSize: '0.58rem', letterSpacing: '2px',
+                  textTransform: 'uppercase', color: post.catColor,
+                  border: `1px solid ${post.catColor}55`, borderRadius: 999,
+                  padding: '0.22rem 0.65rem', alignSelf: 'flex-start', marginBottom: '0.85rem',
+                }}>{post.cat}</span>
+                <p style={{ fontFamily: "'Fraunces', serif", fontSize: '1.02rem', fontWeight: 600, color: FG, lineHeight: 1.45, margin: '0 0 0.65rem' }}>{post.title}</p>
+                <p style={{ fontSize: '0.83rem', color: MUT, lineHeight: 1.65, margin: '0 0 1.1rem', flex: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.excerpt}</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: DIM }}>{post.date} · {post.read}</span>
+                  <span style={{ color: GOLD, fontSize: '0.8rem' }}>Read →</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="reveal" style={{ textAlign: 'center', marginTop: '2rem' }}>
+            <Link to="/blog" style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', letterSpacing: '2px',
+              textTransform: 'uppercase', color: GOLD, textDecoration: 'none',
+              border: `1px solid rgba(223,168,79,0.35)`, borderRadius: 999,
+              padding: '0.55rem 1.4rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+              transition: 'background 0.2s, border-color 0.2s',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(223,168,79,0.1)'; e.currentTarget.style.borderColor = 'rgba(223,168,79,0.6)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = ''; e.currentTarget.style.borderColor = 'rgba(223,168,79,0.35)' }}
+            >Explore all articles →</Link>
+          </div>
+          <style>{`@media(max-width:780px){.bh-blog-grid{grid-template-columns:1fr !important;}}`}</style>
+        </section>
+
         {/* ══ FINAL CTA ══ */}
         <section style={{ ...S.container, padding: '0 5vw 7rem' }}>
           <div className="reveal" style={{
