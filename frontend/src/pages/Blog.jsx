@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { getBlogPosts } from '../hooks/useApi'
 
 // ── Design tokens ──────────────────────────────────────────────────────────────
 const GOLD   = '#DFA84F'
@@ -113,14 +114,14 @@ function PostCard({ post }) {
               fontSize: '0.7rem',
               color: 'var(--text-dim)',
             }}>
-              {formatDate(post.date)}
+              {formatDate(post.created_at)}
             </span>
             <span style={{
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '0.7rem',
               color: 'var(--text-dim)',
             }}>
-              {post.readTime}
+              {post.read_time}
             </span>
           </div>
           <span style={{
@@ -148,8 +149,7 @@ export default function Blog() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const res  = await fetch('/posts/index.json')
-        const data = await res.json()
+        const data = await getBlogPosts()
         setPosts(data)
       } catch (err) {
         console.error('Failed to load posts:', err)

@@ -118,3 +118,26 @@ class EmailOTP(Base):
 
     def __repr__(self) -> str:
         return f"<EmailOTP email={self.email!r} used={self.used}>"
+
+
+class BlogPost(Base):
+    """
+    Blog post for the Jyotish Journal CMS.
+    Admin-managed via /admin/blog; served publicly via /v1/blog/posts.
+    """
+    __tablename__ = "posts"
+
+    id         = Column(Integer,     primary_key=True, autoincrement=True)
+    slug       = Column(String(255), unique=True, nullable=False, index=True)
+    title      = Column(Text,        nullable=False)
+    category   = Column(String(100), nullable=True)
+    excerpt    = Column(Text,        nullable=True)
+    content    = Column(Text,        nullable=True)   # markdown
+    tags       = Column(JSON,        nullable=True)   # list of strings
+    read_time  = Column(String(50),  nullable=True)   # e.g. "7 min read"
+    published  = Column(Boolean,     default=False, nullable=False)
+    created_at = Column(DateTime,    server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime,    server_default=func.now(), onupdate=func.now())
+
+    def __repr__(self) -> str:
+        return f"<BlogPost slug={self.slug!r} published={self.published}>"

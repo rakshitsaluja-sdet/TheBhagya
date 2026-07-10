@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { marked } from 'marked'
+import { getBlogPost, getBlogPosts } from '../hooks/useApi'
 
 // ── marked configuration (compatible with marked v4 – v14) ────────────────────
 try {
@@ -148,7 +149,7 @@ function RelatedCard({ post }) {
             fontSize: '0.68rem',
             color: 'var(--text-dim)',
           }}>
-            {post.readTime}
+            {post.read_time}
           </span>
           <span style={{ color: GOLD, fontSize: '0.8rem' }}>Read →</span>
         </div>
@@ -311,34 +312,21 @@ export default function BlogPost() {
 
     async function load() {
       try {
-        // 1. Fetch index to find post metadata
-        const idxRes = await fetch('/posts/index.json')
-        if (!idxRes.ok) throw new Error('index not found')
-        const all = await idxRes.json()
-        if (!cancelled) setAllPosts(all)
+        // 1. Fetch post (content + metadata) and all posts (for related section) in parallel
+        const [data, all] = await Promise.all([
+          getBlogPost(slug),
+          getBlogPosts(),
+        ])
 
-        const found = all.find(p => p.slug === slug)
-        if (!found) {
-          if (!cancelled) { setNotFound(true); setLoading(false) }
-          return
-        }
-        if (!cancelled) setPost(found)
-
-        // 2. Fetch markdown content
-        const mdRes = await fetch(`/posts/${slug}.md`)
-        if (mdRes.ok) {
-          const text = await mdRes.text()
-          if (!cancelled) setHtmlContent(parseMarkdown(text))
-        } else {
-          // No markdown file yet — show excerpt as fallback
-          if (!cancelled) setHtmlContent(`<p>${found.excerpt}</p>`)
-        }
-
-        // 3. SEO
         if (!cancelled) {
-          document.title = `${found.title} · Bhagya`
+          setPost(data)
+          setAllPosts(all)
+          setHtmlContent(parseMarkdown(data.content || ''))
+
+          // SEO
+          document.title = `${data.title} · Bhagya`
           const metaDesc = document.querySelector('meta[name="description"]')
-          if (metaDesc) metaDesc.setAttribute('content', found.excerpt)
+          if (metaDesc) metaDesc.setAttribute('content', data.excerpt)
         }
       } catch (err) {
         console.error('BlogPost load error:', err)
@@ -489,7 +477,7 @@ export default function BlogPost() {
               fontSize: '0.72rem',
               color: 'var(--text-dim)',
             }}>
-              {formatDate(post.date)}
+              {formatDate(post.created_at)}
             </span>
             <span style={{ color: 'var(--text-dim)', fontSize: '0.8rem', lineHeight: 1 }}>·</span>
             <span style={{
@@ -497,7 +485,7 @@ export default function BlogPost() {
               fontSize: '0.72rem',
               color: 'var(--text-dim)',
             }}>
-              {post.readTime}
+              {post.read_time}
             </span>
           </div>
 

@@ -226,6 +226,9 @@ export default function AdminDashboard() {
           <button onClick={load} style={{ background: 'transparent', border: '1px solid var(--border-hover)', borderRadius: '999px', color: 'var(--gold)', padding: '0.35rem 0.9rem', cursor: 'pointer', fontSize: '0.78rem' }}>
             ↻ Refresh
           </button>
+          <button onClick={() => navigate('/admin/blog')} style={{ background: 'transparent', border: '1px solid var(--border-hover)', borderRadius: '999px', color: 'var(--gold)', padding: '0.35rem 0.9rem', cursor: 'pointer', fontSize: '0.78rem' }}>
+            📝 Blog Posts
+          </button>
           <button onClick={toggleTheme} title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
             style={{ background: 'none', border: '1px solid var(--border)', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '0.9rem', color: 'var(--gold)' }}>
             {theme === 'dark' ? '☀' : '🌙'}

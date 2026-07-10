@@ -34,6 +34,7 @@ from backend.app.api.v1.transit        import router as transit_router
 from backend.app.api.v1.muhurat       import router as muhurat_router
 from backend.app.api.v1.kp            import router as kp_router
 from backend.app.api.v1.nadi          import router as nadi_router
+from backend.app.api.v1.blog          import router as blog_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -125,6 +126,7 @@ app.include_router(transit_router,         prefix=API_PREFIX)
 app.include_router(muhurat_router,         prefix=API_PREFIX)
 app.include_router(kp_router,             prefix=API_PREFIX)
 app.include_router(nadi_router,           prefix=API_PREFIX)
+app.include_router(blog_router,           prefix=API_PREFIX)
 
 
 @app.get("/health", tags=["System"])

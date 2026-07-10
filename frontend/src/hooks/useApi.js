@@ -363,3 +363,53 @@ export async function computeNadi(data) {
   }
   return res.json()
 }
+
+// ── Blog / Jyotish Journal ─────────────────────────────────────────────────
+
+export async function getBlogPosts() {
+  const res = await fetch(`${BASE}/blog/posts`)
+  if (!res.ok) throw new Error('Failed to load posts')
+  return res.json()
+}
+
+export async function getBlogPost(slug) {
+  const res = await fetch(`${BASE}/blog/posts/${slug}`)
+  if (!res.ok) throw new Error('Post not found')
+  return res.json()
+}
+
+export async function adminGetAllPosts() {
+  const res = await fetch(`${BASE}/blog/posts/all`, { headers: adminHeaders() })
+  if (!res.ok) throw new Error('Failed to load posts')
+  return res.json()
+}
+
+export async function adminCreatePost(data) {
+  const res = await fetch(`${BASE}/blog/posts`, {
+    method: 'POST', headers: adminHeaders(), body: JSON.stringify(data),
+  })
+  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.detail || `Error ${res.status}`) }
+  return res.json()
+}
+
+export async function adminUpdatePost(slug, data) {
+  const res = await fetch(`${BASE}/blog/posts/${slug}`, {
+    method: 'PUT', headers: adminHeaders(), body: JSON.stringify(data),
+  })
+  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.detail || `Error ${res.status}`) }
+  return res.json()
+}
+
+export async function adminDeletePost(slug) {
+  const res = await fetch(`${BASE}/blog/posts/${slug}`, { method: 'DELETE', headers: adminHeaders() })
+  if (!res.ok) throw new Error(`Error ${res.status}`)
+  return res.json()
+}
+
+export async function adminTogglePublish(slug, published) {
+  const res = await fetch(`${BASE}/blog/posts/${slug}/publish`, {
+    method: 'PATCH', headers: adminHeaders(), body: JSON.stringify({ published }),
+  })
+  if (!res.ok) throw new Error(`Error ${res.status}`)
+  return res.json()
+}

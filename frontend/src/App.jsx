@@ -36,6 +36,7 @@ import BlogPost from './pages/BlogPost'
 import Pricing from './pages/Pricing'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
+import AdminBlog from './pages/AdminBlog'
 import { trackPageView } from './hooks/useApi'
 
 // ── Login gate — requires sign-in only, no plan check ────────────────────────
@@ -82,8 +83,9 @@ function AppShell() {
       <PageTracker />
       <Routes>
         {/* ── Admin routes (no Navbar/Footer) ── */}
-        <Route path="/admin"           element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin"            element={<AdminLogin />} />
+        <Route path="/admin/dashboard"  element={<AdminDashboard />} />
+        <Route path="/admin/blog"       element={<AdminBlog />} />
 
         {/* ── Standalone dark pages (no Navbar/Footer) ── */}
         <Route path="/"        element={<Landing />} />
