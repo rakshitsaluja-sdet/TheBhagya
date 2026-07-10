@@ -823,7 +823,7 @@ export default function Landing() {
             {[
               { cat: 'Timing', catColor: '#5C6BC0', title: 'Muhurat: The Art of Choosing Auspicious Moments', excerpt: 'Every moment carries a different cosmic quality. Muhurat is the Vedic science of selecting that precise window when celestial energies align.', slug: 'choosing-muhurat-auspicious-timing', date: 'Jul 8', read: '6 min' },
               { cat: 'Ancient Systems', catColor: '#F9A825', title: 'Nadi Astrology: Ancient Secrets of Palm-Leaf Manuscripts', excerpt: 'Hidden in dusty Tamil Nadu libraries lie thousands of palm-leaf manuscripts written by ancient sages who claimed to foresee individual fates.', slug: 'nadi-astrology-ancient-secrets', date: 'Jul 5', read: '8 min' },
-              { cat: 'Beginners', catColor: '#43A047', title: 'How to Read Your Kundali: A Beginner's Guide', excerpt: 'Your Kundali is a map of the sky at the exact moment you were born — twelve houses, nine planets, and twelve signs. Here is how to begin.', slug: 'how-to-read-your-kundali', date: 'Jul 2', read: '9 min' },
+              { cat: 'Beginners', catColor: '#43A047', title: "How to Read Your Kundali: A Beginner's Guide", excerpt: 'Your Kundali is a map of the sky at the exact moment you were born — twelve houses, nine planets, and twelve signs. Here is how to begin.', slug: 'how-to-read-your-kundali', date: 'Jul 2', read: '9 min' },
             ].map((post, i) => (
               <Link key={post.slug} to={`/blog/${post.slug}`} className="reveal"
                 style={{
