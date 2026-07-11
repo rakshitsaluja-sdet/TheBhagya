@@ -12,7 +12,7 @@ from datetime import date, timedelta
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field, field_validator
 
-from app.core.jyotish.muhurat import find_muhurats, EVENT_RULES
+from backend.app.core.jyotish.muhurat import find_muhurats, EVENT_RULES
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/muhurat", tags=["muhurat"])

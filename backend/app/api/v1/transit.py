@@ -13,7 +13,7 @@ from typing import Optional
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
-from app.core.jyotish.transit import compute_transits
+from backend.app.core.jyotish.transit import compute_transits
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/transit", tags=["transit"])
