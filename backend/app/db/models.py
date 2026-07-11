@@ -46,21 +46,18 @@ class BirthChart(Base):
     __tablename__ = "birth_charts"
 
     id          = Column(String(36), primary_key=True, default=_new_uuid)
-    label       = Column(String(100), nullable=True)   # e.g. "My Chart", "Daughter"
+    label       = Column(String(100), nullable=True)
     place_name  = Column(String(200), nullable=True)
 
-    # Birth data (inputs)
-    dob         = Column(String(10),  nullable=False)  # YYYY-MM-DD
-    tob         = Column(String(8),   nullable=False)  # HH:MM or HH:MM:SS
+    dob         = Column(String(10),  nullable=False)
+    tob         = Column(String(8),   nullable=False)
     timezone    = Column(String(50),  nullable=False)
     lat         = Column(Float,       nullable=False)
     lon         = Column(Float,       nullable=False)
 
-    # Computed chart (cached JSON blob)
     chart_json  = Column(JSON,        nullable=True)
     computed_at = Column(DateTime,    nullable=True)
 
-    # Metadata
     created_at  = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at  = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
@@ -76,9 +73,9 @@ class PageView(Base):
     __tablename__ = "page_views"
 
     id         = Column(String(36),  primary_key=True, default=_new_uuid)
-    session_id = Column(String(36),  nullable=False, index=True)  # random UUID per browser tab-session
-    user_id    = Column(String(36),  nullable=True,  index=True)  # null = anonymous visitor
-    page       = Column(String(200), nullable=True)               # e.g. /chart/new
+    session_id = Column(String(36),  nullable=False, index=True)
+    user_id    = Column(String(36),  nullable=True,  index=True)
+    page       = Column(String(200), nullable=True)
     referrer   = Column(String(500), nullable=True)
     created_at = Column(DateTime,    server_default=func.now(), nullable=False, index=True)
 
@@ -89,58 +86,16 @@ class PageView(Base):
 class ChatSession(Base):
     """
     Stores an AI chat session tied to a birth chart.
-    Phase 2 — defined here for schema completeness.
     """
     __tablename__ = "chat_sessions"
 
     id           = Column(String(36), primary_key=True, default=_new_uuid)
-    chart_id     = Column(String(36), nullable=False)  # FK to birth_charts.id
-    session_type = Column(String(20), default="vedic")  # vedic | lal_kitab | palmistry
-    messages     = Column(JSON,   nullable=True)         # [{role, content}]
+    chart_id     = Column(String(36), nullable=False)
+    session_type = Column(String(20), default="vedic")
+    messages     = Column(JSON,   nullable=True)
     tokens_used  = Column(String, nullable=True)
     created_at   = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at   = Column(DateTime, server_default=func.now(), onupdate=func.now())
-
-
-class EmailOTP(Base):
-    """
-    Short-lived one-time passwords for passwordless email login.
-    Expire after 10 minutes and are single-use.
-    """
-    __tablename__ = "email_otps"
-
-    id         = Column(String(36),  primary_key=True, default=_new_uuid)
-    email      = Column(String(200), nullable=False, index=True)
-    otp_code   = Column(String(6),   nullable=False)
-    expires_at = Column(DateTime,    nullable=False)   # UTC naive
-    used       = Column(Boolean,     default=False, nullable=False)
-    created_at = Column(DateTime,    server_default=func.now(), nullable=False)
-
-    def __repr__(self) -> str:
-        return f"<EmailOTP email={self.email!r} used={self.used}>"
-
-
-class BlogPost(Base):
-    """
-    Blog post for the Jyotish Journal CMS.
-    Admin-managed via /admin/blog; served publicly via /v1/blog/posts.
-    """
-    __tablename__ = "posts"
-
-    id         = Column(Integer,     primary_key=True, autoincrement=True)
-    slug       = Column(String(255), unique=True, nullable=False, index=True)
-    title      = Column(Text,        nullable=False)
-    category   = Column(String(100), nullable=True)
-    excerpt    = Column(Text,        nullable=True)
-    content    = Column(Text,        nullable=True)   # markdown
-    tags       = Column(JSON,        nullable=True)   # list of strings
-    read_time  = Column(String(50),  nullable=True)   # e.g. "7 min read"
-    published  = Column(Boolean,     default=False, nullable=False)
-    created_at = Column(DateTime,    server_default=func.now(), nullable=False)
-    updated_at = Column(DateTime,    server_default=func.now(), onupdate=func.now())
-
-    def __repr__(self) -> str:
-        return f"<BlogPost slug={self.slug!r} published={self.published}>"
 
 
 class EmailOTP(Base):
@@ -164,6 +119,7 @@ class EmailOTP(Base):
 class BlogPost(Base):
     """
     Blog post for the Jyotish Journal CMS.
+    Admin-managed via /admin/blog; served publicly via /v1/blog/posts.
     """
     __tablename__ = "posts"
 
