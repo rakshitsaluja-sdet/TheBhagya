@@ -141,3 +141,43 @@ class BlogPost(Base):
 
     def __repr__(self) -> str:
         return f"<BlogPost slug={self.slug!r} published={self.published}>"
+
+
+class EmailOTP(Base):
+    """
+    Short-lived one-time passwords for passwordless email login.
+    Expire after 10 minutes and are single-use.
+    """
+    __tablename__ = "email_otps"
+
+    id         = Column(String(36),  primary_key=True, default=_new_uuid)
+    email      = Column(String(200), nullable=False, index=True)
+    otp_code   = Column(String(6),   nullable=False)
+    expires_at = Column(DateTime,    nullable=False)
+    used       = Column(Boolean,     default=False, nullable=False)
+    created_at = Column(DateTime,    server_default=func.now(), nullable=False)
+
+    def __repr__(self) -> str:
+        return f"<EmailOTP email={self.email!r} used={self.used}>"
+
+
+class BlogPost(Base):
+    """
+    Blog post for the Jyotish Journal CMS.
+    """
+    __tablename__ = "posts"
+
+    id         = Column(Integer,     primary_key=True, autoincrement=True)
+    slug       = Column(String(255), unique=True, nullable=False, index=True)
+    title      = Column(Text,        nullable=False)
+    category   = Column(String(100), nullable=True)
+    excerpt    = Column(Text,        nullable=True)
+    content    = Column(Text,        nullable=True)
+    tags       = Column(JSON,        nullable=True)
+    read_time  = Column(String(50),  nullable=True)
+    published  = Column(Boolean,     default=False, nullable=False)
+    created_at = Column(DateTime,    server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime,    server_default=func.now(), onupdate=func.now())
+
+    def __repr__(self) -> str:
+        return f"<BlogPost slug={self.slug!r} published={self.published}>"
