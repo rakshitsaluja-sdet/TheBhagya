@@ -215,12 +215,12 @@ async def update_post(
     return _post_detail(post)
 
 
-@router.delete("/posts/{slug}", status_code=204, summary="Delete post (admin)")
+@router.delete("/posts/{slug}", status_code=200, summary="Delete post (admin)")
 async def delete_post(
     slug: str,
     db: AsyncSession = Depends(get_db),
     _admin: dict = Depends(_verify_admin_token),
-) -> None:
+) -> dict:
     """Admin only — permanently delete a post."""
     result = await db.execute(
         select(BlogPost).where(BlogPost.slug == slug)
@@ -230,6 +230,7 @@ async def delete_post(
         raise HTTPException(status_code=404, detail="Post not found")
     await db.delete(post)
     await db.commit()
+    return {"deleted": True, "slug": slug}
 
 
 @router.patch("/posts/{slug}/publish", summary="Toggle published status (admin)")
@@ -251,3 +252,4 @@ async def toggle_publish(
     await db.commit()
     await db.refresh(post)
     return _post_detail(post)
+
