@@ -14,7 +14,7 @@ import logging
 from datetime import date, timedelta
 from typing import Optional
 
-from app.core.jyotish.panchang import compute_panchang
+from backend.app.core.jyotish.panchang import compute_panchang
 
 logger = logging.getLogger(__name__)
 
@@ -373,3 +373,4 @@ def find_muhurats(
     # Sort by score descending and cap at max_results
     results.sort(key=lambda x: x["score"], reverse=True)
     return results[:max_results]
+
