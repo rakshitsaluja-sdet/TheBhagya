@@ -43,9 +43,9 @@ logging.basicConfig(
 logger = logging.getLogger("bhagyaai")
 
 _TEST_USERS = [
-    {"email": "free@thebhagya.com",    "password": "Test@free1",    "plan": "starter"},
-    {"email": "pro@thebhagya.com",     "password": "Test@pro1",     "plan": "pro"},
+    {"email": "free@thebhagya.com",    "password": "Test@free1",    "plan": "free"},
     {"email": "jyotish@thebhagya.com", "password": "Test@jyotish1", "plan": "jyotish"},
+    {"email": "guru@thebhagya.com",    "password": "Test@guru1",    "plan": "guru"},
 ]
 
 async def _seed_test_users() -> None:
