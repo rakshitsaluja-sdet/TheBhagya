@@ -4,7 +4,8 @@ import { useTheme } from '../context/ThemeContext'
 import { useLanguage } from '../context/LanguageContext'
 import { listCharts, getChart } from '../hooks/useApi'
 
-const API = '/v1'
+const BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://thebhagya-backend-production.up.railway.app').replace(/\/$/, '')
+const API = `${BASE_URL}/v1`
 
 const SUGGESTIONS = [
   "What does my current Rahu Mahadasha mean for my career?",
@@ -98,10 +99,11 @@ export default function DestinyChat() {
 
   const s = {
     page: {
-      minHeight: '100vh',
+      height: 'calc(100vh - 64px)', /* subtract navbar height */
       background: 'var(--bg-deep)',
       display: 'flex',
       flexDirection: 'column',
+      overflow: 'hidden',
     },
     header: {
       background: 'var(--bg-elevated)',
@@ -254,12 +256,12 @@ export default function DestinyChat() {
       )}
 
       {/* Messages area */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+        <div style={{ flex: 1, maxWidth: '800px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: messages.length === 0 ? 'center' : 'flex-end', gap: '1rem', padding: '1rem 1.5rem' }}>
 
           {/* Welcome / suggestions */}
           {messages.length === 0 && (
-            <div className="bh-fade-up" style={{ textAlign: 'center', padding: '2rem 1rem' }}>
+            <div className="bh-fade-up" style={{ textAlign: 'center', padding: '1rem' }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem', color: 'var(--gold)' }}>◎</div>
               <div style={{ fontFamily: "'Fraunces', serif", color: 'var(--text-primary)', fontSize: '1.35rem', fontWeight: 600, letterSpacing: '-0.02em', marginBottom: '0.5rem' }}>
                 {isHindi ? 'भाग्य चैट में स्वागत है' : 'Welcome to Destiny Chat'}
