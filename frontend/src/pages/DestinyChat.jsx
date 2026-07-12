@@ -54,9 +54,11 @@ export default function DestinyChat() {
       .catch(() => setSelectedChart(null))
   }, [selectedChartId])
 
-  // Scroll to bottom on new message
+  // Scroll to bottom only when there are messages (not on initial mount)
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 0 || loading) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
   }, [messages, loading])
 
   async function send(text) {
@@ -85,7 +87,10 @@ export default function DestinyChat() {
         }),
       })
       if (!res.ok) {
-        const err = await res.json()
+        if (res.status === 429) {
+          throw new Error('Too many requests — please wait a moment and try again.')
+        }
+        const err = await res.json().catch(() => ({}))
         throw new Error(err.detail || 'Chat failed')
       }
       const data = await res.json()
