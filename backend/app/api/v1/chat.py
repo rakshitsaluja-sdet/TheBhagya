@@ -22,9 +22,9 @@ Optional:
     CHAT_MAX_TOKENS    — default: 1024
 
 Default models per provider:
-    anthropic:   claude-haiku-4-5-20251001   (paid, production)
-    openrouter:  meta-llama/llama-3.1-8b-instruct:free   (free tier)
-    groq:        llama-3.1-8b-instant                     (free tier)
+    anthropic:   claude-haiku-4-5-20251001       (paid, production)
+    openrouter:  meta-llama/llama-3.3-70b-instruct:free  (free tier)
+    groq:        llama-3.1-8b-instant               (free tier)
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ CHAT_MAX_TOKENS = int(os.getenv("CHAT_MAX_TOKENS", "1024"))
 
 _PROVIDER_DEFAULTS = {
     "anthropic":   "claude-haiku-4-5-20251001",
-    "openrouter":  "meta-llama/llama-3.1-8b-instruct:free",
+    "openrouter":  "meta-llama/llama-3.3-70b-instruct:free",
     "groq":        "llama-3.1-8b-instant",
 }
 CHAT_MODEL = os.getenv("CHAT_MODEL", _PROVIDER_DEFAULTS.get(LLM_PROVIDER, ""))
