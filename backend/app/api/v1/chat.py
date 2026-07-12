@@ -1,28 +1,34 @@
 """
 backend/app/api/v1/chat.py
 
-Destiny Chat — AI conversation endpoint.
+Destiny Chat — AI conversation endpoint with multi-provider support.
 
 POST /v1/chat
     Accepts: chart_id (optional), message, history[]
     Behaviour:
       • If chart_id is provided, loads the chart from DB and injects the
         full Vedic + Lal Kitab context into the system prompt.
-      • Calls the Anthropic Messages API (claude-haiku-4-5-20251001 by default;
-        override via CHAT_MODEL env var).
+      • Calls the configured LLM provider (Anthropic, OpenRouter, or Groq).
       • Returns the assistant reply as plain JSON.
 
-Required env vars:
-    ANTHROPIC_API_KEY  — your Anthropic API key
+Provider env vars:
+    LLM_PROVIDER       — "anthropic" (default/prod) | "openrouter" | "groq"
+    ANTHROPIC_API_KEY  — required when LLM_PROVIDER=anthropic
+    OPENROUTER_API_KEY — required when LLM_PROVIDER=openrouter
+    GROQ_API_KEY       — required when LLM_PROVIDER=groq
 
-Optional env vars:
-    CHAT_MODEL         — default: claude-haiku-4-5-20251001
+Optional:
+    CHAT_MODEL         — overrides the default model for the chosen provider
     CHAT_MAX_TOKENS    — default: 1024
+
+Default models per provider:
+    anthropic:   claude-haiku-4-5-20251001   (paid, production)
+    openrouter:  meta-llama/llama-3.1-8b-instruct:free   (free tier)
+    groq:        llama-3.1-8b-instant                     (free tier)
 """
 
 from __future__ import annotations
 
-import json
 import logging
 import os
 from typing import Optional
@@ -39,11 +45,72 @@ from backend.app.db.models import BirthChart
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/chat", tags=["Destiny Chat"])
 
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-CHAT_MODEL        = os.getenv("CHAT_MODEL", "claude-haiku-4-5-20251001")
-CHAT_MAX_TOKENS   = int(os.getenv("CHAT_MAX_TOKENS", "1024"))
+# ── Provider config ────────────────────────────────────────────────────────────
 
-ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
+LLM_PROVIDER    = os.getenv("LLM_PROVIDER", "anthropic").lower()
+CHAT_MAX_TOKENS = int(os.getenv("CHAT_MAX_TOKENS", "1024"))
+
+_PROVIDER_DEFAULTS = {
+    "anthropic":   "claude-haiku-4-5-20251001",
+    "openrouter":  "meta-llama/llama-3.1-8b-instruct:free",
+    "groq":        "llama-3.1-8b-instant",
+}
+CHAT_MODEL = os.getenv("CHAT_MODEL", _PROVIDER_DEFAULTS.get(LLM_PROVIDER, ""))
+
+_API_KEYS = {
+    "anthropic":  os.getenv("ANTHROPIC_API_KEY", ""),
+    "openrouter": os.getenv("OPENROUTER_API_KEY", ""),
+    "groq":       os.getenv("GROQ_API_KEY", ""),
+}
+_URLS = {
+    "anthropic":  "https://api.anthropic.com/v1/messages",
+    "openrouter": "https://openrouter.ai/api/v1/chat/completions",
+    "groq":       "https://api.groq.com/openai/v1/chat/completions",
+}
+
+
+def _get_api_key() -> str:
+    return _API_KEYS.get(LLM_PROVIDER, "")
+
+
+def _build_headers() -> dict:
+    key = _get_api_key()
+    if LLM_PROVIDER == "anthropic":
+        return {
+            "x-api-key":         key,
+            "anthropic-version": "2023-06-01",
+            "content-type":      "application/json",
+        }
+    return {
+        "Authorization": f"Bearer {key}",
+        "Content-Type":  "application/json",
+    }
+
+
+def _build_payload(system_prompt: str, messages: list[dict]) -> dict:
+    if LLM_PROVIDER == "anthropic":
+        return {
+            "model":      CHAT_MODEL,
+            "max_tokens": CHAT_MAX_TOKENS,
+            "system":     system_prompt,
+            "messages":   messages,
+        }
+    # OpenAI-compatible (OpenRouter + Groq)
+    return {
+        "model":      CHAT_MODEL,
+        "max_tokens": CHAT_MAX_TOKENS,
+        "messages":   [{"role": "system", "content": system_prompt}] + messages,
+    }
+
+
+def _extract_reply(data: dict) -> str:
+    if LLM_PROVIDER == "anthropic":
+        return data.get("content", [{}])[0].get("text", "")
+    # OpenAI-compatible
+    choices = data.get("choices", [])
+    if choices:
+        return choices[0].get("message", {}).get("content", "")
+    return ""
 
 
 # ── Request / Response schemas ─────────────────────────────────────────────
@@ -150,10 +217,10 @@ async def chat(
     body: ChatRequest,
     db:   AsyncSession = Depends(get_db),
 ) -> ChatResponse:
-    if not ANTHROPIC_API_KEY:
+    if not _get_api_key():
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="ANTHROPIC_API_KEY is not configured. Set it in your .env file.",
+            detail=f"API key for provider '{LLM_PROVIDER}' is not configured.",
         )
 
     # Load chart if provided
@@ -168,7 +235,6 @@ async def chat(
 
     system_prompt = _build_system_prompt(chart_data, body.lang)
 
-    # Build messages array for Anthropic API
     messages = [
         {"role": m.role, "content": m.content}
         for m in body.history
@@ -176,31 +242,19 @@ async def chat(
     ]
     messages.append({"role": "user", "content": body.message})
 
-    payload = {
-        "model":      CHAT_MODEL,
-        "max_tokens": CHAT_MAX_TOKENS,
-        "system":     system_prompt,
-        "messages":   messages,
-    }
+    url     = _URLS[LLM_PROVIDER]
+    payload = _build_payload(system_prompt, messages)
 
     try:
         async with httpx.AsyncClient(timeout=30.0) as client:
-            resp = await client.post(
-                ANTHROPIC_URL,
-                headers={
-                    "x-api-key":         ANTHROPIC_API_KEY,
-                    "anthropic-version": "2023-06-01",
-                    "content-type":      "application/json",
-                },
-                json=payload,
-            )
+            resp = await client.post(url, headers=_build_headers(), json=payload)
             resp.raise_for_status()
             data = resp.json()
     except httpx.HTTPStatusError as exc:
-        logger.error("Anthropic API error: %s — %s", exc.response.status_code, exc.response.text)
+        logger.error("%s API error: %s — %s", LLM_PROVIDER, exc.response.status_code, exc.response.text)
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
-            detail=f"Anthropic API returned {exc.response.status_code}.",
+            detail=f"{LLM_PROVIDER} returned {exc.response.status_code}.",
         )
     except Exception as exc:
         logger.exception("Chat request failed")
@@ -209,10 +263,8 @@ async def chat(
             detail=f"Chat service error: {exc}",
         )
 
-    reply = data["content"][0]["text"] if data.get("content") else ""
-
     return ChatResponse(
-        reply=reply,
+        reply=_extract_reply(data),
         model=data.get("model", CHAT_MODEL),
         chart_used=chart_data is not None,
     )
